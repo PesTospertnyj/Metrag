@@ -1,0 +1,7 @@
+/index.php
+/index-test.php
+
+/olxphoto/*
+!/olxphoto/.gitkeep
+/upload/*
+!/upload/.gitkeep

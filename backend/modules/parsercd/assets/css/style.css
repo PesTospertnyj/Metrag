@@ -1,0 +1,25 @@
+.colLeft {
+    width: 50%;
+    float: left;
+    margin-bottom: 40px;
+}
+.colRight {
+    width: 50%;
+    float: right;
+    margin-bottom: 40px;
+}
+.status-1 {
+    background: rgb(255, 255, 0);
+}
+.status-2 {
+    background: #FFFFFF;
+}
+.status-3 {
+    background: coral;
+}
+.status-4 {
+    background: greenyellow;
+}
+.status-5 {
+    background: #C4C4C4;
+}

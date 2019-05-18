@@ -1,0 +1,7 @@
+.adstracker_hide { 
+  cursor: pointer;
+}
+.adstracker_show{
+  border-bottom: 1px dashed; 
+  margin: 0 10px;
+}

@@ -1,0 +1,1 @@
+<? $this->title = Yii::t('app', 'Contacts'); ?>
