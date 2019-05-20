@@ -107,6 +107,42 @@ class StreetController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function actionGsearch()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $term = Yii::$app->getRequest()->getQueryParam('term');
+
+        $result = array();
+        if (!$term) {
+            return $result;
+        }
+        try {
+            $response = json_decode(file_get_contents(
+                'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' . urlencode('Харьков,') . $term . '&types=address&language=ru&key=' . Yii::$app->params['googleMapsKey']
+            ),
+                true
+            );
+        } catch (\Exception $e) {
+            return $result;
+        }
+
+        foreach($response['predictions'] as $item) {
+            $description = (is_array($item['terms']) && count($item['terms']) > 2) ?
+                $item['terms'][0]['value'] . ', ' . $item['terms'][1]['value'] :
+                $item['description'];
+
+            $result[] = array(
+                'description' => $description,
+                'text' => $item['structured_formatting']['main_text']
+            );
+        }
+
+        return $result;
+    }
+
+    /**
      * Finds the Street model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\modules\parsercd\models\Parsercd;
+use backend\models\Street;
 use Yii;
 use common\models\Apartment;
 use common\models\Area;
@@ -471,6 +472,7 @@ class ApartmentController extends Controller
 
 
         $model->date_modified = date("Y-m-d H:i:s");
+        $model->date_modified_photo = date("Y-m-d H:i:s");
         if (!$model['author_id']) $model['author_id'] = Yii::$app->user->id;
         else $model['update_author_id'] = Yii::$app->user->id;
 

@@ -58,8 +58,22 @@ use yii\helpers\Url;
         Course::find()->select(['name', 'course_id'])->orderby('name')->indexBy('course_id')->column(),['prompt'=>'Выберите направление...'])->label('Направление'); ?>
     <?= $form->field($model, 'region_id')->dropdownList(Region::find()->select(['name', 'region_id'])->orderby('name')->indexBy('region_id')->column(),['prompt'=>'Выберите район...'])->label('Район/Область'); ?>
 
-    <?= $form->field($model, 'street_id')->dropdownList(
-        Street::find()->select(['name', 'street_id'])->orderby('name')->indexBy('street_id')->column(),['prompt'=>'Выберите улицу...'])->label('Улица'); ?>
+    <?php echo $form->field($model, 'street_id')->hiddenInput();/*->dropdownList(
+        Street::find()->select(['name', 'street_id'])->orderby('name')->indexBy('street_id')->column(),['prompt'=>'Выберите улицу...'])->label('Улица');*/ ?>
+    <div class="form-group">
+        <label class="control-label" for="street-select">Улица</label>
+        <select id="street-select" class="form-control" name="Apartment[street]">
+            <?php if ($model->street_id): ?>
+                <option selected="selected">
+                    <?php
+                    $street = backend\models\Street::findOne($model->street_id);
+                    echo $street->name_google;
+                    ?>
+                </option>
+            <?php endif; ?>
+        </select>
+    </div>
+
     <?= $form->field($model,'number_building')->textInput()->label('Номер дома'); ?>
     <?= $form->field($model,'corps')->textInput()->label('Корпус'); ?>
     <?= $form->field($model,'number_apartment')->textInput()->label('Номер квартиры'); ?>
@@ -192,6 +206,18 @@ if($model->id != '')
 
 <?php ActiveForm::end(); ?>
 
+
+<?php
+$this->registerCssFile('@web/css/select2.min.css');
+$this->registerJsFile(
+    '@web/js/select2/select2.full.min.js',
+    ['depends' => [\yii\web\JqueryAsset::className(), \yii\bootstrap\BootstrapAsset::className()]]
+);
+$this->registerJsFile(
+    '@web/js/select2/i18n/ru.js',
+    ['depends' => [\yii\web\JqueryAsset::className(), \yii\bootstrap\BootstrapAsset::className()]]
+);
+?>
 
 <? $this->registerJs('
     $(document).ready(function () {
@@ -345,3 +371,42 @@ $this->registerJs('
 </script>
 
 
+<?php
+$route = Url::to(['street/gsearch']);
+$js = <<<JS
+    $(document).ready(function () {
+        
+        $('#street-select').select2({
+            placeholder: 'Выберите улицу...',
+            minimumInputLength: 1,
+            allowClear: true,
+            ajax: {
+                url: function(params){
+                    return '$route'.replace('%search%', encodeURIComponent(params.term)); 
+                },
+                dataType: 'json',
+                delay: 500,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.text,
+                                description: item.description
+                            }
+                        })
+                    };
+                }
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            templateResult: function(item) {
+                return item.text + (typeof item.description !== 'undefined' ? ' <small class="pull-right text-muted">' + item.description + '</small>' : '');
+            }
+        });
+    });
+JS;
+$this->registerJs(
+    $js,
+    yii\web\View::POS_END
+);
+?>

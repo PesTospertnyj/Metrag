@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $street_id
  * @property string $name
+ * @property string $name_google
  */
 class Street extends \yii\db\ActiveRecord
 {

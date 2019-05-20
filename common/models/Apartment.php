@@ -26,6 +26,7 @@ use backend\models\Region;
  * @property integer $course_id
  * @property integer $region_id
  * @property integer $region_kharkiv_id
+ * @property integer $street
  * @property integer $street_id
  * @property string $number_building
  * @property string $corps
