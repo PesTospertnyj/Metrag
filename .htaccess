@@ -2,6 +2,8 @@
 IndexIgnore */*
 RewriteEngine on
  
+#RewriteRule ^(.*)$ https://m-metrazh.ua/$1 [R=301,L]
+
 # Если запрос начинается с /admin, то заменяем на /backend/web/
 RewriteCond %{REQUEST_URI} ^/admin
 RewriteRule ^admin\/?(.*) /backend/web/$1
