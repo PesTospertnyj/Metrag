@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-xs-12 col-sm-3 col-md-3 ">
     <?= $form->field($model,'price')->textInput(['readonly' => 'true'])->label('Цена'); ?>
     <?= $form->field($model, 'exclusive_user_id')->textInput(['readonly' => 'true',
-        'value' => User::findOne(['id' => $model->exclusive_user_id])->username ? Users::findOne(['id' => $model->exclusive_user_id])->username : ""])->label('Экслюзив'); ?>
+        'value' => User::findOne(['id' => $model->exclusive_user_id])->username ? User::findOne(['id' => $model->exclusive_user_id])->username : ""])->label('Экслюзив'); ?>
     <?= $form->field($model, 'mediator_id')->textInput(['readonly' => 'true',
         'value' => Mediator::findOne(['mediator_id' => $model->mediator_id])->name ? Mediator::findOne(['mediator_id' => $model->mediator_id])->name : ""])->label('Посредник'); ?>
     <?= $form->field($model,'landmark')->textInput(['readonly' => 'true'])->label('Ориентир'); ?>
