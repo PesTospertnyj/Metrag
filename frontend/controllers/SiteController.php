@@ -459,7 +459,8 @@ class SiteController extends Controller
             $status = 400;
         }
 
-        return json_encode($realties, $status);
+        \Yii::$app->response->statusCode = $status;
+        return $this->asJson($realties);
 
     }
 
