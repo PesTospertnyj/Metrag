@@ -97,24 +97,13 @@ class ApartmentController extends Controller
             ]);
         }
 
-        $isUpdated = false;
-        if (!$model->agent1_id) {
-            $model->agent1_id = $agentId;
-            $isUpdated = true;
-        } elseif (!$model->agent2_id) {
-            $model->agent2_id = $agentId;
-            $isUpdated = true;
-        } elseif (!$model->agent3_id) {
-            $model->agent3_id = $agentId;
-            $isUpdated = true;
-        } else {
+        if (!$this->addAgentIdToModel($agentId, $model)) {
             return $this->asJson([
                 'error' => 'Ошибка: максимально колличество агентов для объекта: 3'
             ]);
         }
 
-        if ($isUpdated) {
-            $model->save();
+        if ($model->save()) {
             return $this->asJson([
                 'result' => 'Агент был добавлен к объекту',
                 'refresh' => true
@@ -126,6 +115,25 @@ class ApartmentController extends Controller
         ]);
     }
 
+    /**
+     * @param $agentId
+     * @param Apartment|Building|House|Area|Commercial $model
+     * @return bool
+     */
+    public function addAgentIdToModel($agentId, $model)
+    {
+        if (!$model->agent1_id) {
+            $model->agent1_id = $agentId;
+        } elseif (!$model->agent2_id) {
+            $model->agent2_id = $agentId;
+        } elseif (!$model->agent3_id) {
+            $model->agent3_id = $agentId;
+        } else {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Lists all Apartment models.
@@ -463,6 +471,14 @@ class ApartmentController extends Controller
         if ($values['id'] != '') {
             $model = Apartment::findOne($values['id']);
             $model->attributes = $values;
+
+            if ($model->is_publish) {
+                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+                $agentId = $agent ? $agent['id'] : null;
+                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                    $this->addAgentIdToModel($agentId, $model);
+                }
+            }
         } else {
             $model = new Apartment();
             $model->attributes = $values;
