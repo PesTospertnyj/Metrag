@@ -357,5 +357,5 @@ use yii\helpers\Url;
 
 
 <?php
-include '/' . $_SERVER['DOCUMENT_ROOT']. 'backend/views/new_site/_google_maps.php';
+include Yii::getAlias('@fullRootPath') . '/backend/views/new_site/_google_maps.php';
 ?>

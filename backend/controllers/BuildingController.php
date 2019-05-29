@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\traits\ApartmentAgentTrait;
 use Yii;
 use common\models\Apartment;
 use common\models\Building;
@@ -28,6 +29,8 @@ use yii\helpers\ArrayHelper;
  */
 class BuildingController extends Controller
 {
+    use ApartmentAgentTrait;
+
     /**
      * @inheritdoc
      */
@@ -326,6 +329,14 @@ class BuildingController extends Controller
         {
             $model = Building::findOne($values['id']);
             $model->attributes = $values;
+
+            if ($model->is_publish) {
+                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+                $agentId = $agent ? $agent['id'] : null;
+                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                    $this->addAgentIdToModel($agentId, $model);
+                }
+            }
         }
         else
         {
@@ -354,6 +365,10 @@ class BuildingController extends Controller
         $data['id'] = $model->id;
         $apart = Building::findOne($data['id']);
         $apart->getResouseBoards('building');
-        return $this->render('view', ['data' => $data, 'model' => $apart]);
+        return $this->render('view', [
+            'data' => $data,
+            'model' => $apart,
+            'lived_complex' => LivedComplex::find()->select(['name', 'id'])->orderby('name')->indexBy('id')->column(),
+        ]);
     }
 }

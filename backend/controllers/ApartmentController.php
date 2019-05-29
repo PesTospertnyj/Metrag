@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\modules\parsercd\models\Parsercd;
+use backend\controllers\traits\ApartmentAgentTrait;
 use backend\models\Street;
 use Yii;
 use common\models\Apartment;
@@ -28,6 +29,8 @@ use backend\models\ModelData;
  */
 class ApartmentController extends Controller
 {
+    use ApartmentAgentTrait;
+
     /**
      * @inheritdoc
      */
@@ -113,26 +116,6 @@ class ApartmentController extends Controller
         return $this->asJson([
             'result' => 'Произошла ошибка, попробуйте повторить попытку'
         ]);
-    }
-
-    /**
-     * @param $agentId
-     * @param Apartment|Building|House|Area|Commercial $model
-     * @return bool
-     */
-    public function addAgentIdToModel($agentId, $model)
-    {
-        if (!$model->agent1_id) {
-            $model->agent1_id = $agentId;
-        } elseif (!$model->agent2_id) {
-            $model->agent2_id = $agentId;
-        } elseif (!$model->agent3_id) {
-            $model->agent3_id = $agentId;
-        } else {
-            return false;
-        }
-
-        return true;
     }
 
     /**

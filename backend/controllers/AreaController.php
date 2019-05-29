@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\traits\ApartmentAgentTrait;
 use Yii;
 use common\models\Area;
 use common\models\AreaSearch;
@@ -17,6 +18,8 @@ use yii\data\ActiveDataProvider;
  */
 class AreaController extends Controller
 {
+    use ApartmentAgentTrait;
+
     /**
      * @inheritdoc
      */
@@ -226,6 +229,14 @@ class AreaController extends Controller
         {
             $model = Area::findOne($values['id']);
             $model->attributes = $values;
+
+            if ($model->is_publish) {
+                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+                $agentId = $agent ? $agent['id'] : null;
+                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                    $this->addAgentIdToModel($agentId, $model);
+                }
+            }
         }
         else
         {

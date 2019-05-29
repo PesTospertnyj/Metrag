@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\traits\ApartmentAgentTrait;
 use Yii;
 use common\models\Rent;
 use common\models\RentSearch;
@@ -19,6 +20,8 @@ use backend\models\ModelData;
  */
 class RentController extends Controller
 {
+    use ApartmentAgentTrait;
+
     /**
      * @inheritdoc
      */
@@ -217,6 +220,14 @@ class RentController extends Controller
         {
             $model = Rent::findOne($values['id']);
             $model->attributes = $values;
+
+            if ($model->is_publish) {
+                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+                $agentId = $agent ? $agent['id'] : null;
+                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                    $this->addAgentIdToModel($agentId, $model);
+                }
+            }
         }
         else
         {
