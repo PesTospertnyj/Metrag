@@ -345,7 +345,7 @@ class RealtyBehave extends Behavior
             //var_dump($this->owner->imageFiles); exit;
             foreach ($this->owner->imageFiles as $file) {
                 //$path = Yii::getAlias('@webroot/upload/files/') . $file->name;
-                $path = Yii::getAlias('/home/metrag/metrag.com.ua/www/backend/web/upload/files/') . $file->name;
+                $path = Yii::getAlias('@backend/web/upload/files/') . $file->name;
                 //echo $path;
                 //echo "<br>";
                 $file->saveAs($path);
