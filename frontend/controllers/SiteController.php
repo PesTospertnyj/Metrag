@@ -408,14 +408,10 @@ class SiteController extends Controller
             $rentApartments = $this->getDataFromRent($limit, $page, 1, 6);
 
             $query = Apartment::find()->where(['enabled' => 1, 'is_publish' => 1]);
-            $countQuery = clone $query;
-            $pages = new Pagination([
-                'totalCount' => $countQuery->count(),
-            ]);
 
-            $models = $query->offset($pages->offset)
+            $models = $query
                 ->limit($limit)
-                ->offset($page * $limit)
+                ->offset(($page - 1) * $limit)
                 ->all();
             $realties = $this->transformApartments($models);
 
@@ -425,14 +421,10 @@ class SiteController extends Controller
             $rentHouses = $this->getDataFromRent($limit, $page, 1, 5);
 
             $query = House::find()->where(['enabled' => 1, 'is_publish' => 1]);
-            $countQuery = clone $query;
-            $pages = new Pagination([
-                'totalCount' => $countQuery->count(),
-            ]);
 
-            $models = $query->offset($pages->offset)
+            $models = $query
                 ->limit($limit)
-                ->offset($page * $limit)
+                ->offset(($page - 1) * $limit)
                 ->all();
             $realties = $this->transformHouses($models);
 
@@ -440,39 +432,26 @@ class SiteController extends Controller
 
         } elseif($type === 'areas') {
             $query = Area::find()->where(['enabled' => 1, 'is_publish' => 1]);
-            $countQuery = clone $query;
-            $pages = new Pagination([
-                'totalCount' => $countQuery->count(),
-            ]);
 
-            $models = $query->offset($pages->offset)
+            $models = $query
                 ->limit($limit)
-                ->offset($page * $limit)
+                ->offset(($page - 1) * $limit)
                 ->all();
             $realties = $this->transformAreas($models);
         } elseif($type === 'commercials') {
             $query = Commercial::find()->where(['enabled' => 1, 'is_publish' => 1]);
-            $countQuery = clone $query;
-            $pages = new Pagination([
-                'totalCount' => $countQuery->count(),
-            ]);
 
-            $models = $query->offset($pages->offset)
+            $models = $query
                 ->limit($limit)
-                ->offset($page * $limit)
+                ->offset(($page - 1) * $limit)
                 ->all();
             $realties = $this->transformCommercials($models);
         } elseif($type === 'building') {
             $query = Building::find()->where(['enabled' => 1, 'is_publish' => 1]);
 
-            $countQuery = clone $query;
-            $pages = new Pagination([
-                'totalCount' => $countQuery->count(),
-            ]);
-
-            $models = $query->offset($pages->offset)
+            $models = $query
                 ->limit($limit)
-                ->offset($page * $limit)
+                ->offset(($page - 1) * $limit)
                 ->all();
 
             $realties = $this->transformBuildings($models);
