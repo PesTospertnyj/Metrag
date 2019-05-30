@@ -287,8 +287,8 @@ class SiteController extends Controller
                 //'street_name' => $commercial->street->name,
                 'state_id' => $commercial->realty_state_id,
                 'total_area' => $commercial->total_area,
-                'square_living' => $commercial->floor_area,
-                'square_kitchen' => $commercial->kitchen_area,
+                'square_living' => $commercial->total_area_house,
+                'square_kitchen' => $commercial->total_area_house,
                 'year_built' => $commercial->year_built,
                 //1 - аренда. 2 - купить
                 'deal_type_id' => $commercial->rent === 1 ? 1 : 2,
