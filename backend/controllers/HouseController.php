@@ -233,14 +233,6 @@ class HouseController extends Controller
         {
             $model = House::findOne($values['id']);
             $model->attributes = $values;
-
-            if ($model->is_publish) {
-                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
-                $agentId = $agent ? $agent['id'] : null;
-                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
-                    $this->addAgentIdToModel($agentId, $model);
-                }
-            }
         }
         else
         {
@@ -250,7 +242,16 @@ class HouseController extends Controller
         }
         $model->year_built = 0;
 
+        if ($model->is_publish) {
+            $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+            $agentId = $agent ? $agent['id'] : null;
+            if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                $this->addAgentIdToModel($agentId, $model);
+            }
+        }
+
         $model->date_modified = date("Y-m-d H:i:s");
+        $model->date_modified_photo = date("Y-m-d H:i:s");
         if(!$model['author_id']) $model['author_id'] = Yii::$app->user->id;
         else $model['update_author_id'] = Yii::$app->user->id;
 

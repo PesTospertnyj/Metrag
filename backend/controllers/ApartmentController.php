@@ -454,18 +454,18 @@ class ApartmentController extends Controller
         if ($values['id'] != '') {
             $model = Apartment::findOne($values['id']);
             $model->attributes = $values;
-
-            if ($model->is_publish) {
-                $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
-                $agentId = $agent ? $agent['id'] : null;
-                if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
-                    $this->addAgentIdToModel($agentId, $model);
-                }
-            }
         } else {
             $model = new Apartment();
             $model->attributes = $values;
             $model->date_added = date("Y-m-d H:i:s");
+        }
+
+        if ($model->is_publish) {
+            $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
+            $agentId = $agent ? $agent['id'] : null;
+            if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+                $this->addAgentIdToModel($agentId, $model);
+            }
         }
 
 
