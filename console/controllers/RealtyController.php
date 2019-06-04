@@ -28,15 +28,23 @@ class RealtyController extends \yii\console\Controller
     public function actionRemove($maxUpdated = null)
     {
         if (!($this->realtyImagesFullPath && is_dir($this->realtyImagesFullPath))) {
-            $this->stdout("Directory not exists.\n");
+            $this->stdout("The image store directory does not exists.\n");
 
             return 1;
         }
 
         if ($maxUpdated === null || !$this->isValidDate($maxUpdated)) {
-            $this->stdout($this->ansiFormat("The first parameter is required and must be in the format 'YYYY-MM-DD' (for example, 2017-12-30)!\n"));
 
-            return 1;
+            // check interval format
+            if (1 === preg_match('/(\-[0-9]+) (day|month|year)/m', $maxUpdated, $matches)) {
+                $maxUpdated = date('Y-m-d', strtotime((int)$matches[1] . ' ' . $matches[2]));
+            } else {
+                $this->stdout(
+                    "The first parameter is required and must be in the format 'YYYY-MM-DD' or interval format (for example, 2017-12-30, -2 year, -18 month, -15 day)!\n"
+                );
+
+                return 1;
+            }
         }
 
         foreach (['rent', 'apartment', 'building', 'house', 'area', 'commercial'] as $model) {
@@ -100,6 +108,7 @@ class RealtyController extends \yii\console\Controller
             INNER JOIN $modelName m ON i.itemId = m.id
             WHERE i.modelName = :modelName
             AND m.enabled = 0
+            AND m.is_publish = 0
             AND m.date_modified < :dateModified";
 
         $data = \Yii::$app->db->createCommand($sql, [
