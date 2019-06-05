@@ -30,4 +30,13 @@ trait ApartmentAgentTrait
 
         return true;
     }
+
+    protected function isAgentAttachedToModel($agentId, $model)
+    {
+        return in_array($agentId, [
+            $model->agent1_id,
+            $model->agent2_id,
+            $model->agent3_id,
+        ]);
+    }
 }

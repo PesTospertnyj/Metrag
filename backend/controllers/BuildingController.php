@@ -340,7 +340,7 @@ class BuildingController extends Controller
         if ($model->is_publish) {
             $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
             $agentId = $agent ? $agent['id'] : null;
-            if ($agentId !== null && ($model->agent1_id !== $agentId || $model->agent2_id !== $agentId || $model->agent3_id !== $agentId)) {
+            if ($agentId !== null && !$this->isAgentAttachedToModel($agentId, $model)) {
                 $this->addAgentIdToModel($agentId, $model);
             }
         }
