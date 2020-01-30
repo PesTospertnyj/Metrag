@@ -89,20 +89,20 @@ class Parsercd extends \yii\db\ActiveRecord
     public function saveFromParser($obj){
         $result = false;
         if(!empty($obj)){
-            $this->link = $obj['Ссылка'];
-            $this->path = $obj['Ссылка'];
-            $this->date = $obj['Дата'];
+            $this->link = $obj['пїЅпїЅпїЅпїЅпїЅпїЅ'];
+            $this->path = $obj['пїЅпїЅпїЅпїЅпїЅпїЅ'];
+            $this->date = $obj['пїЅпїЅпїЅпїЅ'];
             $this->type_object_id = '12';
-            $this->count_room = $obj['Кол.комн.'];
-            $this->floor = $obj['Эт'];
-            $this->floor_all = $obj['Этажн'];
-            $this->total_area = $obj['Общ'];
-            $this->floor_area = $obj['Жил'];
-            $this->kitchen_area = $obj['Кух'];
-            $this->price = $obj['Цена'];
-            $this->phone = $obj['Тел'];
+            $this->count_room = $obj['пїЅпїЅпїЅ.пїЅпїЅпїЅпїЅ.'];
+            $this->floor = $obj['пїЅпїЅ'];
+            $this->floor_all = $obj['пїЅпїЅпїЅпїЅпїЅ'];
+            $this->total_area = $obj['пїЅпїЅпїЅ'];
+            $this->floor_area = $obj['пїЅпїЅпїЅ'];
+            $this->kitchen_area = $obj['пїЅпїЅпїЅ'];
+            $this->price = $obj['пїЅпїЅпїЅпїЅ'];
+            $this->phone = $obj['пїЅпїЅпїЅ'];
             $this->status = '1';
-            $this->note = $obj['Текст'];
+            $this->note = $obj['пїЅпїЅпїЅпїЅпїЅ'];
             $this->kolfoto = null;
             $this->image = null;
             $this->view = 'no';
@@ -118,7 +118,7 @@ class Parsercd extends \yii\db\ActiveRecord
 
             if(!empty($obj['L'])){
                 //$this->link = RegionKharkiv::$obj['L'];}
-                //$street = explode('ул.,пр. ');
+                //$street = explode('пїЅпїЅ.,пїЅпїЅ. ');
                 $this->region_kharkiv_id = RegionKharkiv::findOne('like', ['name' => trim($obj['L'])])->region_kharkiv_id;
             }
             if(!empty($obj['M'])){
@@ -167,6 +167,13 @@ class Parsercd extends \yii\db\ActiveRecord
             $this->view = 'no';
             $this->enabled = 10;
             $result = $this->save();
+
+            if (!$result) {
+                echo '<pre>';
+                echo var_dump($this->getErrors());
+                echo '</pre>';
+                exit;
+            }
             //echo var_dump($this->getErrors()); exit;
         }
         return $result;
