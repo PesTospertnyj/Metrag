@@ -14,7 +14,7 @@ class ExcelFileModel extends Model
     public function rules()
     {
         return [
-        [['excelFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx'],
+        [['excelFile'], 'file', 'skipOnEmpty' => false],
         ];
     }
 
