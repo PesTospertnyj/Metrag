@@ -110,9 +110,11 @@ class DefaultController extends Controller
                 }
 
                 if (count($allErrors) > 0) {
+                    echo '<pre>Errors</pre>';
                     echo '<pre>';
                     echo print_r($allErrors, true);
                     echo '</pre>';
+                    die();
                 }
 
                 //return $this->render('excel-arr', ['data' => $data, 'model' => $model]);
