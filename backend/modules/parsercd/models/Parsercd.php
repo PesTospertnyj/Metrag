@@ -140,12 +140,27 @@ class Parsercd extends \yii\db\ActiveRecord
             $this->floor_area = $obj['S'];
             $this->kitchen_area = $obj['T'];
             $this->price = $obj['U'];
-            $this->phone = trim($obj['V']);
+
+            $vPhone = function ($in) {
+                if ($in === null) {
+                    return "";
+                }
+
+                $v = trim($in);
+
+                if (mb_strlen($v) > 0 && $v[0] != '0') {
+                    $v .= '0';
+                }
+
+                return $v;
+            };
+
+            $this->phone = $vPhone($obj['V']);
             if(trim($obj['W']) != ''){
-                $this->phone .= ', '.trim($obj['W']);
+                $this->phone .= ', '.$vPhone($obj['W']);
             }
             if(trim($obj['X']) != ''){
-                $this->phone .= ', '.trim($obj['X']);
+                $this->phone .= ', '.$vPhone($obj['X']);
             }
             //check for exist object in Parsecd table
             //$check = Parsercd::find()->
