@@ -149,7 +149,7 @@ class Parsercd extends \yii\db\ActiveRecord
                 $v = trim($in);
 
                 if (mb_strlen($v) > 0 && $v[0] != '0') {
-                    $v .= '0';
+                    $v = '0' . $v;
                 }
 
                 return $v;
