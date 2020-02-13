@@ -76,6 +76,8 @@ class DefaultController extends Controller
 //    }
     public function actionIndex()
     {
+        ini_set('max_execution_time', 30 * 60 * 60);
+
         \app\modules\parsercd\ParsercdAssetsBundle::register($this->view);
         $model = new ExcelFileModel();
 
