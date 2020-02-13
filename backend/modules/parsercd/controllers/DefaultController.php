@@ -103,7 +103,7 @@ class DefaultController extends Controller
                         $add = new Parsercd();
                         list($result, $errors, $attrs) = $add->saveFromParser($obj);
                         if (count($errors) > 0) {
-                            $allErrors[$index] = [$errors, $attrs];
+                            $allErrors[$index] = ['errors' => $errors, 'attrs' => $attrs, 'input' => $obj];
                         }
                     }
                     $header = false;
