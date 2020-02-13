@@ -158,7 +158,7 @@ class Parsercd extends \yii\db\ActiveRecord
 
             //var_dump($check); exit;
 
-            if($check > 0) return false;
+            if($check > 0) return [false, $this->getErrors()];
 
             $this->status = 'wait';
             $this->note = $obj['AB'];
@@ -169,13 +169,9 @@ class Parsercd extends \yii\db\ActiveRecord
             $result = $this->save();
 
             if (!$result) {
-                echo '<pre>';
-                echo var_dump($this->getErrors());
-                echo '</pre>';
-                exit;
+                return [$result, $this->getErrors()];
             }
-            //echo var_dump($this->getErrors()); exit;
         }
-        return $result;
+        return [$result, []];
     }
 }

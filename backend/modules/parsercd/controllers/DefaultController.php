@@ -94,14 +94,23 @@ class DefaultController extends Controller
                 //$this->filterTheSameAdverts();
 
                 $header = true;
-                foreach ($data as $obj)
+                $allErrors = [];
+                foreach ($data as $index => $obj)
                 {
-
                     if(!$header){
                         $add = new Parsercd();
-                        $result = $add->saveFromParser($obj);
+                        list($result, $errors) = $add->saveFromParser($obj);
+                        if (count($errors) > 0) {
+                            $allErrors[$index] = $allErrors;
+                        }
                     }
                     $header = false;
+                }
+
+                if (count($allErrors) > 0) {
+                    echo '<pre>';
+                    echo print_r($allErrors, true);
+                    echo '</pre>';
                 }
 
                 //return $this->render('excel-arr', ['data' => $data, 'model' => $model]);
@@ -164,7 +173,7 @@ class DefaultController extends Controller
                             },
                         ],*/
                         [
-                            //'name' => 'Нас.п.',
+                            //'name' => 'пїЅпїЅпїЅ.пїЅ.',
                             //'valueReplacement' => Parsercd::path,
                         ],
                     ],
