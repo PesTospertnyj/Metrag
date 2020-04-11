@@ -40,3 +40,8 @@ phpunit.phar
 !/backend/web/assets/.gitkeep
 /frontend/web/assets/*
 !/frontend/web/assets/.gitkeep
+
+/.ftpaccess
+/Vagrantfile
+/vagrant
+/pma
