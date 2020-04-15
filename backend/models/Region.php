@@ -41,4 +41,16 @@ class Region extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
         ];
     }
+
+    public static function prepareForSelect()
+    {
+        $items = self::find()->all();
+        $arr = [];
+
+        foreach ($items as $item) {
+            $arr[$item->region_id] = $item->name;
+        }
+
+        return $arr;
+    }
 }

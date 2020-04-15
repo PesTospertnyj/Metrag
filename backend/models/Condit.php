@@ -43,4 +43,16 @@ class Condit extends \yii\db\ActiveRecord
             'display_only_building' => 'Отображать на странице здания, только эти пункты',
         ];
     }
+
+    public static function prepareForSelect()
+    {
+        $items = self::find()->all();
+        $arr = [];
+
+        foreach ($items as $item) {
+            $arr[$item->condit_id] = $item->name;
+        }
+
+        return $arr;
+    }
 }
