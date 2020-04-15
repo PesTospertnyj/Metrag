@@ -51,6 +51,11 @@ return [
 //            'class' => 'app\modules\api\Module',
 //        ],
 
+        'gii' => [
+            'class' => 'yii\gii\Module',
+            'allowedIPs' => ['*']
+        ],
+
     ],
     
         
