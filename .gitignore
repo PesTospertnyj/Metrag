@@ -45,3 +45,5 @@ phpunit.phar
 /Vagrantfile
 /vagrant
 /pma
+
+/docker
