@@ -60,16 +60,13 @@ class CustomerSearch extends Customer
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'price_from' => $this->price_from,
-            'price_to' => $this->price_to,
-            'total_area_from' => $this->total_area_from,
-            'total_area_to' => $this->total_area_to,
             'is_public' => $this->is_public,
         ]);
 
         $query->andFilterWhere(['like', 'full_name', $this->full_name])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'info', $this->info])
+            ->andFilterWhere(['>=', 'price', $this->info])
             ->andFilterWhere(['like', 'phone', $this->phone]);
 
         return $dataProvider;

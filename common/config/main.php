@@ -30,6 +30,12 @@ return [
                 ],
             ],
         ],
+        'jwt' => [
+            'class' => \sizeg\jwt\Jwt::class,
+            'key' => 'secret',
+            // You have to configure ValidationData informing all claims you want to validate the token.
+            'jwtValidationData' => \api\components\JwtValidationData::class,
+        ],
     ],
     'modules' => [
             'yii2images' => [

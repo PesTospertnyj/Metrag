@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use backend\models\Condit;
 use backend\models\Region;
