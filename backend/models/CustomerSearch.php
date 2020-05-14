@@ -1,11 +1,9 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Customer;
 
 /**
  * CustomerSearch represents the model behind the search form about `app\models\Customer`.
@@ -59,16 +57,28 @@ class CustomerSearch extends Customer
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'is_public' => $this->is_public,
+            'id' => $this->getParameter($params, 'id'),
+            'is_public' => $this->getParameter($params, 'is_public'),
         ]);
 
-        $query->andFilterWhere(['like', 'full_name', $this->full_name])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'info', $this->info])
-            ->andFilterWhere(['>=', 'price', $this->info])
-            ->andFilterWhere(['like', 'phone', $this->phone]);
+        $query->andFilterWhere(['like', 'full_name', $this->getParameter($params, 'full_name')])
+            ->andFilterWhere(['like', 'type', $this->getParameter($params, 'type')])
+            ->andFilterWhere(['like', 'info', $this->getParameter($params, 'info')])
+            ->andFilterWhere(['>=', 'price_from', $this->getParameter($params, 'price_from')])
+            ->andFilterWhere(['<=', 'price_to', $this->getParameter($params, 'price_to')])
+            ->andFilterWhere(['<=', 'total_area_from', $this->getParameter($params, 'total_area_from')])
+            ->andFilterWhere(['<=', 'total_area_to', $this->getParameter($params, 'total_area_to')])
+            ->andFilterWhere(['like', 'phone', $this->getParameter($params, 'phone')]);
 
         return $dataProvider;
+    }
+
+    private function getParameter($params, $key)
+    {
+        if (isset($params[$key])) {
+            return $params[$key];
+        }
+
+        return null;
     }
 }

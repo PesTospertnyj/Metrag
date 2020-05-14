@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
 
         <? if ($model->isNewRecord) { ?>
             <?= $form->field($model, 'types')->label('Типы')->widget(\kartik\select2\Select2::className(), [
-                'data' => \app\models\Customer::AVAILABLE_TYPES_LABELS,
+                'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
                 'options' => [
                     'multiple' => true,
                 ]

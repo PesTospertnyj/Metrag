@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Customer */
+/* @var $model backend\models\Customer */
 
 $this->title = Yii::t('app', 'Создать покупателя');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Покупатели'), 'url' => ['index']];

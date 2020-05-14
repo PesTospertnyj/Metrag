@@ -3,13 +3,28 @@
 namespace api\modules\v1\controllers;
 
 use backend\models\Customer;
-use app\models\CustomerSearch;
+use backend\models\CustomerSearch;
+use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 
 class CustomerController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['authenticator'] = [
+            'class' => JwtHttpBearerAuth::class,
+        ];
+
+        return $behaviors;
+    }
+
     /**
      * @return \yii\web\Response
      */
