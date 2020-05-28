@@ -169,7 +169,9 @@ class Parsercd extends \yii\db\ActiveRecord
                 where(['count_room' => $this->count_room])->
                 andWhere(['floor_all' => $this->floor_all])->
                 andWhere(['floor' => $this->floor])->
-                andWhere(['phone' => $this->phone])->count();
+                andWhere(['phone' => $this->phone])->
+                andWhere(['price' => $this->price])->
+                count();
 
             //var_dump($check); exit;
 
