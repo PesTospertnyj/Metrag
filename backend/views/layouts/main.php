@@ -76,6 +76,14 @@ AppAsset::register($this);
             ]
         ],
         [
+            'label' => Yii::t('yii', 'Customers'),
+            'items' => [
+                ['label' => Yii::t('yii', 'Search'), 'url' => ['/customer/search']],
+                ['label' => Yii::t('yii', 'Add'), 'url' => ['/customer/create']],
+                ['label' => Yii::t('yii', 'List'), 'url' => ['/customer']],
+            ]
+        ],
+        [
             'label' => Yii::t('yii', 'Areas'),
             'items' => [
                 ['label' => Yii::t('yii', 'Search'), 'url' => ['/area/search']],

@@ -34,14 +34,23 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-xs-12 col-sm-4 col-md-4">
-        <?= $form->field($model, 'regions')->label('Регионы')->widget(\kartik\select2\Select2::className(), [
+        <?= $form->field($model, 'regions', [
+            'options' => [
+                'class' => 'required',
+            ],
+        ])->label('Регионы')->widget(\kartik\select2\Select2::className(), [
             'data' => \backend\models\Region::prepareForSelect(),
             'options' => [
                 'multiple' => true,
-            ]
+                'required' => true,
+            ],
         ]) ?>
 
-        <?= $form->field($model, 'condits')->label('Состояния')->widget(\kartik\select2\Select2::className(), [
+        <?= $form->field($model, 'condits', [
+            'options' => [
+                'class' => 'required',
+            ],
+        ])->label('Состояния')->widget(\kartik\select2\Select2::className(), [
             'data' => \backend\models\Condit::prepareForSelect(),
             'options' => [
                 'multiple' => true,
@@ -49,16 +58,24 @@ use yii\widgets\ActiveForm;
         ]) ?>
 
         <? if ($model->isNewRecord) { ?>
-            <?= $form->field($model, 'types')->label('Типы')->widget(\kartik\select2\Select2::className(), [
+            <?= $form->field($model, 'types', [
+                'options' => [
+                    'class' => 'required',
+                ],
+            ])->label('Типы')->widget(\kartik\select2\Select2::className(), [
                 'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
                 'options' => [
                     'multiple' => true,
                 ]
             ]) ?>
         <? } else { ?>
-            <?= $form->field($model, 'type')->textInput([
-                'disabled' => true
-            ])->label('Типы') ?>
+            <?= $form->field($model, 'type')->label('Тип')->widget(\kartik\select2\Select2::className(), [
+                'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
+                'options' => [
+                    'disabled' => true,
+                    'name' => $model->type,
+                ]
+            ]) ?>
         <? } ?>
     </div>
   </div>

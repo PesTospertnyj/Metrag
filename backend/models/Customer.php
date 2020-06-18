@@ -148,7 +148,7 @@ class Customer extends ActiveRecord
     {
         $className = $this->getClassName();
 
-        if (isset($data[$className]['condits'])) {
+        if (isset($data[$className]['condits']) && $data[$className]['condits'] && count($data[$className]['condits'])) {
             foreach ($data[$className]['condits'] as $conditId) {
                 $condit = Condit::findOne($conditId);
 

@@ -20,15 +20,35 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'full_name',
-            'phone',
-            'price_from',
-            'price_to',
+            [
+                'label' => 'ФИО',
+                'value' => 'full_name',
+            ],
+
+            [
+                'label' => 'Телефон',
+                'value' => 'phone',
+            ],
+
+            [
+                'label' => 'Цена От',
+                'value' => 'price_from',
+            ],
+
+            [
+                'label' => 'Цена До',
+                'value' => 'price_to',
+            ],
+            [
+                'label' => 'Тип',
+                'value' => function ($model) {
+                    return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
+                }
+            ],
             // 'total_area_from',
             // 'total_area_to',
             // 'info:ntext',

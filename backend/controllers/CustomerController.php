@@ -2,9 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\CustomerFind;
+use backend\models\HouseFind;
+use backend\models\ModelData;
+use backend\models\WallMaterial;
 use Yii;
 use backend\models\Customer;
 use backend\models\CustomerSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,6 +109,33 @@ class CustomerController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSearch()
+    {
+        // fill with previous values
+        $values = Yii::$app->request->get('HouseFind');
+        $model = new CustomerFind();
+        $model->attributes = $values;
+        return $this->render('find', ['model' => $model]);
+    }
+
+    public function actionSearchresult()
+    {
+        $model = new CustomerFind();
+        $query = $model->search(Yii::$app->request->get('CustomerFind'));
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+        ]);
+        return $this->render('find-result', [
+            'dataProvider' => $dataProvider,
+            'data' => ModelData::getData()
+        ]);
     }
 
     /**
