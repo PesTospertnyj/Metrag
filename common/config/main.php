@@ -31,10 +31,10 @@ return [
             ],
         ],
         'jwt' => [
-            'class' => \sizeg\jwt\Jwt::class,
+            'class' => '\sizeg\jwt\Jwt',
             'key' => 'secret',
             // You have to configure ValidationData informing all claims you want to validate the token.
-            'jwtValidationData' => \api\components\JwtValidationData::class,
+            'jwtValidationData' => '\api\components\JwtValidationData',
         ],
     ],
     'modules' => [
