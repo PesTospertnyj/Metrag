@@ -395,7 +395,6 @@ class CompareController extends Controller
 
     public function actionCompareitems($start = 0)
     {
-        die(1);
         try {
             /** @var Parsercd[] $items */
             //$items = Yii::$app->db->createCommand("SELECT * FROM parsercd ORDER BY id desc LIMIT $start, 10")
