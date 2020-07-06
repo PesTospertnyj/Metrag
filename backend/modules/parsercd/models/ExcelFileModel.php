@@ -22,7 +22,7 @@ class ExcelFileModel extends Model
     {
         if ($this->validate()) {
         //$this->excelFile->saveAs('excel/uploads/' . $this->excelFile->baseName . '.' . $this->excelFile->extension);
-        $this->excelFile->saveAs('excel/uploads/' . 'parse' . '.' . $this->excelFile->extension);
+        $this->excelFile->saveAs('excel/uploads/' . 'parse.xlsx');
         return true;
         } else {
         return false;
