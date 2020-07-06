@@ -15,7 +15,7 @@ use yii\helpers\Url;
 class CompareController extends Controller
 {
     /**
-     * Функция нормализует (разбивает строку по запятой и убирает лишние символы) поле номера телефонов
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      *
      * @param $value
      * @return array
@@ -44,7 +44,7 @@ class CompareController extends Controller
 
             $sql = '';
             foreach ($numbers as $n => $number) {
-                // первый номер
+                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                 if ($n === 0) {
                     $sql .= '`phone` LIKE "%' . $number . '%"';
                 } else {
@@ -63,47 +63,47 @@ class CompareController extends Controller
                     `count_similar_advs` = {$value} WHERE id = {$item->id}")->execute();
             };
 
-            // $similarPhonesCount показывает сколько квартир с номера текущего
-            // объявления было найдено
+            // $similarPhonesCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             $similarPhonesCount = Yii::$app->db->createCommand(
                 "SELECT COUNT(*) FROM `apartment` WHERE ({$sql})")->queryScalar();
 
-            // `Если совпадает телефон - мы помечаем нашу квартиру статусом "2"`
+            // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "2"`
             if ($similarPhonesCount > 0) {
                 $update_status(2);
                 $update_counter($similarPhonesCount);
             }
 
-            // $similarPhonesAndRoomsCount показывает сколько квартир с номера текущего + к-во комнат
-            // объявления было найдено
+            // $similarPhonesAndRoomsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             $similarPhonesAndRoomsCount = Yii::$app->db->createCommand(
                 "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}")->queryScalar();
 
-            // `если совпадает телефон и кол-во комнат - помечаем статусом "3"`
+            // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "3"`
             if ($similarPhonesAndRoomsCount > 0) {
                 $update_status(3);
                 $update_counter($similarPhonesAndRoomsCount);
             }
 
-            // $similarPhonesAndRoomsAndFloorsCount показывает сколько квартир с номера текущего + к-во комнат + этажность
-            // объявления было найдено
+            // $similarPhonesAndRoomsAndFloorsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             $similarPhonesAndRoomsAndFloorsCount = Yii::$app->db->createCommand(
                 "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}
                   AND floor_all = {$item->floor_all}")->queryScalar();
 
-            // `если совпадает телефон, кол-во комнат и кол-во этажей - помечаем статусом "4" `
+            // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "4" `
             if ($similarPhonesAndRoomsAndFloorsCount > 0) {
                 $update_status(4);
                 $update_counter($similarPhonesAndRoomsAndFloorsCount);
             }
 
-            // $similarPhonesAndRoomsAndFloorsCount показывает сколько квартир с номера текущего + к-во комнат + этажность
-            // объявления было найдено
+            // $similarPhonesAndRoomsAndFloorsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             $similarPhonesAndRoomsAndFloorsAndFloorCount = Yii::$app->db->createCommand(
                 "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}
                   AND floor_all = {$item->floor_all} AND floor = {$item->floor}")->queryScalar();
 
-            // `и наконец если совпадает совпадает телефон, кол-во комнат и кол-во этажей и этажность дома - помечаем статусом "5".`
+            // `пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "5".`
             if ($similarPhonesAndRoomsAndFloorsAndFloorCount > 0) {
                 $update_status(5);
                 $update_counter($similarPhonesAndRoomsAndFloorsAndFloorCount);
@@ -124,7 +124,7 @@ class CompareController extends Controller
     {
         $ids = [];
         if ($data) {
-            //запись в статус для этих id что значения совпадают.
+            //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ id пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
             foreach ($data as $element) {
                 $ids[] = $element['id'];
             }
@@ -167,7 +167,7 @@ class CompareController extends Controller
 
     private function setNewStatusAllColumns(array $params)//: bool
     {
-        $status = 'Телефон, комнаты, этаж';
+        $status = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ';
 
         $data = Yii::$app->db->createCommand(
             "SELECT id
@@ -187,7 +187,7 @@ class CompareController extends Controller
 
     private function setNewStatusPhoneFloor(array $params)//: bool
     {
-        $status = 'Телефон, этаж';
+        $status = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ';
 
         $data = Yii::$app->db->createCommand(
             "SELECT id
@@ -205,7 +205,7 @@ class CompareController extends Controller
 
     private function setNewStatusPhoneRooms(array $params)//: bool
     {
-        $status = 'Телефон, комнаты';
+        $status = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 
         $data = Yii::$app->db->createCommand(
             "SELECT id
@@ -226,7 +226,7 @@ class CompareController extends Controller
     }
     private function setStatusPhone(array $params)//: bool
     {
-        $status = 'Сопадает телефон';
+        $status = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 
 
         $data = Yii::$app->db->createCommand(
@@ -259,7 +259,7 @@ class CompareController extends Controller
 
 //
 //
-//    //НОВЫЙ ВАРИАНТ.
+//    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 //    public function actionCompareitems($start = 0)
 //    {
 //
@@ -268,7 +268,7 @@ class CompareController extends Controller
 ////            ->all();
 //
 //        //
-//        //Полные тексты	region_kharkiv_id	street_id	metro_id	link1	link2	date	type_object_id	count_room	floor	floor_all	total_area	floor_area	kitchen_area	price	phone	status	note	kolfoto	image	view	count_similar_advs	enabled	id
+//        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ	region_kharkiv_id	street_id	metro_id	link1	link2	date	type_object_id	count_room	floor	floor_all	total_area	floor_area	kitchen_area	price	phone	status	note	kolfoto	image	view	count_similar_advs	enabled	id
 //
 //
 //        try {
@@ -368,7 +368,7 @@ class CompareController extends Controller
 //        $items = (new \yii\db\Query())
 //            ->select(['id'])
 //            ->from('parsercd')
-//            //подставить параметры
+//            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //            ->where('phone LIKE :phone', ['phone' => '%0930043890%'])
 //            ->andWhere('count_room = :count_rooms', ['count_rooms' => 2])
 //            ->andWhere('floor = :floor', ['floor' => 5])
@@ -395,6 +395,7 @@ class CompareController extends Controller
 
     public function actionCompareitems($start = 0)
     {
+        die(1);
         try {
             /** @var Parsercd[] $items */
             //$items = Yii::$app->db->createCommand("SELECT * FROM parsercd ORDER BY id desc LIMIT $start, 10")
@@ -437,19 +438,19 @@ class CompareController extends Controller
                 if(!empty($numbers))
                 {
                     foreach ($numbers as $n => $number) {
-                        // первый номер
+                        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                         if ($n === 0) {
                             $sql .= '`phone` LIKE "%' . $number . '%"';
                         } else {
                             $sql .= ' OR `phone` LIKE "%' . $number . '%"';
                         }
                     }
-                    // $similarPhonesCount показывает сколько квартир с номера текущего
-                    // объявления было найдено
+                    // $similarPhonesCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     $similarPhonesCount = Yii::$app->db->createCommand(
                         "SELECT COUNT(*) FROM `apartment` WHERE ({$sql})")->queryScalar();
 
-                    // `Если совпадает телефон - мы помечаем нашу квартиру статусом "2"`
+                    // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "2"`
                     if ($similarPhonesCount > 0) {
                         $update_status(2);
                         $update_counter($similarPhonesCount);
@@ -459,38 +460,38 @@ class CompareController extends Controller
                 }
 
                 if(!$item->count_room) $item->count_room = 0;
-                // $similarPhonesAndRoomsCount показывает сколько квартир с номера текущего + к-во комнат
-                // объявления было найдено
+                // $similarPhonesAndRoomsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 $similarPhonesAndRoomsCount = Yii::$app->db->createCommand(
                     "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}")->queryScalar();
 
-                // `если совпадает телефон и кол-во комнат - помечаем статусом "3"`
+                // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "3"`
                 if ($similarPhonesAndRoomsCount > 0) {
                     $update_status(3);
                     $update_counter($similarPhonesAndRoomsCount);
                 }
 
-                // $similarPhonesAndRoomsAndFloorsCount показывает сколько квартир с номера текущего + к-во комнат + этажность
-                // объявления было найдено
+                // $similarPhonesAndRoomsAndFloorsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if(!$item->floor_all) $item->floor_all= 0;
                 $similarPhonesAndRoomsAndFloorsCount = Yii::$app->db->createCommand(
                     "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}
                   AND floor_all = {$item->floor_all}")->queryScalar();
 
-                // `если совпадает телефон, кол-во комнат и кол-во этажей - помечаем статусом "4" `
+                // `пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "4" `
                 if ($similarPhonesAndRoomsAndFloorsCount > 0) {
                     $update_status(4);
                     $update_counter($similarPhonesAndRoomsAndFloorsCount);
                 }
 
-                // $similarPhonesAndRoomsAndFloorsCount показывает сколько квартир с номера текущего + к-во комнат + этажность
-                // объявления было найдено
+                // $similarPhonesAndRoomsAndFloorsCount пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if(!$item->floor) $item->floor = 0;
                 $similarPhonesAndRoomsAndFloorsAndFloorCount = Yii::$app->db->createCommand(
                     "SELECT COUNT(*) FROM `apartment` WHERE ({$sql}) AND count_room = {$item->count_room}
                   AND floor_all = {$item->floor_all} AND floor = {$item->floor}")->queryScalar();
 
-                // `и наконец если совпадает совпадает телефон, кол-во комнат и кол-во этажей и этажность дома - помечаем статусом "5".`
+                // `пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "5".`
                 if ($similarPhonesAndRoomsAndFloorsAndFloorCount > 0) {
                     //$update_status(5);
                     $update_enabled(0);
@@ -522,7 +523,7 @@ class CompareController extends Controller
 
         $sql = '';
         foreach ($numbers as $n => $number) {
-            // первый номер
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             if ($n === 0) {
                 $sql .= '`phone` LIKE "%' . $number . '%"';
             } else {
