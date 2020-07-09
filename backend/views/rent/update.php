@@ -122,16 +122,16 @@ use yii\helpers\Url;
         <?= Html::button(Yii::t('app', 'Cancel'), ['id' => 'cancel_phone']) ?>
 
     </div>
-    <select size="5" class="span12" id="select_phone" style="width: 100%">
-        <?php
-        $phones = explode(",", $model['phone']);
-        ?>
+    <?php
+    $phones = explode(",", $model['phone']);
+    ?>
+    <ul id="select_phone" data-target="Rent" style="width: 100%;height: 200px;background: #fff;list-style: none;">
         <?php foreach ($phones as $phone) { ?>
             <?php if ($phone) { ?>
-                <option><?php echo $phone; ?></option>
+                <li><input type="checkbox" name="selected_phones[]"> <?php echo $phone; ?></li>
             <?php } ?>
         <?php } ?>
-    </select>
+    </ul>
     <?= $form->field($model, 'phone')->hiddenInput(); ?>
     <? if ($model->id == null) $model->enabled = 1; ?>
     <?= $form->field($model, 'enabled')->checkbox()->label('Активное') ?>
@@ -229,79 +229,12 @@ use yii\helpers\Url;
 
 ?>
 
-<?
-$this->registerJs('
-	    var add_phone_tmp;
 
-    $("#input_phone").keyup(function(){
-        $(this).val($(this).val().replace(/[^0-9]/gim,\'\'));
-    });
-
-    $("#cancel_phone").click(function(e){
-        e.preventDefault();
-        $("#input_phone").val("");
-        $("#div_phone").css("display", "none");
-    });
-
-    $("#add_phone").click(function(e){
-        e.preventDefault();
-        $("#input_phone").val("");
-        $("#div_phone").css("display", "block");
-        add_phone_tmp = true;
-    });
-
-    $("#edit_phone").click(function(e){
-        e.preventDefault();
-        if($("#select_phone :selected").length) {
-            $("#input_phone").val($("#select_phone :selected").val());
-            $("#div_phone").css("display", "block");
-            add_phone_tmp = false;
-        } else {
-            alert("Вы не выбрали номер телефона для редактирования.");
-        }
-    });
-
-    $("#delete_phone").click(function(e){
-        e.preventDefault();
-        if($("#select_phone :selected").length) {
-            if(confirm("Вы уверены что хотите удалить?")) {
-                $("#select_phone :selected").remove();
-                save_phone();
-            }
-        } else {
-            alert("Вы не выбрали номер телефона для удаленя.");
-        }
-    });
-
-    $("#ok_phone").click(function(e){
-        e.preventDefault();
-        if($("#input_phone").val()) {
-            if(add_phone_tmp) {
-                $("#select_phone").append($(\'<option>\' + $("#input_phone").val() + \'</option>\'));
-            } else {
-                $("#select_phone :selected").text($("#input_phone").val());
-            }
-            save_phone();
-        } else {
-            alert("Вы не ввели номер телефона.");
-        }
-        $("#input_phone").val("");
-        $("#div_phone").css("display", "none");
-    });
-
-    function save_phone() {
-        var phone = [];
-        $(\'#select_phone option\').each(function(){
-            phone.push($(this).text());
-        });
-        $("input[name=\'Rent[phone]\']").val(phone.join(","));
-    }
- 	')
-?>
 <?php
 include Yii::getAlias('@fullRootPath') . '/backend/views/new_site/_google_maps.php';
 ?>
 <script src="/js/site_index.js"></script>
+<script src="/js/phone_field.js"></script>
 <script>
     window.onload = function () {
         var add = document.getElementById("add_site");

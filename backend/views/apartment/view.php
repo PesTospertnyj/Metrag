@@ -113,17 +113,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-xs-12 col-sm-3 col-md-3 ">
     <?= $form->field($model, 'note')->textarea(['rows'=>6,'readonly' => 'true'])->label('Заметки'); ?>
     <?= $form->field($model, 'notesite')->textarea(['rows'=>6, 'readonly' => 'true'])->label('Информация для показа на сайте'); ?>
-    
-    <select size="5" class="span12" id="select_phone" style="width: 100%">
-        <?php
-        $phones = explode(",", $model['phone']);
-        ?>
-        <?php foreach($phones as $phone) { ?>
-            <?php if($phone) { ?>
-                <option><?php echo $phone; ?></option>
+
+    <?php
+    $phones = explode(",", $model['phone']);
+    ?>
+    <ul id="select_phone"  style="width: 100%;height: 200px;background: #fff;list-style: none; padding: 5px 10px;">
+        <?php foreach ($phones as $phone) { ?>
+            <?php if ($phone) { ?>
+                <li><?php echo $phone; ?></li>
             <?php } ?>
         <?php } ?>
-    </select>
+    </ul>
     <?= $form->field($model,'phone')->hiddenInput(); ?>
     <?= $form->field($model,'enabled')->checkbox(['disabled' => 'true'])->label('Активное') ?>
     <?= $form->field($model,'is_publish')->checkbox()->label('Опубликовать на сайте') ?>
@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'showUpload' => false,
             'showBrowse' => false,
             //'maxFileCount' => 10,
-            
+
         ]
     ])->label(Yii::t('app', 'Photos')); ?>
 
