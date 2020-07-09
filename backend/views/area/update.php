@@ -49,9 +49,9 @@ use yii\helpers\Url;
 		<?= $form->field($model, 'region_id')->dropdownList(Region::find()->select(['name', 'region_id'])->orderby('name')->indexBy('region_id')->column(),['prompt'=>'Выберите район...'])->label('Район/Область', ['class' => 'required']); ?>
         <label>Улица</label>
 		<?= $form->field($model, 'street')->textInput(['id' => 'autocomplete'])->label('Улица'); ?>
-        
+
         <?= $form->field($model,'number_building')->textInput()->label('Номер дома'); ?>
-		
+
 	</div>
 	<div class="col-xs-12 col-sm-3 col-md-3 ">
         <?= $form->field($model,'price')->textInput()->label('Цена'); ?>
@@ -65,7 +65,7 @@ use yii\helpers\Url;
             Sewage::find()->select(['name', 'sewage_id'])->orderby('name')->indexBy('sewage_id')->column(),['prompt'=>'Выберите тип канализации...'])->label('Канализация'); ?>
         <?= $form->field($model, 'purpose_id')->dropdownList(
             Purpose::find()->select(['name', 'purpose_id'])->orderby('name')->indexBy('purpose_id')->column(),['prompt'=>'Выберите целевое назначение...'])->label('Целевое назначение'); ?>
-		
+
     	<?= $form->field($model,'date_added')->textInput(['readonly' => 'true'])->label('Дата добавления'); ?>
 		<?= $form->field($model,'date_modified')->textInput(['readonly' => 'true'])->label('Дата изменения'); ?>
 	</div>
@@ -79,7 +79,7 @@ use yii\helpers\Url;
         <?= $form->field($model,'house_demolition')->checkbox()->label('Дом под снос') ?>
         <?= $form->field($model,'state_act')->checkbox()->label('Гос. акт на участок') ?>
         <?= $form->field($model,'electric')->checkbox()->label('Наличие электроэнергии') ?>
-        		
+
 		<?= $form->field($model, 'author_id')->dropdownList(
     		User::find()->select(['username', 'id'])->where(['id'=> $model->author_id])->column(),['disabled' => 'true'])->label('Автор'); ?>
         <?= $form->field($model, 'update_author_id')->dropdownList(
@@ -98,13 +98,13 @@ use yii\helpers\Url;
         <?= Html::button(Yii::t('app', 'Add'), ['id' => 'add_phone']) ?>
         <?= Html::button(Yii::t('app', 'Edit'), ['id' => 'edit_phone']) ?>
         <?= Html::button(Yii::t('app', 'Delete'), ['id' => 'delete_phone']) ?>
-       	
+
         <div id="div_phone" style="display: none;">
         <input type="text" id="input_phone" class="span12" />
-        
+
         <?= Html::button(Yii::t('app', 'OK'), ['id' => 'ok_phone']) ?>
         <?= Html::button(Yii::t('app', 'Cancel'), ['id' => 'cancel_phone']) ?>
-        
+
         </div>
         <select size="5" class="span12" id="select_phone" style="width: 100%">
                                         <?php
@@ -178,7 +178,7 @@ use yii\helpers\Url;
             //'maxFileCount' => 10,
         ]
     ]); ?>
-	
+
 	</div>
 
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']);?>
@@ -199,7 +199,7 @@ use yii\helpers\Url;
             }
         }
     ?>
-    
+
 <?php ActiveForm::end(); ?>
 
 
@@ -301,7 +301,7 @@ use yii\helpers\Url;
  	')
 ?>
 <?= $this->render('/new_site/_js.php', ['agent' => $agent]); ?>
-
+    <script src="/js/site_index.js"></script>
 <script>
         window.onload = function () {
                 var add = document.getElementById("add_site");
@@ -312,7 +312,7 @@ use yii\helpers\Url;
                 var del = document.getElementById("del_from_site");
                 if(del)
                 {
-                    del.onclick = delSite;  
+                    del.onclick = delSite;
                 }
             };
 
@@ -320,39 +320,48 @@ use yii\helpers\Url;
                 if(confirm("<?php echo Yii::t('app', 'Add site?'); ?>"))
                 {
                     var id = document.getElementById("area-id");
-                    var xrequest = new XMLHttpRequest();    
+                    var xrequest = new XMLHttpRequest();
               xrequest.open("GET", "/admin/addsite/add?id="+id.value+"&base=area", true);
-              xrequest.send(); 
+              xrequest.send();
 
                     xrequest.onload = function() {
                     alert(this.responseText);
                     var add = document.getElementById("add_site");
                     add.style.display = "none";
-                    var del = document.getElementById("del_from_site"); 
-                    del.style.display = ""; 
+                    var del = document.getElementById("del_from_site");
+                    del.style.display = "";
                 };
                 }
-                
+
             };
 
             function delSite(){
                 if(confirm("<?php echo Yii::t('app', 'Delete from site?'); ?>"))
                 {
                     var id = document.getElementById("area-id");
-                    var xrequest = new XMLHttpRequest();    
+                    var xrequest = new XMLHttpRequest();
               xrequest.open("GET", "/admin/addsite/del?id="+id.value, true);
-              xrequest.send(); 
+              xrequest.send();
 
                     xrequest.onload = function() {
                     alert(this.responseText);
                     var add = document.getElementById("add_site");
                     add.style.display = "";
-                    var del = document.getElementById("del_from_site"); 
-                    del.style.display = "none"; 
+                    var del = document.getElementById("del_from_site");
+                    del.style.display = "none";
                 };
                 }
-                
+
             };
+        $('textarea').keyup(function(event) {
+            if (event.keyCode === 13) {
+                var content = this.value;
+                var caret = getCaret(this);
+                this.value = content.substring(0, caret) + "\n" + content.substring(caret, content.length);;
+                event.stopPropagation();
+                setCaretToPos(event.target,caret + 1);
+            }
+        });
  </script>
 
 

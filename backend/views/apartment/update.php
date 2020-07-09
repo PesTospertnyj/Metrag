@@ -45,7 +45,7 @@ use yii\helpers\Url;
     		Layout::find()->select(['name', 'layout_id'])->orderby('name')->indexBy('layout_id')->column(),['prompt'=>'Выберите тип...'])->label('Тип планировки'); ?>
     	<?= $form->field($model,'floor')->textInput()->label('Этаж'); ?>
 		<?= $form->field($model,'floor_all')->textInput()->label('Этажность'); ?>
-        
+
         <? if($model->id == null) $model->city_or_region = 0; ?>
 		<?= $form->field($model,'city_or_region',['inline' => true, 'template' => '{input}'])->radiolist(['0' => Yii::t('app', 'Kharkiv'), '1' => Yii::t('app', 'Region')])->label(false); ?>
 
@@ -54,7 +54,7 @@ use yii\helpers\Url;
     		RegionKharkiv::find()->select(['name', 'region_kharkiv_id'])->orderby('name')->indexBy('region_kharkiv_id')->column(),['prompt'=>'Выберите район...'])->label('Район/Харьков', ['class' => 'required']); ?>
 		<?= $form->field($model, 'metro_id')->dropdownList(
     		Metro::find()->select(['name', 'metro_id'])->orderby('name')->indexBy('metro_id')->column(),['prompt'=>'Выберите станцию метро...'])->label('Метро'); ?>
-		
+
 		<?= $form->field($model, 'locality_id')->dropdownList(
 			Locality::find()->select(['name', 'locality_id'])->orderby('name')->indexBy('locality_id')->column(),['prompt'=>'Выберите населенный пункт...'])->label('Населенный пункт', ['class' => 'required']); ?>
 		<?= $form->field($model, 'course_id')->dropdownList(
@@ -132,7 +132,7 @@ use yii\helpers\Url;
     		User::find()->select(['username', 'id'])->where(['id'=> $model->update_author_id])->column(),['disabled' => 'true'])->label('Изменил дпи'); ?>
     	<?= $form->field($model, 'update_photo_user_id')->dropdownList(
     		User::find()->select(['username', 'id'])->where(['id'=> $model->update_photo_user_id])->column(),['disabled' => 'true'])->label('Кто обновил фото'); ?>
-        <?= Html::label("Доски объявлений") ?>    
+        <?= Html::label("Доски объявлений") ?>
         <?= $form->field($model,'besplatka')->checkbox()->label('Бесплатка') ?>
         <?= $form->field($model,'est')->checkbox()->label('EST') ?>
 		<?= $form->field($model,'mesto')->checkbox()->label('Mesto.ua') ?>
@@ -144,7 +144,7 @@ use yii\helpers\Url;
         <?= Html::button(Yii::t('app', 'Add'), ['id' => 'add_phone']) ?>
         <?= Html::button(Yii::t('app', 'Edit'), ['id' => 'edit_phone']) ?>
         <?= Html::button(Yii::t('app', 'Delete'), ['id' => 'delete_phone']) ?>
-       	
+
         <div id="div_phone" style="display: none;">
         <input type="text" id="input_phone" class="span12" />
 
@@ -205,7 +205,7 @@ use yii\helpers\Url;
 	<?= $form->field($model, 'imageFiles[]')->widget(FileInput::classname(), [
     'options' => ['multiple' => true, 'accept' => 'image/*'],
     'pluginOptions' => [
-    
+
     'initialPreview' => $img,
     'initialPreviewAsData'=>true,
     'initialPreviewConfig'=> $keys,
@@ -349,8 +349,9 @@ use yii\helpers\Url;
  	')
 ?>
 <?= $this->render('/new_site/_js.php', ['agent' => $agent]); ?>
+<script src="/js/site_index.js"></script>
 <script>
-        window.onload = function () {
+    window.onload = function () {
                 var add = document.getElementById("add_site");
                 if(add)
                 {
@@ -359,7 +360,7 @@ use yii\helpers\Url;
                 var del = document.getElementById("del_from_site");
                 if(del)
                 {
-                    del.onclick = delSite;  
+                    del.onclick = delSite;
                 }
             };
 
@@ -367,39 +368,50 @@ use yii\helpers\Url;
                 if(confirm("<?php echo Yii::t('app', 'Add site?'); ?>"))
                 {
                     var id = document.getElementById("apartment-id");
-                    var xrequest = new XMLHttpRequest();    
+                    var xrequest = new XMLHttpRequest();
               xrequest.open("GET", "/admin/addsite/add?id="+id.value+"&base=apartment", true);
-              xrequest.send(); 
+              xrequest.send();
 
                     xrequest.onload = function() {
                     alert(this.responseText);
                     var add = document.getElementById("add_site");
                     add.style.display = "none";
-                    var del = document.getElementById("del_from_site"); 
-                    del.style.display = ""; 
+                    var del = document.getElementById("del_from_site");
+                    del.style.display = "";
                 };
                 }
-                
+
             };
 
             function delSite(){
                 if(confirm("<?php echo Yii::t('app', 'Delete from site?'); ?>"))
                 {
                     var id = document.getElementById("apartment-id");
-                    var xrequest = new XMLHttpRequest();    
+                    var xrequest = new XMLHttpRequest();
               xrequest.open("GET", "/admin/addsite/del?id="+id.value, true);
-              xrequest.send(); 
+              xrequest.send();
 
                     xrequest.onload = function() {
                     alert(this.responseText);
                     var add = document.getElementById("add_site");
                     add.style.display = "";
-                    var del = document.getElementById("del_from_site"); 
-                    del.style.display = "none"; 
+                    var del = document.getElementById("del_from_site");
+                    del.style.display = "none";
                 };
                 }
-                
+
             };
+
+    $('textarea').keyup(function(event) {
+        if (event.keyCode === 13) {
+            var content = this.value;
+            var caret = getCaret(this);
+            this.value = content.substring(0, caret) + "\n" + content.substring(caret, content.length);;
+            event.stopPropagation();
+            setCaretToPos(event.target,caret + 1);
+        }
+    });
+
         </script>
 
         <?php
