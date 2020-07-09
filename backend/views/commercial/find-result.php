@@ -284,7 +284,7 @@ $statuses = [
                 //return /*$str*/$dataProvider->date_added;
                 if($dataProvider->date_added=="0000-00-00 00:00:00")
                     return "";
-                return Yii::$app->formatter->asDateTime($dataProvider->date_added, 'dd.MM.yyyy');
+                return date("d.m.Y", strtotime($dataProvider->date_added));
             },
             'contentOptions' => ['style' => 'max-width: 40px; overflow: hidden' ],
         ],

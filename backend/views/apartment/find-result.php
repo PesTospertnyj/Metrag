@@ -56,7 +56,7 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
                         $url,
                         [
                             'title' => Yii::t('app', 'Edit'),
-                                                              
+
                 ]);
                 },
 
@@ -150,7 +150,7 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
             'attribute' => 'phone',
             'value' =>  function ($dataProvider) {
                //$str = str_replace(',', ',<br>', $dataProvider->phone);
-                $str = strpos($dataProvider->phone, ",") === false ? $dataProvider->phone : 
+                $str = strpos($dataProvider->phone, ",") === false ? $dataProvider->phone :
                        substr($dataProvider->phone,0,strpos($dataProvider->phone, ","));
 
                 //$str = (($pos=strpos($dataProvider->phone, ",")==false)?strlen($dataProvider->phone):$pos);
@@ -233,7 +233,7 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
                 //return /*$str*/$dataProvider->date_added;
                  if($dataProvider->date_added=="0000-00-00 00:00:00")
                     return "";
-                return Yii::$app->formatter->asDateTime($dataProvider->date_added, 'dd.MM.yyyy');
+                 return date("d.m.Y", strtotime($dataProvider->date_added));
             },
             'contentOptions' => ['style' => 'max-width: 40px; overflow: hidden' ],
         ],
@@ -360,7 +360,7 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
             ],
         ]);
         ?>
-        
+
         <a href="<?= Url::base(true);?>/apartment/search<?= $get;?>" class="btn btn-default">Вернуться к поиску</a>
         <a href="<?= Url::base(true);?>/apartment/print<?= $get;?>" class="btn btn-success" style="float: right;" target="_blank">Печать</a>
 
