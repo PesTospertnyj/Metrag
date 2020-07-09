@@ -153,14 +153,14 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
                 return $str/*$dataProvider->phone*/;
             }
         ],
-        [
-            'attribute' => 'layout_id',
-            'label' => 'Плани-ровка',
-            'value' =>  function ($dataProvider) {
-                return Layout::findOne($dataProvider->layout_id)->name;
-            },
-            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
-        ],
+//        [
+//            'attribute' => 'layout_id',
+//            'label' => 'Плани-ровка',
+//            'value' =>  function ($dataProvider) {
+//                return Layout::findOne($dataProvider->layout_id)->name;
+//            },
+//            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
+//        ],
         [
             'attribute' => 'wall_material_id',
             'label' => 'Матер. стен',
@@ -169,14 +169,14 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
             },
             'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
         ],
-        [
-            'attribute' => 'count_balcony',
-            'label' => 'Кол-во балк-в',
-            'value' =>  function ($dataProvider) {
-                return $dataProvider->count_balcony;
-            },
-            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
-        ],
+//        [
+//            'attribute' => 'count_balcony',
+//            'label' => 'Кол-во балк-в',
+//            'value' =>  function ($dataProvider) {
+//                return $dataProvider->count_balcony;
+//            },
+//            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
+//        ],
         [
             'attribute' => 'count_balcony_glazed',
             'label' => 'Заст балк',
@@ -282,12 +282,12 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
                 return $data['sub_types'][$dataProvider->sub_type_id];
             }
         ],
-        [
-            'label' => 'Тип сделки',
-            'value' => function ($dataProvider) use($data) {
-                return $data['deal_type'][$dataProvider->deal_type_id];
-            }
-        ],
+//        [
+//            'label' => 'Тип сделки',
+//            'value' => function ($dataProvider) use($data) {
+//                return $data['deal_type'][$dataProvider->deal_type_id];
+//            }
+//        ],
         [
             'label' => 'Жилой комплекс',
             'value' => function ($dataProvider) use($data) {

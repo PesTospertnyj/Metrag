@@ -156,14 +156,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $str/*$dataProvider->phone*/;
                 }
             ],
-            [
-                'attribute' => 'layout_id',
-                'label' => 'Плани-ровка',
-                'value' =>  function ($dataProvider) {
-                    return Layout::findOne($dataProvider->layout_id)->name;
-                },
-                'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
-            ],
+//            [
+//                'attribute' => 'layout_id',
+//                'label' => 'Плани-ровка',
+//                'value' =>  function ($dataProvider) {
+//                    return Layout::findOne($dataProvider->layout_id)->name;
+//                },
+//                'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
+//            ],
             [
                 'attribute' => 'wall_material_id',
                 'label' => 'Матер. стен',
@@ -172,14 +172,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
             ],
-            [
-                'attribute' => 'count_balcony',
-                'label' => 'Кол-во балк-в',
-                'value' =>  function ($dataProvider) {
-                    return $dataProvider->count_balcony;
-                },
-                'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
-            ],
+//            [
+//                'attribute' => 'count_balcony',
+//                'label' => 'Кол-во балк-в',
+//                'value' =>  function ($dataProvider) {
+//                    return $dataProvider->count_balcony;
+//                },
+//                'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
+//            ],
             [
                 'attribute' => 'count_balcony_glazed',
                 'label' => 'Заст балк',
