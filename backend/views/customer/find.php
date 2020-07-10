@@ -94,9 +94,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?
                 echo $form->field($model, 'types',[
                     'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])
-                    ->checkboxList(\backend\models\Customer::AVAILABLE_TYPES_LABELS)->label('Стены');
+                    ->checkboxList(\backend\models\Customer::AVAILABLE_TYPES_LABELS)->label('Тип недвижимости');
                 ?>
             </div>
+
+          <div class="col-xs-6 col-sm-2 col-md-2">
+              <?
+              echo $form->field($model, 'regions',[
+                  'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])
+                  ->checkboxList(\backend\models\Region::prepareForSelect())->label('Районы');
+              ?>
+          </div>
         </div>
     </div>
 <?php ActiveForm::end(); ?>

@@ -55,13 +55,20 @@ class CustomerFind extends Customer
     {
         $query = Customer::find();
 
+        if ($params['regions']) {
+            $query = $query->joinWith(['regions' => function($query) use ($params) {
+                return $query->where(['in', 'region.region_id', $params['regions']]);
+            }]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->getParameter($params, 'id'),
             'is_public' => $this->getParameter($params, 'is_public'),
         ]);
 
-        $query->andFilterWhere(['like', 'full_name', $this->getParameter($params, 'full_name')])
+        $query
+            ->andFilterWhere(['like', 'full_name', $this->getParameter($params, 'full_name')])
             ->andFilterWhere(['like', 'type', $this->getParameter($params, 'type')])
             ->andFilterWhere(['type' => $this->getParameter($params, 'types')])
             ->andFilterWhere(['like', 'info', $this->getParameter($params, 'info')])

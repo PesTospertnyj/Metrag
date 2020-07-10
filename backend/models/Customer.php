@@ -27,12 +27,13 @@ use yii\db\ActiveRecord;
 class Customer extends ActiveRecord
 {
     const AVAILABLE_TYPES = [
-        'flats', 'new_buildings'
+        'flats', 'new_buildings', 'houses'
     ];
 
     const AVAILABLE_TYPES_LABELS = [
         'flats' => 'Квартиры',
         'new_buildings' => 'Новостройки',
+        'houses' => 'Дома',
     ];
 
     /**
