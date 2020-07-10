@@ -27,7 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin([
             'method' => 'get',
             'action' => ['rent/searchresult'],
-            'layout' => 'horizontal'
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'horizontalCssClasses' => [
+                    'wrapper' => 'col-sm-6 col-md-8',
+                    'error' => '',
+                    'hint' => '',
+                ],
+            ]
         ]); ?>
 
         <div class="main-content-header">
@@ -296,5 +303,5 @@ $this->registerJs('
 ');
 ?>
 <?php
-include '/' . $_SERVER['DOCUMENT_ROOT']. 'backend/views/new_site/_google_maps.php';
+include '../views/new_site/_google_maps.php';
 ?>

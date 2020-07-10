@@ -34,7 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin([
             'method' => 'get',
             'action' => ['house/searchresult'],
-            'layout' => 'horizontal'
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'horizontalCssClasses' => [
+                    'wrapper' => 'col-sm-6 col-md-8',
+                    'error' => '',
+                    'hint' => '',
+                ],
+            ]
         ]); ?>
 
         <div class="main-content-header">

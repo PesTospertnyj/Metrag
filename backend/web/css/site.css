@@ -234,10 +234,12 @@ div.required label.control-label:after {
 {
     font-size: 16px;
 }
-
+.form-horizontal .pull-right .form-group{
+    width: 100%;
+}
 .field-apartmentfind-phone
 {
-    width: 400px;
+
 }
 #apartmentfind-phone
 {

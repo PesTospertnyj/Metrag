@@ -1,8 +1,11 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 //use yii\widgets\ActiveForm;
 use yii\bootstrap\ActiveForm;
+
 //use yii\jui\DatePicker;
 use kartik\date\DatePicker;
 
@@ -18,6 +21,7 @@ use backend\models\Condit;
 use backend\models\Wc;
 use backend\models\User;
 use common\models\Apartment;
+
 ?>
 <?php \yii\helpers\Url::remember(); ?>
 <?
@@ -28,25 +32,35 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="main-content">
 
     <?php $form = ActiveForm::begin([
-              'method' => 'get',
-              'action' => ['apartment/searchresult'],
-              'layout' => 'horizontal'
-          ]); ?>
-    
+        'method' => 'get',
+        'action' => ['apartment/searchresult'],
+        'layout' => 'horizontal',
+        'fieldConfig' => [
+            'horizontalCssClasses' => [
+                'wrapper' => 'col-sm-6 col-md-8',
+                'error' => '',
+                'hint' => '',
+            ],
+        ]
+    ]); ?>
+
     <div class="main-content-header">
         <div class="pull-left">
-                <?= Yii::t('app', 'Apartments') ?>
+            <?= Yii::t('app', 'Apartments') ?>
         </div>
         <div class="pull-right">
             <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>
-            <?//= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) ?>
-            <a href="<?= Url::base(true);?>/apartment/search" class="btn btn-default">Сбросить</a>
+            <? //= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) ?>
+            <a href="<?= Url::base(true); ?>/apartment/search" class="btn btn-default">Сбросить</a>
         </div>
         <div class="pull-right">
-            <?= $form->field($model,'phone', [ 'labelOptions' => ['class' => 'header-search']])->textInput()->label(\Yii::t('yii','Phone')); ?>
+
+            <?= $form->field($model, 'phone', ['labelOptions' => ['class' => 'header-search']])
+                ->textInput()->label
+                (\Yii::t('yii', 'Phone')); ?>
         </div>
         <div class="pull-right">
-            <?= $form->field($model, 'id', [ 'labelOptions' => ['class' => 'header-search']])->textInput()->label('ID'); ?>
+            <?= $form->field($model, 'id', ['labelOptions' => ['class' => 'header-search']])->textInput()->label('ID'); ?>
         </div>
 
 
@@ -112,113 +126,113 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model,'kitchen_areaTo', [
                     'template' => $template, 'labelOptions' => ['class' => '']])->textInput()->label(\Yii::t('yii','to')); ?>
             </div>
-            <? $template_date = "<div class=\"wrap-find\"><div class=\"col-lg-1 padding-null\">{label}</div>\n<div class=\"col-lg-11 find-input\">{input}</div>\n</div>"?>
+            <? $template_date = "<div class=\"wrap-find\"><div class=\"col-lg-1 padding-null\">{label}</div>\n<div class=\"col-lg-11 find-input\">{input}</div>\n</div>" ?>
 
-        <div class="col-xs-6 col-sm-3 col-md-2 ">
-           <label for="" class="from-to-label">Дата доб</label>
-           <?= $form->field($model, 'date_addedFrom', [
-                   'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
-    'options' => ['placeholder' => \Yii::t('yii','Enter date ...')],
-    'type' => DatePicker::TYPE_COMPONENT_APPEND,
-    'pickerButton' => false,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        //'format' => 'yyyy-mm-dd',
-        'format' => 'dd.mm.yyyy',
-        'todayHighlight' => true,
-    ]
-])->label(\Yii::t('yii','from')); ?>
-           <?= $form->field($model, 'date_addedTo', [
-                   'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
-    'options' => ['placeholder' => \Yii::t('yii','Enter date ...')],
-    'type' => DatePicker::TYPE_COMPONENT_APPEND,
-    'pickerButton' => false,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        //'format' => 'yyyy-mm-dd',
-        'format' => 'dd.mm.yyyy',
-        'todayHighlight' => true,
-    ]
-])->label(\Yii::t('yii','to')); ?>
-           </div>
+            <div class="col-xs-6 col-sm-3 col-md-2 ">
+                <label for="" class="from-to-label">Дата доб</label>
+                <?= $form->field($model, 'date_addedFrom', [
+                    'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => \Yii::t('yii', 'Enter date ...')],
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'pickerButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        //'format' => 'yyyy-mm-dd',
+                        'format' => 'dd.mm.yyyy',
+                        'todayHighlight' => true,
+                    ]
+                ])->label(\Yii::t('yii', 'from')); ?>
+                <?= $form->field($model, 'date_addedTo', [
+                    'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => \Yii::t('yii', 'Enter date ...')],
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'pickerButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        //'format' => 'yyyy-mm-dd',
+                        'format' => 'dd.mm.yyyy',
+                        'todayHighlight' => true,
+                    ]
+                ])->label(\Yii::t('yii', 'to')); ?>
+            </div>
 
-        <div class="col-xs-6 col-sm-3 col-md-2 ">
-            <label for="" class="from-to-label">Дата ДПИ</label>
-            <?= $form->field($model, 'date_modifiedFrom', [
-                'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => \Yii::t('yii','Enter date ...')],
-                'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'pickerButton' => false,
-                'pluginOptions' => [
-                    'autoclose'=>true,
-                    //'format' => 'yyyy-mm-dd',
-                    'format' => 'dd.mm.yyyy',
-                    'todayHighlight' => true,
-                ]
-            ])->label(\Yii::t('yii','from')); ?>
-            <?= $form->field($model, 'date_modifiedTo', [
-                'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => \Yii::t('yii','Enter date ...')],
-                'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'pickerButton' => false,
-                'pluginOptions' => [
-                    'autoclose'=>true,
-                    //'format' => 'yyyy-mm-dd',
-                    'format' => 'dd.mm.yyyy',
-                    'todayHighlight' => true,
-                ]
-            ])->label(\Yii::t('yii','to')); ?>
+            <div class="col-xs-6 col-sm-3 col-md-2 ">
+                <label for="" class="from-to-label">Дата ДПИ</label>
+                <?= $form->field($model, 'date_modifiedFrom', [
+                    'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => \Yii::t('yii', 'Enter date ...')],
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'pickerButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        //'format' => 'yyyy-mm-dd',
+                        'format' => 'dd.mm.yyyy',
+                        'todayHighlight' => true,
+                    ]
+                ])->label(\Yii::t('yii', 'from')); ?>
+                <?= $form->field($model, 'date_modifiedTo', [
+                    'template' => $template_date, 'labelOptions' => ['class' => '']])->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => \Yii::t('yii', 'Enter date ...')],
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'pickerButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        //'format' => 'yyyy-mm-dd',
+                        'format' => 'dd.mm.yyyy',
+                        'todayHighlight' => true,
+                    ]
+                ])->label(\Yii::t('yii', 'to')); ?>
+            </div>
+
+            <!--        <div class="clearfix autocomplete_street">-->
+            <!--            <div>-->
+            <!--                <label>Улица</label>-->
+            <!--            </div>-->
+            <!---->
+            <!--                --><?php
+            //                echo $form->field($model, 'street')->textInput(['id' => 'autocomplete'])->label('');
+            //                ?>
+            <!---->
+            <!--        </div>-->
+            <!--        <div class="col-xs-12 col-sm-6 col-md-6">-->
+            <!--        </div>-->
         </div>
 
-<!--        <div class="clearfix autocomplete_street">-->
-<!--            <div>-->
-<!--                <label>Улица</label>-->
-<!--            </div>-->
-<!---->
-<!--                --><?php
-//                echo $form->field($model, 'street')->textInput(['id' => 'autocomplete'])->label('');
-//                ?>
-<!---->
-<!--        </div>-->
-<!--        <div class="col-xs-12 col-sm-6 col-md-6">-->
-<!--        </div>-->
-    </div>
+        <? $scrollbox_template = "{label}\n<div class=\"scrollbox\">{input}</div>" ?>
 
-    <? $scrollbox_template = "{label}\n<div class=\"scrollbox\">{input}</div>" ?>
-
-       <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'type_object_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        TypeObject::find()->select(['name', 'type_object_id'])->where(['type_realty_id'=>'2'])->orderBy(['type_object_id' => SORT_DESC])->indexBy('type_object_id')->column(),
-        ['prompt'=>'Select type'])->label('Тип объекта');
-    ?>
+        <div class="col-xs-6 col-sm-2 col-md-2">
+            <?
+            echo $form->field($model, 'type_object_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                TypeObject::find()->select(['name', 'type_object_id'])->where(['type_realty_id' => '2'])->orderBy(['type_object_id' => SORT_DESC])->indexBy('type_object_id')->column(),
+                ['prompt' => 'Select type'])->label('Тип объекта');
+            ?>
         </div>
 
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'region_kharkiv_admin_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        RegionKharkivAdmin::find()->select(['name', 'region_kharkiv_admin_id'])->orderby('name')->indexBy('region_kharkiv_admin_id')->column(),
-        ['prompt'=>'Select region'])->label('РайонАдмин/Харьков');
-    ?>
+            <?
+            echo $form->field($model, 'region_kharkiv_admin_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                RegionKharkivAdmin::find()->select(['name', 'region_kharkiv_admin_id'])->orderby('name')->indexBy('region_kharkiv_admin_id')->column(),
+                ['prompt' => 'Select region'])->label('РайонАдмин/Харьков');
+            ?>
         </div>
 
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'region_kharkiv_id',[
-            'template' => "{label}\n <input id=\"region_kharkiv_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
-        RegionKharkiv::find()->select(['name', 'region_kharkiv_id'])->orderby('name')->indexBy('region_kharkiv_id')->column(),
-        ['prompt'=>'Select region'])->label('Район/Харьков');
-    ?>
+            <?
+            echo $form->field($model, 'region_kharkiv_id', [
+                'template' => "{label}\n <input id=\"region_kharkiv_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
+                RegionKharkiv::find()->select(['name', 'region_kharkiv_id'])->orderby('name')->indexBy('region_kharkiv_id')->column(),
+                ['prompt' => 'Select region'])->label('Район/Харьков');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2" style="height: 200px;">
-    <?
-        echo $form->field($model, 'region_id',[
-            'template' => "{label}\n <input id=\"region_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
-        Region::find()->select(['name', 'region_id'])->orderby('name')->indexBy('region_id')->column(),
-        ['prompt'=>'Select region','unselect' => null, ])->label('Район/Область');
-    ?>
+            <?
+            echo $form->field($model, 'region_id', [
+                'template' => "{label}\n <input id=\"region_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
+                Region::find()->select(['name', 'region_id'])->orderby('name')->indexBy('region_id')->column(),
+                ['prompt' => 'Select region', 'unselect' => null,])->label('Район/Область');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
     <?
@@ -236,55 +250,55 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
 
-        <?
-        echo $form->field($model, 'street',[
-            'template' => "{label}\n <input id=\"street_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
-            ['' => '?'] +
-            Apartment::find()->select('street')->distinct()->where(['>', 'LENGTH(street)', 0])->orderby('street')->indexBy('street')->column(), ['unselect' => null])->label('Улица');
-        ?>
+            <?
+            echo $form->field($model, 'street', [
+                'template' => "{label}\n <input id=\"street_search\" class=\"fast-search-input\"><div class=\"scrollbox\" style=\"height:174px;\">{input}</div>", 'labelOptions' => ['class' => '']])->checkboxList(
+                ['' => '?'] +
+                Apartment::find()->select('street')->distinct()->where(['>', 'LENGTH(street)', 0])->orderby('street')->indexBy('street')->column(), ['unselect' => null])->label('Улица');
+            ?>
 
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'wall_material_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        WallMaterial::find()->select(['name', 'wall_material_id'])->orderby('name')->indexBy('wall_material_id')->column())->label('Стены');
-    ?>
+            <?
+            echo $form->field($model, 'wall_material_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                WallMaterial::find()->select(['name', 'wall_material_id'])->orderby('name')->indexBy('wall_material_id')->column())->label('Стены');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'condit_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        Condit::find()->select(['name', 'condit_id'])->orderby('name')->indexBy('condit_id')->column())->label('Состояние');
-    ?>
+            <?
+            echo $form->field($model, 'condit_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                Condit::find()->select(['name', 'condit_id'])->orderby('name')->indexBy('condit_id')->column())->label('Состояние');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'wc_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        Wc::find()->select(['name', 'wc_id'])->orderby('name')->indexBy('wc_id')->column())->label('Сан. узел');
-    ?>
+            <?
+            echo $form->field($model, 'wc_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                Wc::find()->select(['name', 'wc_id'])->orderby('name')->indexBy('wc_id')->column())->label('Сан. узел');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'author_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label('Автор');
-    ?>
+            <?
+            echo $form->field($model, 'author_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label('Автор');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'update_author_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label('Изменил дпи');
-    ?>
+            <?
+            echo $form->field($model, 'update_author_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label('Изменил дпи');
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">
-    <?
-        echo $form->field($model, 'update_photo_user_id',[
-            'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
-        User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label(\Yii::t('yii', '(Кто обновил фото)'));
-    ?>
+            <?
+            echo $form->field($model, 'update_photo_user_id', [
+                'template' => $scrollbox_template, 'labelOptions' => ['class' => '']])->checkboxList(
+                User::find()->select(['username', 'id'])->orderby('username')->indexBy('id')->column())->label(\Yii::t('yii', '(Кто обновил фото)'));
+            ?>
         </div>
         <div class="col-xs-6 col-sm-2 col-md-2">    
     <?
@@ -295,35 +309,35 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     
 
-    <div class="col-xs-1 col-sm-1 col-md-1">
-    <?
-        echo $form->field($model, 'middle_floor', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii','Yes'), '2' => \Yii::t('yii','No'), '0' => \Yii::t('yii','All')])->label(\Yii::t('yii','Middle floor'));
-    ?>
-    </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
-    <?
-        echo $form->field($model, 'no_mediators', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii','Yes'), '2' => \Yii::t('yii','No'), '0' => \Yii::t('yii','All')])->label(\Yii::t('yii','No mediators'));
-    ?>
+            <?
+            echo $form->field($model, 'middle_floor', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Middle floor'));
+            ?>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
-    <?
-        echo $form->field($model, 'exchange', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii','Yes'), '2' => \Yii::t('yii','No'), '0' => \Yii::t('yii','All')])->label(\Yii::t('yii','Exchange'));
-    ?>
+            <?
+            echo $form->field($model, 'no_mediators', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'No mediators'));
+            ?>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
-    <?
-        echo $form->field($model, 'enabled', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii','Yes'), '2' => \Yii::t('yii','No'), '0' => \Yii::t('yii','All')])->label(\Yii::t('yii','Archive'));
-    ?>
+            <?
+            echo $form->field($model, 'exchange', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Exchange'));
+            ?>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
-    <?
-        echo $form->field($model, 'note', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii','Yes'), '2' => \Yii::t('yii','No'), '0' => \Yii::t('yii','All')])->label(\Yii::t('yii','Note'));
-    ?>
+            <?
+            echo $form->field($model, 'enabled', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Archive'));
+            ?>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1">
+            <?
+            echo $form->field($model, 'note', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Note'));
+            ?>
         </div>
 
         
     </div>
-    </div>
+</div>
 <?php ActiveForm::end(); ?>
 
 <?php
@@ -331,7 +345,7 @@ include '/' . $_SERVER['DOCUMENT_ROOT']. 'backend/views/new_site/_google_maps.ph
 ?>
 
 <?
-    $this->registerJs('
+$this->registerJs('
 	$("#street_search, #region_search, #region_kharkiv_search, #locality_search, #course_search").keyup(function(){
         var search_string = $(this).val().toLowerCase();
         var arr = $(this).parent().find("div.scrollbox > div > div");
