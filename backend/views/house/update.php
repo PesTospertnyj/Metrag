@@ -311,8 +311,16 @@ use yii\helpers\Url;
 
             }
         });
-
+            $('#house-city_or_region input').change(function(){
+                $('#house-region_kharkiv_admin_id').prop('selectedIndex',0)
+                $('#house-region_kharkiv_id').prop('selectedIndex',0)
+                $('#house-metro_id').prop('selectedIndex',0)
+                $('#house-locality_id').prop('selectedIndex',0)
+                $('#house-course_id').prop('selectedIndex',0)
+                $('#house-region_id').prop('selectedIndex',0)
+            })
  </script>
+
 <?php
 include Yii::getAlias('@fullRootPath') . '/backend/views/new_site/_google_maps.php';
 ?>
