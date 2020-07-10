@@ -64,14 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'contentOptions' => ['style' => 'min-width: 150px; overflow: hidden' ],
             ],
-    [
-        'format' => 'html',
-        'attribute' => 'street_id',
-        'value' =>  function ($dataProvider) {
-            return Street::findOne(['street_id' => $dataProvider->street_id])->name ;
-        },
-        'contentOptions' => ['style' => 'max-width: 250px; overflow: hidden' ],
-    ],
     'number_building',
     'count_room',
     [

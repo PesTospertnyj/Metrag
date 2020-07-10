@@ -60,16 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'contentOptions' => ['style' => 'min-width: 150px; overflow: hidden' ],
             ],
-            [
-                'format' => 'html',
-                'attribute' => 'street_id',
-                'value' =>  function ($dataProvider) {
-                    $street = Street::findOne($dataProvider->street_id)->name;
-                    $str = str_replace(' ', ' <br>', $street);
-                    return $str;
-                },
-                'contentOptions' => ['style' => 'max-width: 70px; overflow: hidden' ],
-            ],
             'number_building',
             'count_room',
             [
