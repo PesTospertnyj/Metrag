@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' =>  function ($dataProvider) {
                     return $dataProvider->street;
                 },
-                'contentOptions' => ['style' => 'min-width: 150px; overflow: hidden' ],
+                'contentOptions' => ['style' => 'min-width: 300px; overflow: hidden' ],
             ],
     'number_building',
     'count_room',
