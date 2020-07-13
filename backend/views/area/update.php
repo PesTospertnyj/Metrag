@@ -239,8 +239,8 @@ $this->registerJs('
  	')
 ?>
 <?= $this->render('/new_site/_js.php', ['agent' => $agent]); ?>
-<script src="/js/site_index.js"></script>
-<script src="/js/phone_field.js"></script>
+<script src="/admin/js/site_index.js"></script>
+<script src="/admin/js/phone_field.js"></script>
 <script>
 
     window.onload = function () {

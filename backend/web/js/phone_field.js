@@ -54,7 +54,6 @@ $("#ok_phone").click(function(e){
 });
 
 function save_phone() {
-    debugger
     var phone = [];
     $('#select_phone li').each(function(){
         phone.push($(this).text());

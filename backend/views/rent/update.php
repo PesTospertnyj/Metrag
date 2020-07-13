@@ -233,8 +233,8 @@ use yii\helpers\Url;
 <?php
 include Yii::getAlias('@fullRootPath') . '/backend/views/new_site/_google_maps.php';
 ?>
-<script src="/js/site_index.js"></script>
-<script src="/js/phone_field.js"></script>
+<script src="/admin/js/site_index.js"></script>
+<script src="/admin/js/phone_field.js"></script>
 <script>
     window.onload = function () {
         var add = document.getElementById("add_site");
