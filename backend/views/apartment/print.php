@@ -18,6 +18,9 @@
             overflow: hidden;
         }
     </style>
+    <style type="text/css" media="print">
+        @page { size: landscape; }
+    </style>
 </head>
 <body>
 <table>
@@ -94,5 +97,9 @@
     <?php } ?>
     </tbody>
 </table>
+<script>
+
+    window.print();
+</script>
 </body>
 </html>

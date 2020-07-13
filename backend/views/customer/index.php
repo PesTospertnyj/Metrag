@@ -46,7 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Тип',
                 'value' => function ($model) {
-                    return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
+                    $modelClass = get_class($model);
+                    return $modelClass::AVAILABLE_TYPES_LABELS[$model->type];
+                    //  return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
                 }
             ],
             // 'total_area_from',

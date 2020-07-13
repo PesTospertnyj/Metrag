@@ -4,6 +4,7 @@ namespace backend\models;
 
 use backend\models\Condit;
 use backend\models\Region;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -73,6 +74,7 @@ class Customer extends ActiveRecord
             'total_area_to' => 'Total Area To',
             'info' => 'Info',
             'is_public' => 'Is Public',
+            'city_or_region' => Yii::t('app', 'City Or Region'),
         ];
     }
 
