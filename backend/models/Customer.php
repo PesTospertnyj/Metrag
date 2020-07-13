@@ -75,6 +75,14 @@ class Customer extends ActiveRecord
             'info' => 'Info',
             'is_public' => 'Is Public',
             'city_or_region' => Yii::t('app', 'City Or Region'),
+            'region_kharkiv_admin_id' => Yii::t('yii', 'Region Kharkiv Admin'),
+            'locality_id' => Yii::t('yii', 'Locality'),
+            'course_id' => Yii::t('yii', 'Course'),
+            'region_id' => Yii::t('yii', 'Region'),
+            'region_kharkiv_id' => Yii::t('yii', 'Region Kharkiv'),
+            'street_id' => Yii::t('yii', 'Street'),
+            'number_building' => Yii::t('yii', 'Number Building'),
+            'metro_id' => Yii::t('yii', 'Metro'),
         ];
     }
 
