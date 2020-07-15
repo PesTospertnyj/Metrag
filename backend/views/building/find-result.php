@@ -177,14 +177,14 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
 //            },
 //            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
 //        ],
-        [
-            'attribute' => 'count_balcony_glazed',
-            'label' => 'Заст балк',
-            'value' =>  function ($dataProvider) {
-                return $dataProvider->count_balcony_glazed;
-            },
-            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
-        ],
+//        [
+//            'attribute' => 'count_balcony_glazed',
+//            'label' => 'Заст балк',
+//            'value' =>  function ($dataProvider) {
+//                return $dataProvider->count_balcony_glazed;
+//            },
+//            'contentOptions' => ['style' => 'max-width: 30px; overflow: hidden' ],
+//        ],
         //'count_balcony',
         //'count_balcony_glazed',
         [
