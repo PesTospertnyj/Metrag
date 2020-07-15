@@ -87,7 +87,7 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
             'value' =>  function ($dataProvider) {
                 return $dataProvider->street;
             },
-            'contentOptions' => ['style' => 'max-width: 70px; overflow: hidden' ],
+            'contentOptions' => ['style' =>'overflow: hidden' ],
         ],
         'number_building',
         'count_room',
