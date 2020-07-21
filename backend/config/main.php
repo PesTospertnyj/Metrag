@@ -18,17 +18,17 @@ return [
     'modules' => [
         'yii2images' => [
             'class' => 'rico\yii2images\Module',
-            //be sure, that permissions ok 
+            //be sure, that permissions ok
             //if you cant avoid permission errors you have to create "images" folder in web root manually and set 777 permissions
             'imagesStorePath' => 'upload/store', //path to origin images
             //'imagesUploadPath' => '/advanced/frontend/web/upload/store', //path to origin images
             'imagesCachePath' => 'upload/cache', //path to resized copies
-            'graphicsLibrary' => 'Imagick', //but GD really its better to use 'Imagick' 
+            'graphicsLibrary' => 'Imagick', //but GD really its better to use 'Imagick'
             //'placeHolderPath' => '@webroot/images/placeHolder.png', // if you want to get placeholder when image not exists, string will be processed by Yii::getAlias
         ],
         'admin' => [
             'class' => 'mdm\admin\Module',
-           
+
         ],
         'parsercd' => [
             'class' => 'app\modules\parsercd\Module',
@@ -65,7 +65,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -73,7 +73,7 @@ return [
             ],
         ],
         'authManager' => [
-            'class' => 'yii\rbac\DbManager', 
+            'class' => 'yii\rbac\DbManager',
         ],
         'i18n' => [
         'translations' => [
@@ -88,7 +88,7 @@ return [
                 ],
             ],
         ],
-        
+
     ],
     'params' => $params,
     'as access' => [
@@ -97,6 +97,7 @@ return [
             '*/*',
             'admin/site',
             'gii/*',
+            'mediator/get-mediators'
             //'wc/*',
             //'apartment/*',
 
