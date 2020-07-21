@@ -125,7 +125,11 @@ class MediatorController extends Controller
     public function actionGetMediators()
     {
         $model = new Mediator();
-        $mediators = $model->find()->select(['name', 'phone'])->asArray()
+        $mediators = $model
+            ->find()
+            ->select(['name', 'phone'])
+            ->where('phone is not null and phone != "" and phone != 0 and name != "?"')
+            ->asArray()
             ->all();
 
         return json_encode($mediators);
