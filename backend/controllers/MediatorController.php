@@ -121,4 +121,13 @@ class MediatorController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionGetMediators()
+    {
+        $model = new Mediator();
+        $mediators = $model->find()->select(['name', 'phone'])->asArray()
+            ->all();
+
+        return json_encode($mediators);
+    }
 }
