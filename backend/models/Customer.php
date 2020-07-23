@@ -28,12 +28,11 @@ use yii\db\ActiveRecord;
 class Customer extends ActiveRecord
 {
     const AVAILABLE_TYPES = [
-        'flats', 'new_buildings', 'houses'
+        'flats-new_buildings', 'houses'
     ];
 
     const AVAILABLE_TYPES_LABELS = [
-        'flats' => 'Квартиры',
-        'new_buildings' => 'Новостройки',
+        'flats-new_buildings' => 'Квартиры/Новостройки',
         'houses' => 'Дома',
     ];
 
@@ -105,6 +104,14 @@ class Customer extends ActiveRecord
     }
 
     /**
+     * @return ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(CustomerLocation::className(), ['customer_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function load($data, $formName = null, $created = false)
@@ -128,7 +135,7 @@ class Customer extends ActiveRecord
 
         $this->loadRegions($data);
         $this->loadCondits($data);
-
+        $this->loadLocation($data);
         return true;
     }
 
@@ -149,6 +156,34 @@ class Customer extends ActiveRecord
 
                 $this->link('regions', $region);
             }
+        }
+    }
+
+    public function loadLocation(array $data)
+    {
+        $className = $this->getClassName();
+        $customerLocation = CustomerLocation::find()
+            ->where(['customer_id' => $this->id])
+            ->one();
+
+        if($customerLocation === null){
+            $customerLocation = new CustomerLocation();
+        }
+        $values = [
+            'customer_id' =>$this->id,
+        ];
+        if (isset($data[$className]['region_kharkiv_id']) && $data[$className]['region_kharkiv_id'] !== '') {
+            $regionKharkiv = RegionKharkiv::findOne($data[$className]['region_kharkiv_id']);
+            $values['region_kharkiv_id'] = $regionKharkiv->region_kharkiv_id;
+        }
+        if (isset($data[$className]['locality_id'])  && $data[$className]['locality_id'] !== '') {
+            $locality = Locality::findOne($data[$className]['locality_id']);
+            $values['locality_id'] = $locality->locality_id;
+        }
+
+        if(count($values) > 1){
+            $customerLocation->attributes = $values;
+            $customerLocation->save();
         }
     }
 

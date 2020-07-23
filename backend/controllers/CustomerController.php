@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\CustomerFind;
+use backend\models\CustomerLocation;
 use backend\models\HouseFind;
 use backend\models\ModelData;
 use backend\models\WallMaterial;
@@ -92,6 +93,14 @@ class CustomerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            if($model->location){
+                $model->region_kharkiv_id = $model->location->region_kharkiv_id;
+                $model->locality_id = $model->location->locality_id;
+                if($model->type === 'houses'){
+                    $model->city_or_region = $model->location->region_kharkiv_id !== null ? 0 : 1;
+                }
+
+            }
             return $this->render('update', [
                 'model' => $model,
             ]);
