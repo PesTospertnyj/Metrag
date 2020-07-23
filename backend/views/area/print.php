@@ -16,6 +16,9 @@ $models = $dataProvider->getModels();
             overflow: hidden;
         }
     </style>
+    <style type="text/css" media="print">
+        @page { size: landscape; }
+    </style>
 </head>
 <body>
 <table>
@@ -73,5 +76,9 @@ $models = $dataProvider->getModels();
     <?php } ?>
     </tbody>
 </table>
+<script>
+
+    window.print();
+</script>
 </body>
 </html>
