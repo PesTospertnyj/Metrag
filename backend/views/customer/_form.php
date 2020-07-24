@@ -63,15 +63,15 @@ use yii\widgets\ActiveForm;
                 'multiple' => true,
             ]
         ]) ?>
-
-        <? if ($model->isNewRecord) { ?>
-            <?= $form->field($model, 'types', [
+        <? if ($model->isNewRecord ) { ?>
+            <?= $form->field($model, 'type', [
                 'options' => [
                     'class' => 'required',
                 ],
-            ])->label('Типы')->widget(\kartik\select2\Select2::className(), [
-                'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
 
+            ])->label('Тип')->widget(\kartik\select2\Select2::className(), [
+                'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
+                'options' => ['placeholder' => 'Выберите тип ...'],
             ]) ?>
         <? } else { ?>
             <?= $form->field($model, 'type')->label('Тип')->widget(\kartik\select2\Select2::className(), [
