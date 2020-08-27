@@ -24,45 +24,6 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'phone')->textInput(['maxlength' => true])->label('Телефон') ?>
 
-        <?= $form->field($model, 'price_from')->textInput()->label('Цена от') ?>
-
-        <?= $form->field($model, 'price_to')->textInput()->label('Цена до') ?>
-    </div>
-
-    <div class="col-xs-12 col-sm-4 col-md-4">
-        <?= $form->field($model, 'total_area_from')->textInput()->label('Общая площадь от') ?>
-
-        <?= $form->field($model, 'total_area_to')->textInput()->label('Общая площадь до') ?>
-
-        <?= $form->field($model, 'is_public')->checkbox([
-            'label' => 'Публичный?'
-        ]) ?>
-    </div>
-
-
-    <div class="col-xs-12 col-sm-4 col-md-4">
-        <?= $form->field($model, 'regions', [
-            'options' => [
-                'class' => 'required',
-            ],
-        ])->label('Регионы')->widget(\kartik\select2\Select2::className(), [
-            'data' => \backend\models\Region::prepareForSelect(),
-            'options' => [
-                'multiple' => true,
-                'required' => true,
-            ],
-        ]) ?>
-
-        <?= $form->field($model, 'condits', [
-            'options' => [
-                'class' => 'required',
-            ],
-        ])->label('Состояния')->widget(\kartik\select2\Select2::className(), [
-            'data' => \backend\models\Condit::prepareForSelect(),
-            'options' => [
-                'multiple' => true,
-            ]
-        ]) ?>
         <? if ($model->isNewRecord ) { ?>
             <?= $form->field($model, 'type', [
                 'options' => [
@@ -83,27 +44,59 @@ use yii\widgets\ActiveForm;
             ]) ?>
         <? } ?>
 
+      <div class="select-for-flats" style="display: none" >
+          <?= $form->field($model, 'regionsKharkiv')
+              ->widget(\kartik\select2\Select2::className(), [
+                  'data' => RegionKharkiv::prepareForSelect(),
+                  'options' => ['placeholder' => 'Выберите район...', 'multiple' => true],
+              ])->label('Район/Харьков'); ?>
+      </div>
+      <div class="select-for-houses" style="display: none" >
+          <? if($model->id == null) $model->city_or_region = 0; ?>
+          <?= $form->field($model,'city_or_region',['template' => '{input}'])->radiolist(['0' => Yii::t('app', 'Kharkiv'), '1' => Yii::t('app', 'Region')])->label(false); ?>
+
+          <?= $form->field($model, 'regionsKharkivCopy')->widget(
+              \kartik\select2\Select2::className(), [
+                  'data' => RegionKharkiv::prepareForSelect(),
+                  'options' => ['placeholder' => 'Выберите район...', 'multiple' => true],
+              ]
+          )->label('Район/Харьков'); ?>
+
+          <?= $form->field($model, 'localities')->widget(
+              \kartik\select2\Select2::className(), [
+                  'data' => Locality::prepareForSelect(),
+                  'options' => ['placeholder' => 'Выберите населенный пункт...', 'multiple' => true]
+              ]
+          )->label('Населенный пункт', ['class' => 'required']); ?>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <?= $form->field($model, 'price_from')->textInput()->label('Цена от') ?>
+
+        <?= $form->field($model, 'price_to')->textInput()->label('Цена до') ?>
+
+        <?= $form->field($model, 'total_area_from')->textInput()->label('Общая площадь от') ?>
+
+        <?= $form->field($model, 'total_area_to')->textInput()->label('Общая площадь до') ?>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-4 col-md-4">
+        <?= $form->field($model, 'condits')->label('Состояния')->widget(\kartik\select2\Select2::className(), [
+            'data' => \backend\models\Condit::prepareForSelect(),
+            'options' => [
+                'multiple' => true,
+            ]
+        ]) ?>
+
+        <?= $form->field($model, 'is_public')->checkbox([
+            'label' => 'Публичный?'
+        ]) ?>
     </div>
 
   </div>
 
-    <div class="row " >
-        <div class="col-xs-12 col-sm-4 col-md-4 select-for-flats" style="display: none" >
-            <?= $form->field($model, 'region_kharkiv_id')->dropdownList(
-                RegionKharkiv::find()->select(['name', 'region_kharkiv_id'])->orderby('name')->indexBy('region_kharkiv_id')->column(),['prompt'=>'Выберите район...'])->label('Район/Харьков', ['class' => 'required']); ?>
-
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 select-for-houses" style="display: none" >
-            <? if($model->id == null) $model->city_or_region = 0; ?>
-            <?= $form->field($model,'city_or_region',['template' => '{input}'])->radiolist(['0' => Yii::t('app', 'Kharkiv'), '1' => Yii::t('app', 'Region')])->label(false); ?>
-
-            <?= $form->field($model, 'region_kharkiv_id')->dropdownList(
-                RegionKharkiv::find()->select(['name', 'region_kharkiv_id'])->orderby('name')->indexBy('region_kharkiv_id')->column(),['prompt'=>'Выберите район...'])->label('Район/Харьков', ['class' => 'required']); ?>
-
-            <?= $form->field($model, 'locality_id')->dropdownList(
-                Locality::find()->select(['name', 'locality_id'])->orderby('name')->indexBy('locality_id')->column(),['prompt'=>'Выберите населенный пункт...'])->label('Населенный пункт', ['class' => 'required']); ?>
-        </div>
-    </div>
 
   <div class="row">
     <div class="col-xs-12 col-sm-4 col-md-4">

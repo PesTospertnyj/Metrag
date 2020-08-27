@@ -4,9 +4,13 @@ namespace backend\models;
 
 use backend\models\Condit;
 use backend\models\Region;
+use backend\models\RegionKharkiv;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\BadRequestHttpException;
+use yii\web\HttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "customers".
@@ -24,15 +28,19 @@ use yii\db\ActiveRecord;
  *
  * @property Condit[] $condits
  * @property Region[] $regions
+ * @property RegionKharkiv[] $regionsKharkiv
+ * @property RegionKharkiv[] $regionsKharkivCopy
+ * @property Locality[] $localities
  */
 class Customer extends ActiveRecord
 {
     const AVAILABLE_TYPES = [
-        'flats-new_buildings', 'houses'
+        'flats', 'new_buildings', 'houses'
     ];
 
     const AVAILABLE_TYPES_LABELS = [
-        'flats-new_buildings' => 'Квартиры/Новостройки',
+        'flats' => 'Квартиры',
+        'new_buildings' => 'Новостройки',
         'houses' => 'Дома',
     ];
 
@@ -50,7 +58,7 @@ class Customer extends ActiveRecord
     public function rules()
     {
         return [
-            [['full_name', 'price_from', 'price_to', 'total_area_from', 'total_area_to', 'type'], 'required'],
+            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone'], 'required'],
             [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public'], 'integer'],
             [['info'], 'string'],
             [['full_name', 'phone', 'type'], 'string', 'max' => 255],
@@ -106,6 +114,32 @@ class Customer extends ActiveRecord
     /**
      * @return ActiveQuery
      */
+    public function getRegionsKharkiv()
+    {
+        return $this->hasMany(RegionKharkiv::className(), ['region_kharkiv_id' => 'region_kharkiv_id'])
+            ->viaTable('customers_regions_kharkiv', ['customer_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getRegionsKharkivCopy()
+    {
+        return $this->getRegionsKharkiv();
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getLocalities()
+    {
+        return $this->hasMany(Locality::className(), ['locality_id' => 'locality_id'])
+            ->viaTable('customers_localities', ['customer_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getLocation()
     {
         return $this->hasOne(CustomerLocation::className(), ['customer_id' => 'id']);
@@ -131,11 +165,11 @@ class Customer extends ActiveRecord
             }
         }
 
-
-
         $this->loadRegions($data);
+        $this->loadRegionsKharkiv($data);
         $this->loadCondits($data);
-        $this->loadLocation($data);
+        $this->loadLocalities($data);
+
         return true;
     }
 
@@ -159,6 +193,73 @@ class Customer extends ActiveRecord
         }
     }
 
+    /**
+     * @param array $data
+     */
+    public function loadRegionsKharkiv(array $data)
+    {
+        $className = $this->getClassName();
+
+        if (isset($data[$className]['regionsKharkivCopy']) && $this->getAttribute('type') === 'houses') {
+            $data[$className]['regionsKharkiv'] = $data[$className]['regionsKharkivCopy'];
+        }
+
+        $customerId = $this->id;
+
+        Yii::$app->db->createCommand(
+            "DELETE FROM customers_regions_kharkiv WHERE customer_id=${customerId}"
+        )->execute();
+
+        if (isset($data[$className]['regionsKharkiv']) && is_array($data[$className]['regionsKharkiv'])) {
+            foreach ($data[$className]['regionsKharkiv'] as $regionId) {
+                $region = RegionKharkiv::findOne($regionId);
+
+                if (!$region) {
+                    continue;
+                }
+
+                $regionKharkivId = $region->region_kharkiv_id;
+                $post = Yii::$app->db->createCommand(
+                    "SELECT * FROM customers_regions_kharkiv WHERE region_kharkiv_id=${regionKharkivId} AND customer_id=${customerId}"
+                )->queryOne();
+
+                if (!$post) {
+                    $this->link('regionsKharkiv', $region);
+                }
+            }
+        }
+    }
+
+    public function loadLocalities(array $data)
+    {
+        $className = $this->getClassName();
+
+        $customerId = $this->id;
+
+        Yii::$app->db->createCommand(
+            "DELETE FROM customers_localities WHERE customer_id=${customerId}"
+        )->execute();
+
+        if (isset($data[$className]['localities'])) {
+            foreach ($data[$className]['localities'] as $regionId) {
+                $region = Locality::findOne($regionId);
+
+                if (!$region) {
+                    continue;
+                }
+
+                $localityId = $region->locality_id;
+                $post = Yii::$app->db->createCommand(
+                    "SELECT * FROM customers_localities WHERE locality_id=${localityId} AND customer_id=${customerId}"
+                )->queryOne();
+
+                if (!$post) {
+                    $this->link('localities', $region);
+                }
+            }
+        }
+    }
+
     public function loadLocation(array $data)
     {
         $className = $this->getClassName();
@@ -166,22 +267,22 @@ class Customer extends ActiveRecord
             ->where(['customer_id' => $this->id])
             ->one();
 
-        if($customerLocation === null){
+        if ($customerLocation === null) {
             $customerLocation = new CustomerLocation();
         }
         $values = [
-            'customer_id' =>$this->id,
+            'customer_id' => $this->id,
         ];
         if (isset($data[$className]['region_kharkiv_id']) && $data[$className]['region_kharkiv_id'] !== '') {
             $regionKharkiv = RegionKharkiv::findOne($data[$className]['region_kharkiv_id']);
             $values['region_kharkiv_id'] = $regionKharkiv->region_kharkiv_id;
         }
-        if (isset($data[$className]['locality_id'])  && $data[$className]['locality_id'] !== '') {
+        if (isset($data[$className]['locality_id']) && $data[$className]['locality_id'] !== '') {
             $locality = Locality::findOne($data[$className]['locality_id']);
             $values['locality_id'] = $locality->locality_id;
         }
 
-        if(count($values) > 1){
+        if (count($values) > 1) {
             $customerLocation->attributes = $values;
             $customerLocation->save();
         }
@@ -283,10 +384,37 @@ class Customer extends ActiveRecord
             return false;
         }
 
+        // normalize phone
+        if ($this->isAttributeChanged('phone')) {
+            if (
+                preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))(\d{7}|\d{3}-\d{2}-\d{2})/',
+                    $this->getAttribute('phone')) === 1
+            ) {
+                $properPhone = str_replace(['-', '+', '(', ')'], '', $this->getAttribute('phone'));
+                if (strlen($properPhone) == 10) {
+                    $properPhone = '38' . $properPhone;
+                }
+
+                $this->setAttribute('phone', $properPhone);
+            } else {
+                throw new ServerErrorHttpException('Неправильный формат номера телефона');
+            }
+        }
+
         if (!$insert) {
             if ($this->getOldAttribute('type') &&
                 $this->getOldAttribute('type') != $this->type) {
                 return false;
+            }
+        }
+
+        if ($this->getAttribute('is_public')) {
+            if ($this->getAttribute('phone')) {
+                $similar = self::find()->where(['phone' => $this->getAttribute('phone')])->all();
+
+                if (count($similar) > 0) {
+                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
+                }
             }
         }
 

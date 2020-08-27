@@ -41,4 +41,16 @@ class RegionKharkiv extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
         ];
     }
+
+    public static function prepareForSelect()
+    {
+        $items = self::find()->all();
+        $arr = [];
+
+        foreach ($items as $item) {
+            $arr[$item->region_kharkiv_id] = $item->name;
+        }
+
+        return $arr;
+    }
 }

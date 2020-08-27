@@ -22,17 +22,18 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
 
 </div>
 <?= $this->render('/new_site/_js.php', ['agent' => $agent]); ?>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         if ($('#customer-type option:selected').length > 0) {
 
-            if ($('#customer-type option:selected').val() === 'flats-new_buildings') {
+            if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
                 $('.select-for-flats').css('display', 'block')
                 $('.select-for-houses').css('display', 'none')
             } else {
                 $('.select-for-flats').css('display', 'none')
                 $('.select-for-houses').css('display', 'block')
-                $('.field-customer-locality_id').css('display', 'none')
+                $('.field-customer-localities').css('display', 'none')
             }
         }
         else{
@@ -42,13 +43,13 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 
-                if ($('#customer-type option:selected').val() === 'flats-new_buildings') {
+                if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
                     $('.select-for-flats').css('display', 'block')
                     $('.select-for-houses').css('display', 'none')
                 } else {
                     $('.select-for-flats').css('display', 'none')
                     $('.select-for-houses').css('display', 'block')
-                    $('.field-customer-locality_id').css('display', 'none')
+                    $('.field-customer-localities').css('display', 'none')
                 }
             }
             else{
@@ -59,18 +60,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
 
         $('#customer-city_or_region input').change(function(){
             if($('#customer-city_or_region input:checked').val() == 1){
-                $('.field-customer-region_kharkiv_id').css('display','none')
-                $('.field-customer-locality_id').css('display','block')
+                $('.field-customer-regionskharkivcopy').css('display','none')
+                $('.field-customer-localities').css('display','block')
             }
             else{
-                $('.field-customer-locality_id').css('display','none')
-                $('.field-customer-region_kharkiv_id').css('display','block')
+                $('.field-customer-localities').css('display','none')
+                $('.field-customer-regionskharkivcopy').css('display','block')
             }
         })
 
         $('#w0').submit(function(){
-            debugger
-            if ($('#customer-type option:selected').val() === 'flats-new_buildings') {
+            if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
                 $('.select-for-houses').remove()
             }
             else{

@@ -94,8 +94,6 @@ class CustomerController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             if($model->location){
-                $model->region_kharkiv_id = $model->location->region_kharkiv_id;
-                $model->locality_id = $model->location->locality_id;
                 if($model->type === 'houses'){
                     $model->city_or_region = $model->location->region_kharkiv_id !== null ? 0 : 1;
                 }

@@ -41,4 +41,16 @@ class Locality extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
         ];
     }
+
+    public static function prepareForSelect()
+    {
+        $items = self::find()->all();
+        $arr = [];
+
+        foreach ($items as $item) {
+            $arr[$item->locality_id] = $item->name;
+        }
+
+        return $arr;
+    }
 }
