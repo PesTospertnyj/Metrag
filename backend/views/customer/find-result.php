@@ -78,7 +78,7 @@ $statuses = [
         [
             'label' => 'Тип',
             'value' => function ($model) {
-                return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
+                return \backend\models\Customer::AVAILABLE_TYPES_LABELS[$model->type];
             }
         ],
         // 'total_area_from',
