@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
         'css/font-awesome-ie7.css',
     ];
     public $js = [
+        'js/phone_mask.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

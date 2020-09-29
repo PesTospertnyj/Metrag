@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Customer */
 
 $this->title = Yii::t('app', 'Обновить покупателя: ', [
-    'modelClass' => 'Customer',
-]) . $model->id;
+        'modelClass' => 'Customer',
+    ]) . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Покупатели'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
@@ -21,13 +21,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
     ]) ?>
 
 </div>
-<?= $this->render('/new_site/_js.php', ['agent' => $agent]); ?>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<?= $this->render('/new_site/_js.php', ['agent' => isset($agent) ? $agent : null]); ?>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
+        $("#customer-phone").mask("+38(999) 999-9999");
         if ($('#customer-type option:selected').length > 0) {
 
-            if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
+            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val()
+                === 'new_buildings') {
                 $('.select-for-flats').css('display', 'block')
                 $('.select-for-houses').css('display', 'none')
             } else {
@@ -35,15 +38,14 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
                 $('.select-for-houses').css('display', 'block')
                 $('.field-customer-localities').css('display', 'none')
             }
-        }
-        else{
+        } else {
             $('.select-for-flats').css('display', 'none')
             $('.select-for-houses').css('display', 'none')
         }
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 
-                if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
+                if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
                     $('.select-for-flats').css('display', 'block')
                     $('.select-for-houses').css('display', 'none')
                 } else {
@@ -51,29 +53,28 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
                     $('.select-for-houses').css('display', 'block')
                     $('.field-customer-localities').css('display', 'none')
                 }
-            }
-            else{
+            } else {
                 $('.select-for-flats').css('display', 'none')
                 $('.select-for-houses').css('display', 'none')
             }
         })
 
-        $('#customer-city_or_region input').change(function(){
-            if($('#customer-city_or_region input:checked').val() == 1){
-                $('.field-customer-regionskharkivcopy').css('display','none')
-                $('.field-customer-localities').css('display','block')
-            }
-            else{
-                $('.field-customer-localities').css('display','none')
-                $('.field-customer-regionskharkivcopy').css('display','block')
+        $('#customer-city_or_region input').change(function () {
+            if ($('#customer-city_or_region input:checked').val() == 1) {
+                $('.field-customer-regionskharkivcopy').css('display', 'none')
+                $('.field-customer-localities').css('display', 'block')
+            } else {
+                $('.field-customer-localities').css('display', 'none')
+                $('.field-customer-regionskharkivcopy').css('display', 'block')
             }
         })
 
-        $('#w0').submit(function(){
-            if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
+        $('#w0').submit(function () {
+            let phoneNotFormat = $("#customer-phone").val().replace(/[-\s()]/gi,'')
+            $("#customer-phone").val(phoneNotFormat)
+            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
                 $('.select-for-houses').remove()
-            }
-            else{
+            } else {
                 $('.select-for-flats').remove()
             }
         })
