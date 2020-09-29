@@ -93,11 +93,18 @@ class CustomerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            if($model->location){
-                if($model->type === 'houses'){
-                    $model->city_or_region = $model->location->region_kharkiv_id !== null ? 0 : 1;
+            if($model->localities){
+                switch($model->type){
+                    case 'flats':  $model->city_or_region = 0;break;
+                    case 'new_buildings':$model->city_or_region = 0;break;
+                    case 'flats-new_buildings':$model->city_or_region = 0;break;
+                    case 'houses':$model->city_or_region = 1;break;
+                    case 'land_plot':$model->city_or_region = 1;break;
+                    case 'rent_house':$model->city_or_region = 1;break;
+                    case 'commercial':$model->city_or_region = 0;break;
+                    case 'rent_flat':$model->city_or_region = 0;break;
+                    case 'rent_commercial':$model->city_or_region = 0;break;
                 }
-
             }
             return $this->render('update', [
                 'model' => $model,

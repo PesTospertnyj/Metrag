@@ -35,13 +35,27 @@ use yii\web\ServerErrorHttpException;
 class Customer extends ActiveRecord
 {
     const AVAILABLE_TYPES = [
-        'flats', 'new_buildings', 'houses'
+        'flats',
+        'new_buildings',
+        'houses',
+        'flats-new_buildings',
+        'land_plot',
+        'commercial',
+        'rent_house',
+        'rent_flat',
+        'rent_commercial'
     ];
 
     const AVAILABLE_TYPES_LABELS = [
-        'flats' => 'Квартиры',
-        'new_buildings' => 'Новостройки',
+        'flats' => 'Только квартира (вторичка)',
+        'new_buildings' => 'Только новострой',
         'houses' => 'Дома',
+        'flats-new_buildings' => 'Квартиры/новостройки',
+        'land_plot' => 'Участки',
+        'commercial' => 'Коммерция',
+        'rent_house' => 'АРЕНДА дом',
+        'rent_flat' => 'АРЕНДА квартира',
+        'rent_commercial' => 'АРЕНДА коммерция'
     ];
 
     /**
@@ -180,7 +194,7 @@ class Customer extends ActiveRecord
     {
         $className = $this->getClassName();
 
-        if (isset($data[$className]['regions'])) {
+        if (isset($data[$className]['regions']) && $data[$className]['regions'] !== '') {
             foreach ($data[$className]['regions'] as $regionId) {
                 $region = Region::findOne($regionId);
 
@@ -240,7 +254,7 @@ class Customer extends ActiveRecord
             "DELETE FROM customers_localities WHERE customer_id=${customerId}"
         )->execute();
 
-        if (isset($data[$className]['localities'])) {
+        if (isset($data[$className]['localities']) && $data[$className]['localities'] !== '') {
             foreach ($data[$className]['localities'] as $regionId) {
                 $region = Locality::findOne($regionId);
 

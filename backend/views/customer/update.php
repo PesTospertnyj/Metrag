@@ -28,15 +28,48 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
     $(document).ready(function () {
         $("#customer-phone").mask("+38(999) 999-9999");
         if ($('#customer-type option:selected').length > 0) {
-
-            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val()
-                === 'new_buildings') {
-                $('.select-for-flats').css('display', 'block')
-                $('.select-for-houses').css('display', 'none')
-            } else {
-                $('.select-for-flats').css('display', 'none')
-                $('.select-for-houses').css('display', 'block')
-                $('.field-customer-localities').css('display', 'none')
+            debugger
+            switch ($('#customer-type option:selected').val()){
+                case 'flats':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                case 'new_buildings':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                case 'flats-new_buildings':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                case 'houses':
+                    $('.select-for-flats').css('display', 'none')
+                    $('.select-for-houses').css('display', 'block')
+                    $('.field-customer-localities').css('display', 'none')
+                    break;
+                case 'land_plot':
+                    $('.select-for-flats').css('display', 'none')
+                    $('.select-for-houses').css('display', 'block')
+                    $('.field-customer-localities').css('display', 'none')
+                    break;
+                case 'rent_house':
+                    $('.select-for-flats').css('display', 'none')
+                    $('.select-for-houses').css('display', 'block')
+                    $('.field-customer-localities').css('display', 'none')
+                    break;
+                case 'commercial':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                case 'rent_flat':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                case 'rent_commercial':
+                    $('.select-for-flats').css('display', 'block')
+                    $('.select-for-houses').css('display', 'none')
+                    break;
+                default:break;
             }
         } else {
             $('.select-for-flats').css('display', 'none')
@@ -45,15 +78,51 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 
-                if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
-                    $('.select-for-flats').css('display', 'block')
-                    $('.select-for-houses').css('display', 'none')
-                } else {
-                    $('.select-for-flats').css('display', 'none')
-                    $('.select-for-houses').css('display', 'block')
-                    $('.field-customer-localities').css('display', 'none')
+                switch ($('#customer-type option:selected').val()) {
+                    case 'flats':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    case 'new_buildings':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    case 'flats-new_buildings':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    case 'houses':
+                        $('.select-for-flats').css('display', 'none')
+                        $('.select-for-houses').css('display', 'block')
+                        $('.field-customer-localities').css('display', 'none')
+                        break;
+                    case 'land_plot':
+                        $('.select-for-flats').css('display', 'none')
+                        $('.select-for-houses').css('display', 'block')
+                        $('.field-customer-localities').css('display', 'none')
+                        break;
+                    case 'rent_house':
+                        $('.select-for-flats').css('display', 'none')
+                        $('.select-for-houses').css('display', 'block')
+                        $('.field-customer-localities').css('display', 'none')
+                        break;
+                    case 'commercial':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    case 'rent_flat':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    case 'rent_commercial':
+                        $('.select-for-flats').css('display', 'block')
+                        $('.select-for-houses').css('display', 'none')
+                        break;
+                    default:
+                        break;
                 }
-            } else {
+            }
+            else {
                 $('.select-for-flats').css('display', 'none')
                 $('.select-for-houses').css('display', 'none')
             }
