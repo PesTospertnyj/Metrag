@@ -23,10 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
+        $("#customer-phone").mask("+38(999) 999-9999");
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 
-                if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
+                if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
                     $('.select-for-flats').css('display', 'block')
                     $('.select-for-houses').css('display', 'none')
                 } else {
@@ -53,7 +54,9 @@ $this->params['breadcrumbs'][] = $this->title;
         })
 
         $('#w0').submit(function(){
-            if ($('#customer-type option:selected').val() === 'flats' || ($('#customer-type option:selected').val() === 'new_buildings') {
+            let phoneNotFormat = $("#customer-phone").val().replace(/[-\s()]/gi,'')
+            $("#customer-phone").val(phoneNotFormat)
+            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
                 $('.select-for-houses').remove()
             }
             else{
