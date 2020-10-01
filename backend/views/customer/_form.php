@@ -22,7 +22,8 @@ use yii\widgets\ActiveForm;
     <div class="col-xs-12 col-sm-4 col-md-4">
         <?= $form->field($model, 'full_name')->textInput(['maxlength' => true])->label('ФИО') ?>
 
-        <?= $form->field($model, 'phone')->textInput(['maxlength' => true])->label('Телефон') ?>
+        <?= $form->field($model, 'phone')->textInput(['maxlength' => true,'autocomplete'=>'needToDisableAutoComplete'])
+            ->label('Телефон') ?>
 
         <? if ($model->isNewRecord ) { ?>
             <?= $form->field($model, 'type', [
