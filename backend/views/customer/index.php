@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomerSearch */
@@ -55,7 +56,20 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'total_area_to',
             // 'info:ntext',
             // 'is_public',
-
+            [
+                'label' => 'Ссылка',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::a(
+                        'Перейти на недвижимость покупателя',
+                        Url::to(['/customer-realties', 'id' => $model->id]),
+                        [
+                            'title' => 'Просмотр',
+                            'target' => '_blank'
+                        ]
+                    );
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
