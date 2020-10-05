@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
         integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        $("#customer-phone").mask("+38(999) 999-9999");
+        $("#customer-phone").mask("+38(999) 999-99-99");
         if ($('#customer-type option:selected').length > 0) {
             debugger
             switch ($('#customer-type option:selected').val()){
