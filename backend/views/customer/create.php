@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        $("#customer-phone").mask("+38(999) 999-9999");
+        $("#customer-phone").mask("+38(999) 999-99-99");
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 

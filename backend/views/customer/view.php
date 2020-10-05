@@ -36,6 +36,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \backend\models\Customer::AVAILABLE_TYPES_LABELS[$data->type];
                 }
             ],
+            [
+                'attribute' => 'localities',
+                'format' => 'raw',
+                'value' => function($data){
+                    $result = [];
+                    if(count($data->localities) > 0){
+                        $result = $data->localities;
+                    }
+                    if(count($data->regions) > 0){
+                        $result = $data->regions;
+                    }
+                    $resultMapped = array_map(function($item){
+                        return $item['name'];
+                    },$result);
+
+                    if(count($resultMapped) === 0) return '-';
+                    return implode(', ',$resultMapped);
+                }
+            ],
             'phone',
             'price_from',
             'price_to',
