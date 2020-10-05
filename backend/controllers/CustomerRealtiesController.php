@@ -17,6 +17,7 @@ use Yii;
 use backend\models\Customer;
 use backend\models\CustomerSearch;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
@@ -88,8 +89,12 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                $query->orFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                $query->orFilterWhere(['in', 'locality_id', $regions]);
+                if(count($regions) > 0) {
+                    $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
+                }
+                else{
+                    $query->andFilterWhere(['in', 'locality_id', $localities]);
+                }
                 break;
             case 'houses':
                 $viewName = 'find-result-houses';
@@ -106,8 +111,69 @@ class CustomerRealtiesController extends Controller
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
-            case Customer::AVAILABLE_TYPES['flats-new_buildings']:
-                //$query = (new Query())->from('post');
+            case 'flats-new_buildings_not_work':
+                $viewName = 'find-result-flats';
+                $query = Apartment::find();
+
+                $query->from('apartment');
+                $query->select([
+                    'type_object_id',
+                    'region_kharkiv_id',
+                    'street_id',
+                    'number_building',
+                    'count_room',
+                    'floor',
+                    'floor_all',
+                    'total_area',
+                    'floor_area',
+                    'kitchen_area',
+                    'condit_id',
+                    'price',
+                    'phone',
+                     'layout_id'
+                ]);
+                $query->andFilterWhere(['>=', 'price', $customer->price_from]);
+                $query->andFilterWhere(['<=', 'price', $customer->price_to]);
+                $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
+                $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
+                $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                if(count($regions) > 0) {
+                    $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
+                }
+                else{
+                    $query->andFilterWhere(['in', 'locality_id', $localities]);
+                }
+
+                $query2 = Building::find();
+                $query2->select([
+                    'type_object_id',
+                    'region_kharkiv_id',
+                    'street_id',
+                    'number_building',
+                    'count_room',
+                    'floor',
+                    'floor_all',
+                    'total_area',
+                    'floor_area',
+                    'kitchen_area',
+                    'condit_id',
+                    'price',
+                    'phone',
+                    'layout_id'
+                    ]);
+                $query2->from('building');
+                $query2->andFilterWhere(['>=', 'price', $customer->price_from]);
+                $query2->andFilterWhere(['<=', 'price', $customer->price_to]);
+                $query2->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
+                $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
+                $query2->andFilterWhere(['in', 'condit_id', $conditions]);
+                if(count($regions) > 0) {
+                    $query2->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
+                }
+                else{
+                    $query2->andFilterWhere(['in', 'locality_id', $localities]);
+                }
+                $query->union($query2);
                 break;
             case 'land_plot':
                 $viewName = 'find-result-area';
@@ -183,12 +249,14 @@ class CustomerRealtiesController extends Controller
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
                 ]
             ],
         ]);
+        $dataProvider->setTotalCount(15);
         return $this->render($viewName, [
             'dataProvider' => $dataProvider,
             'data' => ModelData::getData()
