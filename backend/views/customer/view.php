@@ -29,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'full_name',
+            [
+                'attribute' => 'type',
+                'format' => 'raw',
+                'value' => function($data){
+                    return \backend\models\Customer::AVAILABLE_TYPES_LABELS[$data->type];
+                }
+            ],
             'phone',
             'price_from',
             'price_to',
