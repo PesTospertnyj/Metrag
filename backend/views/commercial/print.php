@@ -18,7 +18,7 @@ $models = $dataProvider->getModels();
         }
     </style>
     <style type="text/css" media="print">
-        @page { size: landscape; }
+        /*@page { size: landscape; }*/
     </style>
 </head>
 <body>
@@ -38,7 +38,6 @@ $models = $dataProvider->getModels();
         <th>Прим</th>
         <th>Конт</th>
         <th>Д/об</th>
-        <th>Авт</th>
         <th>Дог</th>
         <th>Ф</th>
     </tr>
@@ -49,7 +48,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($commercial['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $commercial['count_room'] ?><?php echo mb_substr($commercial->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($commercial->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo mb_substr($commercial->getStreet()->name, 0, 8, 'UTF-8') . " " . $commercial['number_office'] ?></td>
+            <td><?php echo $commercial->street. ", " . $commercial['number_office'] ?></td>
             <td><?php echo (ceil($commercial['price']) == $commercial['price']) ? number_format($commercial['price'], 0, '', '') : number_format($commercial['price'], 1, '.', '') ?></td>
             <td><?php echo $commercial['floor'] ?>/<?php echo $commercial['floor_all'] ?></td>
             <td><?php echo round($commercial['total_area']) ?>/<?php echo round($commercial['total_area_house']) ?></td>
@@ -65,7 +64,6 @@ $models = $dataProvider->getModels();
                 ?>
             </td>
             <td><?php if((int)$commercial['date_modified'] !== 0) { echo date('m.y', strtotime($commercial['date_modified'])); } else { echo "-"; } ?></td>
-            <td><?php echo mb_substr($commercial->getAuthor()->username, 0, 4, 'UTF-8') ?></td>
             <td><?php echo mb_substr($commercial->getMediator()->name, 0, 4, 'UTF-8') ?></td>
             <td><?php
                 if((bool) array_filter($commercial->getImages())){

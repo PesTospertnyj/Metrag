@@ -17,7 +17,7 @@ $models = $dataProvider->getModels();
         }
     </style>
     <style type="text/css" media="print">
-        @page { size: landscape; }
+        /*@page { size: landscape; }*/
     </style>
 </head>
 <body>
@@ -35,7 +35,6 @@ $models = $dataProvider->getModels();
         <th>Прим</th>
         <th>Конт</th>
         <th>Д/об</th>
-        <th>Авт</th>
         <th>Л</th>
         <th>Т</th>
         <th>Х</th>
@@ -53,7 +52,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($rent['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $rent['count_room'] ?>/<?php echo $rent['count_room_rent'] ?><?php echo mb_substr($rent->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($rent->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo mb_substr($rent->getStreet()->name, 0, 8, 'UTF-8') . " " . $rent['number_building'] ?></td>
+            <td><?php echo $rent->street. ", " . $rent['number_building'] ?></td>
             <td><?php echo (ceil($rent['price']) == $rent['price']) ? number_format($rent['price'], 0, '', '') : number_format($rent['price'], 1, '.', '') ?></td>
             <td><?php echo $rent['floor'] ?>/<?php echo $rent['floor_all'] ?></td>
             <td><?php echo mb_substr($rent->getCondit()->name, 0, 3, 'UTF-8') ?></td>
@@ -66,7 +65,6 @@ $models = $dataProvider->getModels();
                 ?>
             </td>
             <td><?php if((int)$rent['date_modified'] !== 0) { echo date('m.y', strtotime($rent['date_modified'])); } else { echo "-"; } ?></td>
-            <td><?php echo mb_substr($rent->getAuthor()->username, 0, 4, 'UTF-8') ?></td>
             <td><?php echo ($rent['phone_line'] ? "+" : "-") ?></td>
             <td><?php echo ($rent['tv'] ? "+" : "-") ?></td>
             <td><?php echo ($rent['refrigerator'] ? "+" : "-") ?></td>

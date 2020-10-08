@@ -17,7 +17,7 @@ $models = $dataProvider->getModels();
         }
     </style>
     <style type="text/css" media="print">
-        @page { size: landscape; }
+        /*@page { size: landscape; }*/
     </style>
 </head>
 <body>
@@ -38,7 +38,6 @@ $models = $dataProvider->getModels();
         <th>Прим</th>
         <th>Конт</th>
         <th>Д/об</th>
-        <th>Авт</th>
         <th>Дог</th>
         <th>Ф</th>
     </tr>
@@ -49,7 +48,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($area['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo mb_substr($area->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($area->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo mb_substr($area->getStreet()->name, 0, 8, 'UTF-8') . " " . $area['number_building'] ?></td>
+            <td><?php echo $area->street . ", " . $area['number_building'] ?></td>
             <td><?php echo (ceil($area['price']) == $area['price']) ? number_format($area['price'], 0, '', '') : number_format($area['price'], 1, '.', '') ?></td>
             <td><?php echo mb_substr($area->getPartsite()->name, 0, 4, 'UTF-8') ?></td>
             <td><?php echo round($area['total_area']) ?></td>
@@ -65,7 +64,6 @@ $models = $dataProvider->getModels();
                 ?>
             </td>
             <td><?php if((int)$area['date_modified'] !== 0) { echo date('m.y', strtotime($area['date_modified'])); } else { echo "-"; } ?></td>
-            <td><?php echo mb_substr($area->getAuthor()->username, 0, 4, 'UTF-8') ?></td>
             <td><?php echo mb_substr($area->getMediator()->name, 0, 4, 'UTF-8') ?></td>
             <td><?php if((bool) array_filter($area->getImages())){
                     echo '+';

@@ -17,7 +17,7 @@ $models = $dataProvider->getModels();
         }
     </style>
     <style type="text/css" media="print">
-        @page { size: landscape; }
+        /*@page { size: landscape; }*/
     </style>
 </head>
 <body>
@@ -39,7 +39,6 @@ $models = $dataProvider->getModels();
         <th>Прим</th>
         <th>Конт</th>
         <th>Д/об</th>
-        <th>Авт</th>
         <th>Дог</th>
         <th>Ф</th>
     </tr>
@@ -50,7 +49,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($building['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $building['count_room'] ?><?php echo mb_substr($building->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($building->getRegion()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo mb_substr($building->getStreet()->name, 0, 8, 'UTF-8') . " " . $building['number_building'] ?></td>
+            <td><?php echo $building->street. ", " . $building['number_building']   ?></td>
             <td><?php echo (ceil($building['price']) == $building['price']) ? number_format($building['price'], 0, '', '') : number_format($building['price'], 1, '.', '') ?></td>
             <td><?php echo $building['floor'] ?>/<?php echo $building['floor_all'] ?></td>
             <td><?php echo round($building['total_area']) ?>/<?php echo round($building['floor_area']) ?>/<?php echo round($building['kitchen_area']) ?></td>
@@ -67,7 +66,6 @@ $models = $dataProvider->getModels();
                 ?>
             </td>
             <td><?php if((int)$building['date_modified'] !== 0) { echo date('m.y', strtotime($building['date_modified'])); } else { echo "-"; } ?></td>
-            <td><?php echo mb_substr($building->getAuthor()->username, 0, 4, 'UTF-8') ?></td>
             <td><?php echo mb_substr($building->getMediator()->name, 0, 4, 'UTF-8') ?></td>
             <td><?php
                 if((bool) array_filter($building->getImages())){
