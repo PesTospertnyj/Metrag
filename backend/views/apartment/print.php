@@ -48,7 +48,7 @@
             <td><?php echo str_pad($apartment['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $apartment['count_room'] ?><?php echo mb_substr($apartment->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($apartment->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo $apartment->street . ", " . $apartment['number_building'] ?></td>
+            <td><?php echo $apartment->street . " " . $apartment['number_building'] ?></td>
             <td><?php echo (ceil($apartment['price']) == $apartment['price']) ? number_format($apartment['price'], 0, '', '') : number_format($apartment['price'], 1, '.', '') ?></td>
             <td><?php echo $apartment['floor'] ?>/<?php echo $apartment['floor_all'] ?></td>
             <td><?php echo round($apartment['total_area']) ?>/<?php echo round($apartment['floor_area']) ?>/<?php echo round($apartment['kitchen_area']) ?></td>

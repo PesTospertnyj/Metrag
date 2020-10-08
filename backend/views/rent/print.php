@@ -52,7 +52,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($rent['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $rent['count_room'] ?>/<?php echo $rent['count_room_rent'] ?><?php echo mb_substr($rent->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($rent->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo $rent->street. ", " . $rent['number_building'] ?></td>
+            <td><?php echo $rent->street. " " . $rent['number_building'] ?></td>
             <td><?php echo (ceil($rent['price']) == $rent['price']) ? number_format($rent['price'], 0, '', '') : number_format($rent['price'], 1, '.', '') ?></td>
             <td><?php echo $rent['floor'] ?>/<?php echo $rent['floor_all'] ?></td>
             <td><?php echo mb_substr($rent->getCondit()->name, 0, 3, 'UTF-8') ?></td>

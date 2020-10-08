@@ -49,7 +49,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($house['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $house['count_room'] ?><?php echo mb_substr($house->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($house->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo$house->street . ", " . $house['number_building'] ?></td>
+            <td><?php echo$house->street . " " . $house['number_building'] ?></td>
             <td><?php echo (ceil($house['price']) == $house['price']) ? number_format($house['price'], 0, '', '') : number_format($house['price'], 1, '.', '') ?></td>
             <td><?php echo $house['floor_all'] ?></td>
             <td><?php echo round($house['total_area_house']) ?>/<?php echo round($house['total_area']) ?></td>

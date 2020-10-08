@@ -48,7 +48,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($commercial['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $commercial['count_room'] ?><?php echo mb_substr($commercial->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($commercial->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo $commercial->street. ", " . $commercial['number_office'] ?></td>
+            <td><?php echo $commercial->street. " " . $commercial['number_office'] ?></td>
             <td><?php echo (ceil($commercial['price']) == $commercial['price']) ? number_format($commercial['price'], 0, '', '') : number_format($commercial['price'], 1, '.', '') ?></td>
             <td><?php echo $commercial['floor'] ?>/<?php echo $commercial['floor_all'] ?></td>
             <td><?php echo round($commercial['total_area']) ?>/<?php echo round($commercial['total_area_house']) ?></td>
