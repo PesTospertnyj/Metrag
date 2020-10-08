@@ -49,7 +49,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($building['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $building['count_room'] ?><?php echo mb_substr($building->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($building->getRegion()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo $building->street. ", " . $building['number_building']   ?></td>
+            <td><?php echo $building->street. " " . $building['number_building']   ?></td>
             <td><?php echo (ceil($building['price']) == $building['price']) ? number_format($building['price'], 0, '', '') : number_format($building['price'], 1, '.', '') ?></td>
             <td><?php echo $building['floor'] ?>/<?php echo $building['floor_all'] ?></td>
             <td><?php echo round($building['total_area']) ?>/<?php echo round($building['floor_area']) ?>/<?php echo round($building['kitchen_area']) ?></td>

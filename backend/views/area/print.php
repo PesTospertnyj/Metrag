@@ -48,7 +48,7 @@ $models = $dataProvider->getModels();
             <td><?php echo str_pad($area['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo mb_substr($area->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
             <td><?php echo mb_substr($area->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
-            <td><?php echo $area->street . ", " . $area['number_building'] ?></td>
+            <td><?php echo $area->street . " " . $area['number_building'] ?></td>
             <td><?php echo (ceil($area['price']) == $area['price']) ? number_format($area['price'], 0, '', '') : number_format($area['price'], 1, '.', '') ?></td>
             <td><?php echo mb_substr($area->getPartsite()->name, 0, 4, 'UTF-8') ?></td>
             <td><?php echo round($area['total_area']) ?></td>
