@@ -61,7 +61,7 @@ class CustomerRealtiesController extends Controller
         }, $customer->regionsKharkiv);
 
         $localities = array_map(function ($item) {
-            return $item['region_kharkiv_id'];
+            return $item['locality_id'];
         }, $customer->localities);
 
         $viewName = '';
@@ -74,6 +74,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -89,6 +90,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -104,6 +106,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -137,6 +140,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -167,6 +171,7 @@ class CustomerRealtiesController extends Controller
                 $query2->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query2->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query2->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -182,6 +187,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -197,6 +203,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'realty_state_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -211,6 +218,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -225,6 +233,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }
@@ -239,6 +248,7 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
+                $query->andFilterWhere(['=', 'enabled', 2]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 }

@@ -39,22 +39,6 @@ $statuses = [
     <?php
     $gridColumns = [
         //['class' => 'yii\grid\SerialColumn'],
-        [
-            'class' => 'yii\grid\ActionColumn',
-            'controller' => 'customer',
-            'buttons' => [
-                'update' => function ($url,$model) {
-                    return Html::a(
-                        '<span class="glyphicon glyphicon-pencil"></span>',
-                        $url,
-                        [
-                            'title' => Yii::t('app', 'Edit'),
-
-                        ]);
-                },
-
-            ],
-        ],
         'id',
         [
             'label' => 'ФИО',
@@ -79,6 +63,20 @@ $statuses = [
             'label' => 'Тип',
             'value' => function ($model) {
                 return \backend\models\Customer::AVAILABLE_TYPES_LABELS[$model->type];
+            }
+        ],
+        [
+            'label' => 'Ссылка',
+            'format' => 'raw',
+            'value' => function($model) {
+                return Html::a(
+                    'Перейти на недвижимость покупателя',
+                    Url::to(['/customer-realties', 'id' => $model->id]),
+                    [
+                        'title' => 'Просмотр',
+                        'target' => '_blank'
+                    ]
+                );
             }
         ],
         // 'total_area_from',
