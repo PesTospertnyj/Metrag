@@ -48,7 +48,7 @@ $models = $dataProvider->getModels();
         <tr>
             <td><?php echo str_pad($building['id'], 5, "0", STR_PAD_LEFT); ?></td>
             <td><?php echo $building['count_room'] ?><?php echo mb_substr($building->getTypeObject()->name, 0, 2, 'UTF-8') ?></td>
-            <td><?php echo mb_substr($building->getRegion()->name, 0, 5, 'UTF-8') ?></td>
+            <td><?php echo mb_substr($building->getRegionKharkiv()->name, 0, 5, 'UTF-8') ?></td>
             <td><?php echo $building->street. " " . $building['number_building']   ?></td>
             <td><?php echo (ceil($building['price']) == $building['price']) ? number_format($building['price'], 0, '', '') : number_format($building['price'], 1, '.', '') ?></td>
             <td><?php echo $building['floor'] ?>/<?php echo $building['floor_all'] ?></td>
@@ -62,7 +62,7 @@ $models = $dataProvider->getModels();
             <td>
                 <?php
                 $phone = $building['phone'];
-                echo mb_substr($phone, 0, 22, 'UTF-8');
+                echo $phone;
                 ?>
             </td>
             <td><?php if((int)$building['date_modified'] !== 0) { echo date('m.y', strtotime($building['date_modified'])); } else { echo "-"; } ?></td>
