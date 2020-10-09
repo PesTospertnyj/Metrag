@@ -49,6 +49,7 @@ use yii\widgets\ActiveForm;
           <?= $form->field($model, 'regionsKharkiv')
               ->widget(\kartik\select2\Select2::className(), [
                   'data' => RegionKharkiv::prepareForSelect(),
+                  'showToggleAll' => false,
                   'options' => ['placeholder' => 'Выберите район...', 'multiple' => true],
               ])->label('Район/Харьков'); ?>
       </div>
@@ -59,6 +60,7 @@ use yii\widgets\ActiveForm;
           <?= $form->field($model, 'regionsKharkivCopy')->widget(
               \kartik\select2\Select2::className(), [
                   'data' => RegionKharkiv::prepareForSelect(),
+                  'showToggleAll' => false,
                   'options' => ['placeholder' => 'Выберите район...', 'multiple' => true],
               ]
           )->label('Район/Харьков'); ?>
@@ -66,6 +68,7 @@ use yii\widgets\ActiveForm;
           <?= $form->field($model, 'localities')->widget(
               \kartik\select2\Select2::className(), [
                   'data' => Locality::prepareForSelect(),
+                  'showToggleAll' => false,
                   'options' => ['placeholder' => 'Выберите населенный пункт...', 'multiple' => true]
               ]
           )->label('Населенный пункт', ['class' => 'required']); ?>
