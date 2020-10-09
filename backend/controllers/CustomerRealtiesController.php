@@ -132,7 +132,6 @@ class CustomerRealtiesController extends Controller
                     'price',
                     'phone',
                      'layout_id',
-                    'is_publish',
                     'enabled'
                 ]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
@@ -140,7 +139,6 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                $query->andFilterWhere(['=', 'is_publish', 1]);
                 $query->andFilterWhere(['=', 'enabled', 1]);
                 if(count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
@@ -166,7 +164,6 @@ class CustomerRealtiesController extends Controller
                     'price',
                     'phone',
                     'layout_id',
-                    'is_publish',
                     'enabled'
                     ]);
                 $query2->from('building');
@@ -175,7 +172,6 @@ class CustomerRealtiesController extends Controller
                 $query2->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query2->andFilterWhere(['in', 'condit_id', $conditions]);
-                $query2->andFilterWhere(['=', 'is_publish', 1]);
                 $query2->andFilterWhere(['=', 'enabled', 1]);
                 if(count($regions) > 0) {
                     $query2->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
@@ -257,7 +253,6 @@ class CustomerRealtiesController extends Controller
                 }
                 break;
         }
-        $query->andFilterWhere(['=', 'is_publish', 1]);
         $query->andFilterWhere(['=', 'enabled', 1]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
