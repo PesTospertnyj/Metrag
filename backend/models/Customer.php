@@ -89,15 +89,15 @@ class Customer extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'full_name' => 'Full Name',
-            'type' => 'Type',
-            'phone' => 'Phone',
-            'price_from' => 'Price From',
-            'price_to' => 'Price To',
-            'total_area_from' => 'Total Area From',
-            'total_area_to' => 'Total Area To',
-            'info' => 'Info',
-            'is_public' => 'Is Public',
+            'full_name' => 'ФИО',
+            'type' => 'Тип недвижимости',
+            'phone' => 'Телефон',
+            'price_from' => 'Цена от',
+            'price_to' => 'Цена до',
+            'total_area_from' => 'Общая площадь от',
+            'total_area_to' => 'Общая площадь до',
+            'info' => 'Инфо',
+            'is_public' => 'Публичный',
             'city_or_region' => Yii::t('app', 'City Or Region'),
             'region_kharkiv_admin_id' => Yii::t('yii', 'Region Kharkiv Admin'),
             'locality_id' => Yii::t('yii', 'Locality'),
@@ -107,6 +107,7 @@ class Customer extends ActiveRecord
             'street_id' => Yii::t('yii', 'Street'),
             'number_building' => Yii::t('yii', 'Number Building'),
             'metro_id' => Yii::t('yii', 'Metro'),
+            'localities' => 'Населенный(е) пункт'
         ];
     }
 
