@@ -8,8 +8,6 @@ use backend\models\RegionKharkiv;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\web\BadRequestHttpException;
-use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
@@ -31,9 +29,13 @@ use yii\web\ServerErrorHttpException;
  * @property RegionKharkiv[] $regionsKharkiv
  * @property RegionKharkiv[] $regionsKharkivCopy
  * @property Locality[] $localities
+ * @property CustomerViewedAd[] $customerViewedAd
  */
 class Customer extends ActiveRecord
 {
+    public $viewedCount;
+    public $notViewedCount;
+
     const AVAILABLE_TYPES = [
         'flats',
         'new_buildings',
@@ -158,6 +160,11 @@ class Customer extends ActiveRecord
     public function getLocation()
     {
         return $this->hasOne(CustomerLocation::className(), ['customer_id' => 'id']);
+    }
+
+    public function getCustomerViewedAd()
+    {
+        return $this->hasMany(CustomerViewedAd::className(), ['customer_id' => 'id']);
     }
 
     /**

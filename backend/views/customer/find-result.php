@@ -66,17 +66,26 @@ $statuses = [
             }
         ],
         [
-            'label' => 'Ссылка',
+            'label' => 'Старые/Новые',
             'format' => 'raw',
             'value' => function($model) {
-                return Html::a(
-                    'Перейти на недвижимость покупателя',
-                    Url::to(['/customer-realties', 'id' => $model->id]),
+                $viewedAds = Html::a(
+                    $model->viewedCount,
+                    Url::to(['/customer-realties/OldAdverts', 'id' => $model->id]),
                     [
-                        'title' => 'Просмотр',
+                        'title' => 'Перейти на недвижимость покупателя',
                         'target' => '_blank'
                     ]
                 );
+                $notViewed = Html::a(
+                    $model->notViewedCount,
+                    Url::to(['/customer-realties', 'id' => $model->id]),
+                    [
+                        'title' => 'Перейти на недвижимость покупателя',
+                        'target' => '_blank'
+                    ]
+                );
+                return $viewedAds.'/'.$notViewed;
             }
         ],
         // 'total_area_from',
