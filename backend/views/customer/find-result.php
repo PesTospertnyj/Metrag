@@ -75,7 +75,6 @@ $statuses = [
                     [
                         'title' => 'Перейти на недвижимость покупателя',
                         'target' => '_blank',
-                        'style' => 'color:red;'
                     ]
                 );
                 $notViewed = Html::a(
