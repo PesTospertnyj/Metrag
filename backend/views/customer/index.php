@@ -65,7 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             Url::to(['/customer-realties/old-adverts', 'id' => $model->id]),
                             [
                                 'title' => 'Перейти на недвижимость покупателя',
-                                'target' => '_blank'
+                                'target' => '_blank',
+                                'style' => 'color:red;'
                             ]
                         );
                         $notViewed = Html::a(
@@ -73,7 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             Url::to(['/customer-realties', 'id' => $model->id]),
                             [
                                 'title' => 'Перейти на недвижимость покупателя',
-                                'target' => '_blank'
+                                'target' => '_blank',
+                                'style' => 'color:red;'
                             ]
                         );
                         return $viewedAds.'/'.$notViewed;

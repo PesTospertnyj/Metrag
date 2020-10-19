@@ -74,7 +74,8 @@ $statuses = [
                     Url::to(['/customer-realties/OldAdverts', 'id' => $model->id]),
                     [
                         'title' => 'Перейти на недвижимость покупателя',
-                        'target' => '_blank'
+                        'target' => '_blank',
+                        'style' => 'color:red;'
                     ]
                 );
                 $notViewed = Html::a(
@@ -82,7 +83,8 @@ $statuses = [
                     Url::to(['/customer-realties', 'id' => $model->id]),
                     [
                         'title' => 'Перейти на недвижимость покупателя',
-                        'target' => '_blank'
+                        'target' => '_blank',
+                        'style' => 'color:red;'
                     ]
                 );
                 return $viewedAds.'/'.$notViewed;

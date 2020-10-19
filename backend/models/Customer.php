@@ -329,6 +329,9 @@ class Customer extends ActiveRecord
                 $this->link('condits', $condit);
             }
         }
+        else{
+            $this->unlinkAll('condits',true);
+        }
     }
 
     /**
