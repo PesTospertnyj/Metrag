@@ -139,8 +139,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
         })
 
         $('#w0').submit(function () {
-            let phoneNotFormat = $("#customer-phone").val().replace(/[-\s()]/gi,'')
-            $("#customer-phone").val(phoneNotFormat)
             if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
                 $('.select-for-houses').remove()
             } else {

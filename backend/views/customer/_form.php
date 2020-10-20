@@ -22,7 +22,8 @@ use yii\widgets\ActiveForm;
     <div class="col-xs-12 col-sm-4 col-md-4">
         <?= $form->field($model, 'full_name')->textInput(['maxlength' => true])->label('ФИО') ?>
 
-        <?= $form->field($model, 'phone')->textInput(['maxlength' => true,'autocomplete'=>'needToDisableAutoComplete'])
+        <?= $form->field($model, 'phone')
+            ->textInput(['maxlength' => true,'autocomplete'=>'needToDisableAutoComplete'])
             ->label('Телефон') ?>
 
         <? if ($model->isNewRecord ) { ?>
@@ -39,7 +40,6 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'type')->label('Тип')->widget(\kartik\select2\Select2::className(), [
                 'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
                 'options' => [
-                    'disabled' => true,
                     'name' => $model->type,
                 ]
             ]) ?>

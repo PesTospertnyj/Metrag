@@ -69,6 +69,7 @@ $statuses = [
             'label' => 'Старые/Новые',
             'format' => 'raw',
             'value' => function($model) {
+
                 $viewedAds = Html::a(
                     $model->viewedCount,
                     Url::to(['/customer-realties/OldAdverts', 'id' => $model->id]),

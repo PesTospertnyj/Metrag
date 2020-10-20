@@ -52,7 +52,7 @@ class CustomerController extends Controller
         foreach ($dataProvider->models as $model){
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount - $viewedAdsCount;
+            $notViewedAdsCount = $allAdsCount > $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }
@@ -81,8 +81,9 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
+        $user = Yii::$app->getUser();
         $model = new Customer();
-
+        $model->user_id = $user->id;
         if ($model->load(Yii::$app->request->post(), null, true)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -161,7 +162,7 @@ class CustomerController extends Controller
         foreach ($dataProvider->models as $model){
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount - $viewedAdsCount;
+            $notViewedAdsCount = $allAdsCount > $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }

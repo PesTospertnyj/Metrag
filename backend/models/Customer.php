@@ -77,7 +77,7 @@ class Customer extends ActiveRecord
             [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone'], 'required'],
             [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public'], 'integer'],
             [['info'], 'string'],
-            ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))(\d{7}|\d{3}-\d{2}-\d{2})/'],
+            ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/'],
             [['full_name', 'phone', 'type'], 'string', 'max' => 255],
         ];
     }
@@ -413,10 +413,10 @@ class Customer extends ActiveRecord
         // normalize phone
         if ($this->isAttributeChanged('phone')) {
             if (
-                preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))(\d{7}|\d{3}-\d{2}-\d{2})/',
+                preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
                     $this->getAttribute('phone')) === 1
             ) {
-                $properPhone = str_replace(['-', '+', '(', ')'], '', $this->getAttribute('phone'));
+                $properPhone = str_replace(['-', '+',' ', '(', ')'], '', $this->getAttribute('phone'));
                 if (strlen($properPhone) == 10) {
                     $properPhone = '38' . $properPhone;
                 }
