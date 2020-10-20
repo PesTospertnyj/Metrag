@@ -97,6 +97,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'is_public')->checkbox([
             'label' => 'Публичный?'
         ]) ?>
+        <?php
+            !$model->isNewRecord ? :$model->is_enabled = 1;
+            echo $form->field($model, 'is_enabled')->checkbox([
+            'label' => 'Активный',
+        ]) ?>
     </div>
 
   </div>

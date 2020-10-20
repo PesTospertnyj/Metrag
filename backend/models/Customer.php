@@ -23,6 +23,7 @@ use yii\web\ServerErrorHttpException;
  * @property integer $total_area_to
  * @property string $info
  * @property integer $is_public
+ * @property integer $is_enabled
  *
  * @property Condit[] $condits
  * @property Region[] $regions
@@ -74,7 +75,7 @@ class Customer extends ActiveRecord
     public function rules()
     {
         return [
-            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone'], 'required'],
+            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone','is_enabled'], 'required'],
             [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public'], 'integer'],
             [['info'], 'string'],
             ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/'],

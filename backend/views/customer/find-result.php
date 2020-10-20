@@ -111,8 +111,11 @@ $statuses = [
         'dataProvider' => $dataProvider,
         'filterSelector' => 'select[name="per-page"]',
         //'filterModel' => $searchModel,
-        'rowOptions' => function ($model, $key, $index, $grid)
+        'rowOptions' => function ($model)
         {
+            if($model->is_enabled == false) {
+                return ['style' => 'background-color:#DDA0DD;'];
+            }
         },
         'tableOptions' => [
             'class' => 'table table-striped table-bordered',

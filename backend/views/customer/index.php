@@ -21,6 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'rowOptions' => function ($model)
+        {
+            if($model->is_enabled == false) {
+                return ['style' => 'background-color:#DDA0DD;'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
