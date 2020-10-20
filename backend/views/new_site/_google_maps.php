@@ -60,6 +60,9 @@
                     }
 
                 });
+                $("#autocomplete").change(function(){
+                    $(this).val('')
+                })
             }
         }
 
