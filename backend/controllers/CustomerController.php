@@ -52,7 +52,7 @@ class CustomerController extends Controller
         foreach ($dataProvider->models as $model){
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount > $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
+            $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }
@@ -162,7 +162,7 @@ class CustomerController extends Controller
         foreach ($dataProvider->models as $model){
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount > $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
+            $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }
