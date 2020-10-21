@@ -54,8 +54,11 @@ class CustomerFind extends Customer
      */
     public function search($params)
     {
+        $query = Customer::find();
         $user = Yii::$app->getUser();
-        $query = Customer::find()->where(['user_id' => $user->id])->orWhere(['is_public' => 1]);
+        if(!$user->is_admin){
+            $query->where(['user_id' => $user->id])->orWhere(['is_public' => 1]);
+        }
 
         if ($params['regions']) {
             $query = $query->joinWith(['regions' => function($query) use ($params) {
