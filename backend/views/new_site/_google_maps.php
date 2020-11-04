@@ -49,7 +49,8 @@
                     var place = autocomplete.getPlace().name;
 
                     var endOfStreet = place.indexOf(',');
-                    var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet - 1 : place.length);
+                    // var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet - 1 : place.length);
+                    var streetName = place;
 
                     $('#autocomplete').val(streetName);
 
@@ -58,6 +59,7 @@
                         var streetName = placeFull.substring(endOfStreet + 1, buldingPositionEnd > 0 ? buldingPositionEnd + 1 : place.length);
                         $('#apartment-number_building, #rent-number_building, #building-number_building, #house-number_building, #area-number_building, #commercial-number_office').val(streetName.trim().replace(',', ''));
                     }
+                    $('#apartment-number_building, #rent-number_building, #building-number_building, #house-number_building, #area-number_building, #commercial-number_office').val(streetName.trim())
 
                 });
                 $("#autocomplete").change(function(){
