@@ -48,10 +48,10 @@
 
                     var place = autocomplete.getPlace().name;
 
-                    var endOfStreet = place.indexOf(',');
+                    var endOfStreet = placeFull.indexOf(',');
                     var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet - 1 : place.length);
 
-                    $('#autocomplete').val(place);
+                    $('#autocomplete').val(streetName);
 
                     if(endOfStreet > 0) {
                         var buldingPositionEnd = place.indexOf(',', endOfStreet + 1);
