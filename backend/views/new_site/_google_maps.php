@@ -52,7 +52,7 @@
                     var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet : placeFull.length);
 
                     $('#autocomplete').val(streetName);
-
+                    endOfStreet = place.indexOf(',');
                     if(endOfStreet > 0) {
                         var buldingPositionEnd = place.indexOf(',', endOfStreet + 1);
                         var streetName = placeFull.substring(endOfStreet + 1, buldingPositionEnd > 0 ? buldingPositionEnd + 1 : place.length);
