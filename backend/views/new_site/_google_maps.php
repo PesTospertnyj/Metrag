@@ -49,7 +49,7 @@
                     var place = autocomplete.getPlace().name;
 
                     var endOfStreet = placeFull.indexOf(',');
-                    var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet - 1 : place.length);
+                    var streetName = placeFull.substring(0, endOfStreet > 0 ? endOfStreet : placeFull.length);
 
                     $('#autocomplete').val(streetName);
 
