@@ -90,6 +90,14 @@ $statuses = [
                 return $viewedAds.'/'.$notViewed;
             }
         ],
+        [
+            'label' => 'Дата добавления',
+            'value' => 'created_at',
+        ],
+        [
+            'label' => 'Дата изменения',
+            'value' => 'updated_at',
+        ],
         // 'total_area_from',
         // 'total_area_to',
         // 'info:ntext',

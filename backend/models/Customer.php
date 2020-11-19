@@ -108,7 +108,9 @@ class Customer extends ActiveRecord
             'street_id' => Yii::t('yii', 'Street'),
             'number_building' => Yii::t('yii', 'Number Building'),
             'metro_id' => Yii::t('yii', 'Metro'),
-            'localities' => 'Населенный(е) пункт'
+            'localities' => 'Населенный(е) пункт',
+            'created_at' => 'Дата добавления',
+            'updated_at' => 'Дата изменения'
         ];
     }
 

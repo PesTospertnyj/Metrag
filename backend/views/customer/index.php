@@ -86,6 +86,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $viewedAds.'/'.$notViewed;
                 }
             ],
+            [
+                'label' => 'Дата добавления',
+                'value' => 'created_at',
+            ],
+            [
+                'label' => 'Дата изменения',
+                'value' => 'updated_at',
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

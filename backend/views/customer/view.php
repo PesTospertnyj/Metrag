@@ -62,6 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'total_area_to',
             'info:ntext',
             'is_public',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 
