@@ -443,13 +443,13 @@ class Customer extends ActiveRecord
         }
 
         if ($this->getAttribute('is_public')) {
-            if ($this->getAttribute('phone')) {
-                $similar = self::find()->where(['phone' => $this->getAttribute('phone')])->all();
-
-                if (count($similar) > 0) {
-                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
-                }
-            }
+//            if ($this->getAttribute('phone')) {
+//                $similar = self::find()->where(['phone' => $this->getAttribute('phone')])->all();
+//
+//                if (count($similar) > 0) {
+//                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
+//                }
+//            }
         }
 
         return true;
