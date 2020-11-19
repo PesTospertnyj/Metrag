@@ -83,6 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model,'total_area_to', [
                         'template' => $template, 'labelOptions' => ['class' => '']])->textInput()->label(\Yii::t('yii','to')); ?>
                 </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <?
+                    echo $form->field($model, 'is_enabled', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Archive'));
+                    ?>
+                </div>
 
                 <? $template_date = "<div class=\"wrap-find\"><div class=\"col-lg-1 padding-null\">{label}</div>\n<div class=\"col-lg-11 find-input\">{input}</div>\n</div>"?>
             </div>

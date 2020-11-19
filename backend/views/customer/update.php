@@ -145,5 +145,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
                 $('.select-for-flats').remove()
             }
         })
+
+        $('#customer-is_enabled').change(function(){
+            let checkbox = $(this)
+
+            if(!checkbox.prop("checked")){
+                $('.field-customer-archive_reason').removeClass('hidden')
+            }
+            else{
+                $('.field-customer-archive_reason textarea').val('')
+                $('.field-customer-archive_reason').addClass('hidden')
+            }
+        })
     })
 </script>

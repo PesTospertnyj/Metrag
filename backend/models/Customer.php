@@ -75,9 +75,9 @@ class Customer extends ActiveRecord
     public function rules()
     {
         return [
-            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone','is_enabled'], 'required'],
-            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public'], 'integer'],
-            [['info'], 'string'],
+            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone', 'is_enabled'], 'required'],
+            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public', 'last_edit_by'], 'integer'],
+            [['info', 'archive_reason'], 'string'],
             ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/'],
             [['full_name', 'phone', 'type'], 'string', 'max' => 255],
         ];
@@ -174,6 +174,12 @@ class Customer extends ActiveRecord
      */
     public function load($data, $formName = null, $created = false)
     {
+        $this->setAttribute('last_edit_by', Yii::$app->user->id);
+
+        $this->setAttribute('updated_at', $this->getTimestamp());
+        if ($created) {
+            $this->setAttribute('created_at', $this->getTimestamp());
+        }
         if ($created && isset($data[$this->getClassName()]['types'])) {
             if (!$type = $this->loadTypes($data, $formName)) {
                 return false;
@@ -329,9 +335,8 @@ class Customer extends ActiveRecord
 
                 $this->link('condits', $condit);
             }
-        }
-        else{
-            $this->unlinkAll('condits',true);
+        } else {
+            $this->unlinkAll('condits', true);
         }
     }
 
@@ -417,7 +422,7 @@ class Customer extends ActiveRecord
                 preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
                     $this->getAttribute('phone')) === 1
             ) {
-                $properPhone = str_replace(['-', '+',' ', '(', ')'], '', $this->getAttribute('phone'));
+                $properPhone = str_replace(['-', '+', ' ', '(', ')'], '', $this->getAttribute('phone'));
                 if (strlen($properPhone) == 10) {
                     $properPhone = '38' . $properPhone;
                 }
@@ -455,5 +460,12 @@ class Customer extends ActiveRecord
 
     public function settypes(array $types)
     {
+    }
+
+    private function getTimestamp()
+    {
+        $formatter = \Yii::$app->formatter;
+        $formatter->defaultTimeZone = 'Europe/Kiev';
+        return $formatter->asDate('now', 'php:Y-m-d H:i:s');
     }
 }

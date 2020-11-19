@@ -73,6 +73,13 @@ class CustomerFind extends Customer
             'is_public' => $this->getParameter($params, 'is_public'),
         ]);
 
+        if($params['is_enabled'] == '1' ){
+            $query->andFilterWhere(['=', 'is_enabled', '0']);
+        }
+        if($params['is_enabled'] == '2' ){
+            $query->andFilterWhere(['=', 'is_enabled', '1']);
+        }
+
         $query
             ->andFilterWhere(['like', 'full_name', $this->getParameter($params, 'full_name')])
             ->andFilterWhere(['like', 'type', $this->getParameter($params, 'type')])
