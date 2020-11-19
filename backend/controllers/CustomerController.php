@@ -49,7 +49,7 @@ class CustomerController extends Controller
     {
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        foreach ($dataProvider->models as $model){
+        foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
             $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
@@ -101,22 +101,40 @@ class CustomerController extends Controller
      */
     public function actionUpdate($id)
     {
-            $model = $this->findModel($id);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            if($model->localities){
-                switch($model->type){
-                    case 'flats':  $model->city_or_region = 0;break;
-                    case 'new_buildings':$model->city_or_region = 0;break;
-                    case 'flats-new_buildings':$model->city_or_region = 0;break;
-                    case 'houses':$model->city_or_region = 1;break;
-                    case 'land_plot':$model->city_or_region = 1;break;
-                    case 'rent_house':$model->city_or_region = 1;break;
-                    case 'commercial':$model->city_or_region = 0;break;
-                    case 'rent_flat':$model->city_or_region = 0;break;
-                    case 'rent_commercial':$model->city_or_region = 0;break;
+            if ($model->localities) {
+                switch ($model->type) {
+                    case 'flats':
+                        $model->city_or_region = 0;
+                        break;
+                    case 'new_buildings':
+                        $model->city_or_region = 0;
+                        break;
+                    case 'flats-new_buildings':
+                        $model->city_or_region = 0;
+                        break;
+                    case 'houses':
+                        $model->city_or_region = 1;
+                        break;
+                    case 'land_plot':
+                        $model->city_or_region = 1;
+                        break;
+                    case 'rent_house':
+                        $model->city_or_region = 1;
+                        break;
+                    case 'commercial':
+                        $model->city_or_region = 0;
+                        break;
+                    case 'rent_flat':
+                        $model->city_or_region = 0;
+                        break;
+                    case 'rent_commercial':
+                        $model->city_or_region = 0;
+                        break;
                 }
             }
             return $this->render('update', [
@@ -159,7 +177,7 @@ class CustomerController extends Controller
                 ]
             ],
         ]);
-        foreach ($dataProvider->models as $model){
+        foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $allAdsCount = $this->getTotalCountCustomerAdverts($model);
             $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
@@ -215,10 +233,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -229,10 +246,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -243,10 +259,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -278,10 +293,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
                 $query->andFilterWhere(['=', 'enabled', 1]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
 
@@ -311,10 +325,9 @@ class CustomerController extends Controller
                 $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query2->andFilterWhere(['in', 'condit_id', $conditions]);
                 $query2->andFilterWhere(['=', 'enabled', 1]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query2->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query2->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 $query->union($query2);
@@ -325,10 +338,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -339,10 +351,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'realty_state_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -352,10 +363,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -365,10 +375,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;
@@ -378,10 +387,9 @@ class CustomerController extends Controller
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if(count($regions) > 0) {
+                if (count($regions) > 0) {
                     $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                }
-                else{
+                } else {
                     $query->andFilterWhere(['in', 'locality_id', $localities]);
                 }
                 break;

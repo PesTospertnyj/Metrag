@@ -23,7 +23,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        $("#customer-phone").mask("+38(999) 999-99-99");
+        $(".customer-phone").mask("+38(999) 999-99-99");
+
+        $('.add_phone_icon').click(function(){
+            let patternField = $('.additional-customer-phone.hidden').clone()
+            patternField.find('input').attr('name',"<?=$model->getClassName()?>[phones][]")
+            let newField = patternField.clone().appendTo('.phones-container');
+
+            $('.phones-container .additional-customer-phone').removeClass('hidden')
+            $(".customer-phone").mask("+38(999) 999-99-99");
+
+            $(newField).find('.remove_phone_icon').click(function (){
+                $(newField).remove()
+            })
+        })
+
+        $('.additional-customer-phone .remove_phone_icon').click(function (){
+            $(this).parents('.additional-customer-phone').remove()
+        })
         $('#customer-type').change(function () {
             if ($('#customer-type option:selected').length > 0) {
 

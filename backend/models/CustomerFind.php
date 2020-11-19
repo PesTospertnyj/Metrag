@@ -67,6 +67,8 @@ class CustomerFind extends Customer
             }]);
         }
 
+        $query->leftJoin('customer_phones', 'customer_phones.customer_id = customers.id');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->getParameter($params, 'id'),
@@ -91,7 +93,7 @@ class CustomerFind extends Customer
             ->andFilterWhere(['<=', 'price_to', $this->getParameter($params, 'price_to')])
             ->andFilterWhere(['>=', 'total_area_from', $this->getParameter($params, 'total_area_from')])
             ->andFilterWhere(['<=', 'total_area_to', $this->getParameter($params, 'total_area_to')])
-            ->andFilterWhere(['like', 'phone', $this->getParameter($params, 'phone')]);
+            ->andFilterWhere(['like', 'customer_phones.phone', $this->getParameter($params, 'phone')]);
 
         return $query;
     }

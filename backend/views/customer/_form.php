@@ -21,10 +21,64 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-md-4">
             <?= $form->field($model, 'full_name')->textInput(['maxlength' => true])->label('ФИО') ?>
+            <div class="phones-container">
+                <?php
+                    $customerPhones = $model->customerPhones
+                ?>
+            <? if(count($customerPhones) > 0) : ?>
+                <div class="form-group field-customer-phone required">
+                    <label class="control-label" >Телефон</label>
+                    <div style="display: flex;justify-content: space-between">
+                        <input type="text"  class="form-control customer-phone"
+                               value="<?=$customerPhones[0]->phone?>"
+                               name="<?=$model->getClassName()?>[phones][]"
+                               maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                        <span class="add_phone_icon">+</span>
+                    </div>
 
-            <?= $form->field($model, 'phone')
-                ->textInput(['maxlength' => true, 'autocomplete' => 'needToDisableAutoComplete'])
-                ->label('Телефон') ?>
+                    <div class="help-block"></div>
+                </div>
+                <? unset($customerPhones[0]);?>
+                <?foreach ($customerPhones as $phoneModel):?>
+                    <div class="form-group additional-customer-phone">
+                        <div style="display: flex;justify-content: space-between">
+                            <input type="text" style="margin-left: 20px"  class="form-control customer-phone"
+                                   name="<?=$model->getClassName()?>[phones][]"
+                                   value="<?=$phoneModel->phone?>"
+                                   maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                            <span class="remove_phone_icon">-</span>
+                        </div>
+                    </div>
+                <?endforeach?>
+
+            <? else : ?>
+                <div class="form-group field-customer-phone required">
+                    <label class="control-label" >Телефон</label>
+                    <div style="display: flex;justify-content: space-between">
+                        <input type="text"  class="form-control customer-phone"
+                               value="<?=$customerPhones[0]->phone?>"
+                               name="<?=$model->getClassName()?>[phones][]"
+                               maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                        <span class="add_phone_icon">+</span>
+                    </div>
+
+                    <div class="help-block"></div>
+                </div>
+
+
+
+            <? endif ?>
+            </div>
+            <div class="form-group additional-customer-phone hidden">
+                <div style="display: flex;justify-content: space-between">
+                    <input type="text" style="margin-left: 20px"  class="form-control customer-phone"
+                           maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                    <span class="remove_phone_icon">-</span>
+                </div>
+            </div>
+<!--            --><?//= $form->field($model, 'phone')
+//                ->textInput(['maxlength' => true, 'autocomplete' => 'needToDisableAutoComplete'])
+//                ->label('Телефон') ?>
 
             <? if ($model->isNewRecord) { ?>
                 <?= $form->field($model, 'type', [
@@ -127,3 +181,12 @@ use yii\widgets\ActiveForm;
 
 
 </div>
+<style>
+    .add_phone_icon,.remove_phone_icon{
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 33px;
+        padding-left: 10px;
+    }
+</style>

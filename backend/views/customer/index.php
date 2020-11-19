@@ -37,8 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-                'label' => 'Телефон',
-                'value' => 'phone',
+                'label' => 'Телефон(ы)',
+                'value' => function($model){
+                    $phones = array_map(function($phoneItem){
+                        return $phoneItem->phone;
+                    },$model->customerPhones);
+                    return implode(', ',$phones);
+                },
             ],
 
             [
@@ -93,6 +98,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Дата изменения',
                 'value' => 'updated_at',
+            ],
+            [
+                'label' => 'Автор',
+                'value' => function ($model) {
+                    $user = $model->author;
+                    return $user->username;
+                    //  return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
+                }
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

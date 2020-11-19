@@ -31,6 +31,8 @@ use yii\web\ServerErrorHttpException;
  * @property RegionKharkiv[] $regionsKharkivCopy
  * @property Locality[] $localities
  * @property CustomerViewedAd[] $customerViewedAd
+ * @property User[] $author
+ * @property CustomerPhones[] $phones
  */
 class Customer extends ActiveRecord
 {
@@ -75,11 +77,11 @@ class Customer extends ActiveRecord
     public function rules()
     {
         return [
-            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'phone', 'is_enabled'], 'required'],
+            [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'type', 'is_enabled'], 'required'],
             [['price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public', 'last_edit_by'], 'integer'],
             [['info', 'archive_reason'], 'string'],
-            ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/'],
-            [['full_name', 'phone', 'type'], 'string', 'max' => 255],
+//            ['phone', 'match', 'pattern' => '/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/'],
+            [['full_name', 'type'], 'string', 'max' => 255],
         ];
     }
 
@@ -171,6 +173,16 @@ class Customer extends ActiveRecord
         return $this->hasMany(CustomerViewedAd::className(), ['customer_id' => 'id']);
     }
 
+    public function getCustomerPhones()
+    {
+        return $this->hasMany(CustomerPhones::className(), ['customer_id' => 'id']);
+    }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'last_edit_by']);
+    }
+
     /**
      * @inheritdoc
      */
@@ -201,6 +213,7 @@ class Customer extends ActiveRecord
         $this->loadRegionsKharkiv($data);
         $this->loadCondits($data);
         $this->loadLocalities($data);
+        $this->loadPhones($data);
 
         return true;
     }
@@ -225,6 +238,29 @@ class Customer extends ActiveRecord
         }
     }
 
+    public function loadPhones(array $data)
+    {
+        $className = $this->getClassName();
+        if (isset($data[$className]['phones']) && count($data[$className]['phones']) > 0) {
+            $this->unlinkAll('customerPhones',true);
+            foreach ($data[$className]['phones'] as $phone) {
+                if (
+                    preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
+                        $phone) === 1
+                ) {
+                    $properPhone = str_replace(['-', '+', ' ', '(', ')'], '', $phone);
+                    if (strlen($properPhone) == 10) {
+                        $properPhone = '38' . $properPhone;
+                    }
+                } else {
+                    throw new ServerErrorHttpException('Неправильный формат номера телефона');
+                }
+                $phoneModel  = new CustomerPhones();
+                $phoneModel->phone = $properPhone;
+                $this->link('customerPhones',$phoneModel);
+            }
+        }
+    }
     /**
      * @param array $data
      */
@@ -419,21 +455,7 @@ class Customer extends ActiveRecord
         }
 
         // normalize phone
-        if ($this->isAttributeChanged('phone')) {
-            if (
-                preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
-                    $this->getAttribute('phone')) === 1
-            ) {
-                $properPhone = str_replace(['-', '+', ' ', '(', ')'], '', $this->getAttribute('phone'));
-                if (strlen($properPhone) == 10) {
-                    $properPhone = '38' . $properPhone;
-                }
 
-                $this->setAttribute('phone', $properPhone);
-            } else {
-                throw new ServerErrorHttpException('Неправильный формат номера телефона');
-            }
-        }
 
         if (!$insert) {
             if ($this->getOldAttribute('type') &&

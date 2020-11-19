@@ -55,7 +55,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return implode(', ',$resultMapped);
                 }
             ],
-            'phone',
+            [
+                'label' => 'Телефон(ы)',
+                'value' => function($model){
+                    $phones = array_map(function($phoneItem){
+                        return $phoneItem->phone;
+                    },$model->customerPhones);
+                    return implode(', ',$phones);
+                },
+            ],
             'price_from',
             'price_to',
             'total_area_from',
