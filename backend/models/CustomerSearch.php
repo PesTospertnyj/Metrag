@@ -18,7 +18,7 @@ class CustomerSearch extends Customer
     {
         return [
             [['id', 'price_from', 'price_to', 'total_area_from', 'total_area_to', 'is_public'], 'integer'],
-            [['full_name', 'type', 'info', 'phone'], 'safe'],
+            [['full_name', 'type', 'info'], 'safe'],
         ];
     }
 
