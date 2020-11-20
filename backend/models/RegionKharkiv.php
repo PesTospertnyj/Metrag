@@ -44,7 +44,7 @@ class RegionKharkiv extends \yii\db\ActiveRecord
 
     public static function prepareForSelect()
     {
-        $items = self::find()->all();
+        $items = self::find()->orderBy('name')->all();
         $arr = [];
 
         foreach ($items as $item) {

@@ -76,9 +76,6 @@ use yii\widgets\ActiveForm;
                     <span class="remove_phone_icon">-</span>
                 </div>
             </div>
-<!--            --><?//= $form->field($model, 'phone')
-//                ->textInput(['maxlength' => true, 'autocomplete' => 'needToDisableAutoComplete'])
-//                ->label('Телефон') ?>
 
             <? if ($model->isNewRecord) { ?>
                 <?= $form->field($model, 'type', [
