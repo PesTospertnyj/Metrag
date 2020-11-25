@@ -40,12 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'localities',
                 'format' => 'raw',
                 'value' => function($data){
+
                     $result = [];
                     if(count($data->localities) > 0){
                         $result = $data->localities;
                     }
                     if(count($data->regions) > 0){
                         $result = $data->regions;
+
+                    }
+                    if(count($data->regionsKharkiv) > 0){
+                        $result = array_merge($data->regionsKharkiv,$result);
                     }
                     $resultMapped = array_map(function($item){
                         return $item['name'];

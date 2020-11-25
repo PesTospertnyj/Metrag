@@ -60,17 +60,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     case 'houses':
                         $('.select-for-flats').css('display', 'none')
                         $('.select-for-houses').css('display', 'block')
-                        $('.field-customer-localities').css('display', 'none')
+                        $('.field-customer-localities').css('display', 'block')
+                        $('#customer-city_or_region ').css('display','none')
                         break;
                     case 'land_plot':
                         $('.select-for-flats').css('display', 'none')
                         $('.select-for-houses').css('display', 'block')
-                        $('.field-customer-localities').css('display', 'none')
+                        $('.field-customer-localities').css('display', 'block')
+                        $('#customer-city_or_region ').css('display','none')
                         break;
                     case 'rent_house':
                         $('.select-for-flats').css('display', 'none')
                         $('.select-for-houses').css('display', 'block')
-                        $('.field-customer-localities').css('display', 'none')
+                        $('.field-customer-localities').css('display', 'block')
+                        $('#customer-city_or_region ').css('display','none')
                         break;
                     case 'commercial':
                         $('.select-for-flats').css('display', 'block')
@@ -93,16 +96,16 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         })
 
-        $('#customer-city_or_region input').change(function(){
-            if($('#customer-city_or_region input:checked').val() == 1){
-                $('.field-customer-regionskharkivcopy').css('display','none')
-                $('.field-customer-localities').css('display','block')
-            }
-            else{
-                $('.field-customer-localities').css('display','none')
-                $('.field-customer-regionskharkivcopy').css('display','block')
-            }
-        })
+        // $('#customer-city_or_region input').change(function(){
+        //     if($('#customer-city_or_region input:checked').val() == 1){
+        //         $('.field-customer-regionskharkivcopy').css('display','none')
+        //         $('.field-customer-localities').css('display','block')
+        //     }
+        //     else{
+        //         $('.field-customer-localities').css('display','none')
+        //         $('.field-customer-regionskharkivcopy').css('display','block')
+        //     }
+        // })
 
         $('#w0').submit(function(){
             if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
