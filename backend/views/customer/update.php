@@ -25,6 +25,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
+    window.addEventListener( "pageshow", function ( event ) {
+
+        var historyTraversal = event.persisted ||
+            ( typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2 );
+        if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload();
+        }
+    });
     $(document).ready(function () {
         $(".customer-phone").mask("+38(999) 999-99-99");
 

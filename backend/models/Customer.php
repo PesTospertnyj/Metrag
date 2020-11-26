@@ -241,8 +241,8 @@ class Customer extends ActiveRecord
     public function loadPhones(array $data)
     {
         $className = $this->getClassName();
+        $properPhones = [];
         if (isset($data[$className]['phones']) && count($data[$className]['phones']) > 0) {
-            $this->unlinkAll('customerPhones',true);
             foreach ($data[$className]['phones'] as $phone) {
                 if (
                     preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
@@ -252,11 +252,15 @@ class Customer extends ActiveRecord
                     if (strlen($properPhone) == 10) {
                         $properPhone = '38' . $properPhone;
                     }
+                    $properPhones [] = $properPhone;
                 } else {
                     throw new ServerErrorHttpException('Неправильный формат номера телефона');
                 }
+            }
+            $this->unlinkAll('customerPhones',true);
+            foreach ($properPhones as $phone) {
                 $phoneModel  = new CustomerPhones();
-                $phoneModel->phone = $properPhone;
+                $phoneModel->phone = $phone;
                 $this->link('customerPhones',$phoneModel);
             }
         }
@@ -464,14 +468,16 @@ class Customer extends ActiveRecord
             }
         }
 
-        if ($this->getAttribute('is_public')) {
-//            if ($this->getAttribute('phone')) {
-//                $similar = self::find()->where(['phone' => $this->getAttribute('phone')])->all();
-//
-//                if (count($similar) > 0) {
-//                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
-//                }
-//            }
+        if ($this->getAttribute('is_public') == 1) {
+            $phoneModels = $this->customerPhones;
+            foreach ($phoneModels as $phoneModel) {
+                $similar = CustomerPhones::find()->where(['phone' => $phoneModel->phone,'customer_id' => $this->id])->all();
+
+                if (count($similar) > 0) {
+                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
+                }
+            }
+
         }
 
         return true;

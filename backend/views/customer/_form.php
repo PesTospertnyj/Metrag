@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
                         <input type="text"  class="form-control customer-phone"
                                value="<?=$customerPhones[0]->phone?>"
                                name="<?=$model->getClassName()?>[phones][]"
-                               maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                               autocomplete="needToDisableAutoComplete" readonly aria-required="true">
                         <span class="add_phone_icon">+</span>
                     </div>
 
@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
                             <input type="text" style="margin-left: 20px"  class="form-control customer-phone"
                                    name="<?=$model->getClassName()?>[phones][]"
                                    value="<?=$phoneModel->phone?>"
-                                   maxlength="255" autocomplete="needToDisableAutoComplete" aria-required="true">
+                                   autocomplete="needToDisableAutoComplete" aria-required="true">
                             <span class="remove_phone_icon">-</span>
                         </div>
                     </div>
