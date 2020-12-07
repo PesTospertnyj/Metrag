@@ -3,10 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\CustomerFind;
-use backend\models\CustomerLocation;
-use backend\models\HouseFind;
 use backend\models\ModelData;
-use backend\models\WallMaterial;
 use common\models\Apartment;
 use common\models\Area;
 use common\models\Building;
@@ -20,6 +17,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ServerErrorHttpException;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -81,10 +79,12 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
+        $data = Yii::$app->request->post();
         $user = Yii::$app->getUser();
         $model = new Customer();
         $model->user_id = $user->id;
-        if ($model->load(Yii::$app->request->post(), null, true)) {
+        $data = $this->validatePhones($model,$data);
+        if ($model->load($data, null, true)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -102,8 +102,10 @@ class CustomerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $data = Yii::$app->request->post();
+        $data = $this->validatePhones($model,$data);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load($data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             if ($model->localities) {
@@ -190,6 +192,19 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function actionArchive($id)
+    {
+        $data = Yii::$app->request->post();
+        $customer = Customer::find()
+            ->where(['id' => $id])
+            ->one();
+        $customer->is_enabled = 0;
+        $customer->archive_reason = $data['reason'];
+
+        return $this->asJson([
+            'success' => $customer->save(),
+        ]);
+    }
     /**
      * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -394,5 +409,30 @@ class CustomerController extends Controller
         $query->andFilterWhere(['=', 'enabled', 1]);
 
         return $query->count();
+    }
+
+    private function validatePhones($model,$data)
+    {
+        $className = $model->getClassName();
+        $properPhones = [];
+        if (isset($data[$className]['phones']) && count($data[$className]['phones']) > 0) {
+            foreach ($data[$className]['phones'] as $phone) {
+                if (
+                    preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
+                        $phone) === 1
+                ) {
+                    $properPhone = str_replace(['-', '+', ' ', '(', ')'], '', $phone);
+                    if (strlen($properPhone) == 10) {
+                        $properPhone = '38' . $properPhone;
+                    }
+                    $data[$className]['phones'] = [];
+                    $data[$className]['phones'][] = $properPhone;
+                } else {
+                    throw new ServerErrorHttpException('Неправильный формат номера телефона');
+                }
+            }
+        }
+
+        return $data;
     }
 }

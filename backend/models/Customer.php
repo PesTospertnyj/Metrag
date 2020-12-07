@@ -241,28 +241,11 @@ class Customer extends ActiveRecord
     public function loadPhones(array $data)
     {
         $className = $this->getClassName();
-        $properPhones = [];
-        if (isset($data[$className]['phones']) && count($data[$className]['phones']) > 0) {
-            foreach ($data[$className]['phones'] as $phone) {
-                if (
-                    preg_match('/((\+)?38)?(0\d{2}|\(0\d{2}\))\s(\d{7}|\d{3}-\d{2}-\d{2})/',
-                        $phone) === 1
-                ) {
-                    $properPhone = str_replace(['-', '+', ' ', '(', ')'], '', $phone);
-                    if (strlen($properPhone) == 10) {
-                        $properPhone = '38' . $properPhone;
-                    }
-                    $properPhones [] = $properPhone;
-                } else {
-                    throw new ServerErrorHttpException('Неправильный формат номера телефона');
-                }
-            }
-            $this->unlinkAll('customerPhones',true);
-            foreach ($properPhones as $phone) {
-                $phoneModel  = new CustomerPhones();
-                $phoneModel->phone = $phone;
-                $this->link('customerPhones',$phoneModel);
-            }
+
+        foreach ($data[$className]['phones'] as $phone) {
+            $phoneModel  = new CustomerPhones();
+            $phoneModel->phone = $phone;
+            $this->link('customerPhones',$phoneModel);
         }
     }
     /**
