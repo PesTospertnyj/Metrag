@@ -110,11 +110,8 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
                 $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
-                if (count($regions) > 0) {
-                    $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
-                } else {
-                    $query->andFilterWhere(['in', 'locality_id', $localities]);
-                }
+                $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
+                $query->andFilterWhere(['in', 'locality_id', $localities]);
                 break;
             case 'flats-new_buildings':
                 $viewName = 'find-result-flats';
