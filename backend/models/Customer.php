@@ -241,7 +241,7 @@ class Customer extends ActiveRecord
     public function loadPhones(array $data)
     {
         $className = $this->getClassName();
-
+        $this->unlinkAll('customerPhones',true);
         foreach ($data[$className]['phones'] as $phone) {
             $phoneModel  = new CustomerPhones();
             $phoneModel->phone = $phone;
@@ -453,10 +453,15 @@ class Customer extends ActiveRecord
 
         if ($this->getAttribute('is_public') == 1) {
             $phoneModels = $this->customerPhones;
+            $customers = self::find()->select(['id'])
+                ->where(['is_public' => 1])
+                ->andWhere(['<>','id', $this->id])
+                ->column();
             foreach ($phoneModels as $phoneModel) {
-                $similar = CustomerPhones::find()->where(['phone' => $phoneModel->phone,'customer_id' => $this->id])->all();
 
-                if (count($similar) > 0) {
+                $similar = CustomerPhones::find()
+                    ->where(['phone' => $phoneModel->phone,'customer_id' => $customers])->count();
+                if ((int)$similar > 0) {
                     throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
                 }
             }
