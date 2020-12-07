@@ -107,8 +107,8 @@ class CustomerRealtiesController extends Controller
                 $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
-                $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
-                $query->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
+                $query->andFilterWhere(['>=', 'total_area_house', $customer->total_area_from]);
+                $query->andFilterWhere(['<=', 'total_area_house', $customer->total_area_to]);
                 $query->andFilterWhere(['in', 'condit_id', $conditions]);
                 $query->andFilterWhere(['in', 'region_kharkiv_id', $regions]);
                 $query->andFilterWhere(['in', 'locality_id', $localities]);
