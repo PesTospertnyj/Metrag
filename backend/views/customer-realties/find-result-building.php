@@ -28,6 +28,11 @@ $currentParams = Yii::$app->getRequest()->getQueryParams();
         [
             'class' => 'yii\grid\ActionColumn',
             'controller' => 'building',
+            'urlCreator'=>function($action, $model, $key, $index) use ($currentParams){
+                $namespace = explode("\\", $model::className());
+                $entity = strtolower($namespace[count($namespace) - 1]);
+                return [$entity . '/view','id'=>$model->id,'customer_id'=> $currentParams['id']];
+            },
             'buttons' => [
                 'update' => function ($url,$model) {
                     return Html::a(

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\traits\ApartmentAgentTrait;
+use backend\models\CustomerViewedAd;
 use Yii;
 use common\models\Rent;
 use common\models\RentSearch;
@@ -57,10 +58,19 @@ class RentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $customer_id = null)
     {
         $model = $this->findModel($id);
         $model->getResouseBoards('apartment');
+
+        if($customer_id !== null){
+            $viewedAd = new  CustomerViewedAd();
+            $viewedAd->customer_id = $customer_id;
+            $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
+            $viewedAd->save();
+        }
+
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -186,21 +196,19 @@ class RentController extends Controller
     {
         $posts = Yii::$app->db->createCommand("SELECT * FROM rent ORDER BY id desc LIMIT $start, 50")
             ->queryAll();
-        foreach ($posts as $post)
-        {
+        foreach ($posts as $post) {
             $photos = Yii::$app->db->createCommand("SELECT * FROM photo WHERE  `type_realty_id`= 1 AND `object_id`= {$post['id']}")
                 ->queryAll();
-            if(!empty($photos))
-            {
-                foreach ($photos as $photo)
-                {
+            if (!empty($photos)) {
+                foreach ($photos as $photo) {
                     $model = Rent::findOne($post['id']);
                     $ph_path = explode('/upload/images', $photo['path']);
-                    $path = Yii::getAlias('@webroot')."/../../upload/images".$ph_path['1'];
-                    if(file_exists($path)){
+                    $path = Yii::getAlias('@webroot') . "/../../upload/images" . $ph_path['1'];
+                    if (file_exists($path)) {
                         $model->attachImage($path);
                     }
-                }}
+                }
+            }
         }
         $start += 50;
         echo $start;
@@ -216,13 +224,10 @@ class RentController extends Controller
     {
         $values = Yii::$app->request->post('Rent');
 
-        if($values['id'] !='')
-        {
+        if ($values['id'] != '') {
             $model = Rent::findOne($values['id']);
             $model->attributes = $values;
-        }
-        else
-        {
+        } else {
             $model = new Rent();
             $model->attributes = $values;
             $model->date_added = date("Y-m-d H:i:s");
@@ -238,14 +243,14 @@ class RentController extends Controller
 
         $model->date_modified = date("Y-m-d H:i:s");
         $model->date_modified_photo = date("Y-m-d H:i:s");
-        if(!$model['author_id']) $model['author_id'] = Yii::$app->user->id;
+        if (!$model['author_id']) $model['author_id'] = Yii::$app->user->id;
         else $model['update_author_id'] = Yii::$app->user->id;
 
         //if(!empty(UploadedFile::getInstances($model, 'imageFiles'))){ err WTF?
-        if(UploadedFile::getInstances($model, 'imageFiles')){
+        if (UploadedFile::getInstances($model, 'imageFiles')) {
             $model['update_photo_user_id'] = Yii::$app->user->id;
         }
-        if($model->save()){
+        if ($model->save()) {
             $model->besplatka = $values['besplatka'];
             $model->est = $values['est'];
             $model->mesto = $values['mesto'];
@@ -260,7 +265,8 @@ class RentController extends Controller
         return $this->render('view', ['data' => $data, 'model' => $apart]);
     }
 
-    public function actionPrint(){
+    public function actionPrint()
+    {
         $model = new RentFind();
         $query = $model->search();
         $dataProvider = new ActiveDataProvider([

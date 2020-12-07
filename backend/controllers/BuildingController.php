@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\traits\ApartmentAgentTrait;
+use backend\models\CustomerViewedAd;
 use Yii;
 use common\models\Apartment;
 use common\models\Building;
@@ -105,13 +106,18 @@ class BuildingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$customer_id)
     {
         $model = $this->findModel($id);
         $model->getResouseBoards('building');
 
-        //var_dump( ModelData::getData()['lived_complex']); exit;
-
+        if($customer_id !== null){
+            $viewedAd = new  CustomerViewedAd();
+            $viewedAd->customer_id = $customer_id;
+            $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
+            $viewedAd->save();
+        }
         return $this->render('view', [
             'model' => $model,
             'lived_complex' => ModelData::getData()['lived_complex']

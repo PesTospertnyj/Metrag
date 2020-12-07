@@ -90,9 +90,9 @@ use yii\widgets\ActiveForm;
             <? } else { ?>
                 <?= $form->field($model, 'type')->label('Тип')->widget(\kartik\select2\Select2::className(), [
                     'data' => \backend\models\Customer::AVAILABLE_TYPES_LABELS,
-                    'options' => [
-                        'name' => $model->type,
-                    ]
+//                    'options' => [
+//                        'name' => $model->type,
+//                    ]
                 ]) ?>
             <? } ?>
 

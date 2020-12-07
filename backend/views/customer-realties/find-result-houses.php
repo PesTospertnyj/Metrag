@@ -41,9 +41,14 @@ $statuses = [
         //['class' => 'yii\grid\SerialColumn'],
         [
             'class' => 'yii\grid\ActionColumn',
+            'urlCreator'=>function($action, $model, $key, $index) use ($currentParams){
+                $namespace = explode("\\", $model::className());
+                $entity = strtolower($namespace[count($namespace) - 1]);
+                return [$entity . '/view','id'=>$model->id,'customer_id'=> $currentParams['id']];
+            },
             'controller' => 'house',
             'buttons' => [
-                'update' => function ($url,$model) {
+                'update' => function ($url,$model,$key) {
                     return Html::a(
                         '<span class="glyphicon glyphicon-pencil"></span>',
                         $url,

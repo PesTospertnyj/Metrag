@@ -267,15 +267,15 @@ class CustomerRealtiesController extends Controller
                 ]
             ],
         ]);
-        foreach ($dataProvider->getModels() as $realty) {
-            $viewedAd = new  CustomerViewedAd();
-            $viewedAd->customer_id = $customer->id;
-            $viewedAd->realty_id = $realty->id;
-            if ($customer->type === 'flats-new_buildings') {
-                $viewedAd->realty_type_info = get_class($realty);
-            }
-            $viewedAd->save();
-        }
+//        foreach ($dataProvider->getModels() as $realty) {
+//            $viewedAd = new  CustomerViewedAd();
+//            $viewedAd->customer_id = $customer->id;
+//            $viewedAd->realty_id = $realty->id;
+//            if ($customer->type === 'flats-new_buildings') {
+//                $viewedAd->realty_type_info = get_class($realty);
+//            }
+//            $viewedAd->save();
+//        }
 
         return $this->render($viewName, [
             'dataProvider' => $dataProvider,

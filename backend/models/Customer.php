@@ -443,13 +443,13 @@ class Customer extends ActiveRecord
 
         // normalize phone
 
-
-        if (!$insert) {
-            if ($this->getOldAttribute('type') &&
-                $this->getOldAttribute('type') != $this->type) {
-                return false;
-            }
-        }
+    /** Хз зачем это**/
+//        if (!$insert) {
+//            if ($this->getOldAttribute('type') &&
+//                $this->getOldAttribute('type') != $this->type) {
+//                return false;
+//            }
+//        }
 
         if ($this->getAttribute('is_public') == 1) {
             $phoneModels = $this->customerPhones;
