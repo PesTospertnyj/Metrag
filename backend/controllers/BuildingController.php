@@ -106,7 +106,7 @@ class BuildingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id,$customer_id)
+    public function actionView($id,$customer_id=null)
     {
         $model = $this->findModel($id);
         $model->getResouseBoards('building');
@@ -155,10 +155,18 @@ class BuildingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$customer_id=null)
     {
         $model = $this->findModel($id);
         $model->getResouseBoards('building');
+
+        if($customer_id !== null){
+            $viewedAd = new  CustomerViewedAd();
+            $viewedAd->customer_id = $customer_id;
+            $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
+            $viewedAd->save();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
