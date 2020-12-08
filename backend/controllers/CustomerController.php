@@ -200,6 +200,8 @@ class CustomerController extends Controller
             ->one();
         $customer->is_enabled = 0;
         $customer->archive_reason = $data['reason'];
+        $customer->archive_reason = $data['reason'];
+        $customer->is_public = 0;
 
         return $this->asJson([
             'success' => $customer->save(),
