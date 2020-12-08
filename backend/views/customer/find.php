@@ -87,6 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-xs-1 col-sm-1 col-md-3">
                             <?
+                            $model->is_enabled = '2';
                             echo $form->field($model, 'is_enabled', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Yes'), '2' => \Yii::t('yii', 'No'), '0' => \Yii::t('yii', 'All')])->label(\Yii::t('yii', 'Archive'));
                             ?>
                         </div>
