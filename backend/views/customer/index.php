@@ -108,6 +108,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Кто изменил',
+                'value' => function ($model) {
+                    $user = $model->changedBy;
+                    return $user->username;
+                    //  return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
+                }
+            ],
+            [
                     'class' => 'yii\grid\ActionColumn',
                     'buttons' => [
                             'delete' => function($url, $model, $key){

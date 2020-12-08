@@ -180,6 +180,10 @@ class Customer extends ActiveRecord
 
     public function getAuthor()
     {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+    public function getChangedBy()
+    {
         return $this->hasOne(User::className(), ['id' => 'last_edit_by']);
     }
 
@@ -193,6 +197,7 @@ class Customer extends ActiveRecord
         $this->setAttribute('updated_at', $this->getTimestamp());
         if ($created) {
             $this->setAttribute('created_at', $this->getTimestamp());
+            $this->setAttribute('created_by', Yii::$app->user->id);
         }
         if ($created && isset($data[$this->getClassName()]['types'])) {
             if (!$type = $this->loadTypes($data, $formName)) {
