@@ -230,6 +230,9 @@ class CustomerController extends Controller
 
     private function getTotalCountCustomerAdverts($customer)
     {
+        if($customer->id == 15){
+            $a = 1;
+        }
         $conditions = array_map(function ($item) {
             return $item['condit_id'];
         }, $customer->condits);
@@ -256,9 +259,15 @@ class CustomerController extends Controller
         else{
             $whereQueryForLocationRealty = '';
         }
+
+        $exceptRealtyIds = array_map(function ($item) {
+            return $item->realty_id;
+        }, $customer->customerViewedAd);
+
         switch ($customer->type) {
             case 'flats':
                 $query = Apartment::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -268,6 +277,7 @@ class CustomerController extends Controller
                 break;
             case 'new_buildings':
                 $query = Building::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -278,6 +288,7 @@ class CustomerController extends Controller
             case 'houses':
 
                 $query = House::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area_house', $customer->total_area_from]);
@@ -308,6 +319,7 @@ class CustomerController extends Controller
                     'layout_id',
                     'enabled'
                 ]);
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -336,6 +348,7 @@ class CustomerController extends Controller
                     'enabled'
                 ]);
                 $query2->from('building');
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query2->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query2->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query2->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -348,6 +361,7 @@ class CustomerController extends Controller
                 break;
             case 'land_plot':
                 $query = Area::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -356,6 +370,7 @@ class CustomerController extends Controller
                 break;
             case 'commercial':
                 $query = Commercial::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
                 $query->andFilterWhere(['>=', 'total_area', $customer->total_area_from]);
@@ -365,6 +380,7 @@ class CustomerController extends Controller
                 break;
             case 'rent_house':
                 $query = Rent::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['in', 'type_object_id', [5, 7]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
@@ -373,6 +389,7 @@ class CustomerController extends Controller
                 break;
             case 'rent_flat':
                 $query = Rent::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['in', 'type_object_id', [4, 6]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
@@ -381,6 +398,7 @@ class CustomerController extends Controller
                 break;
             case 'rent_commercial':
                 $query = Rent::find();
+                $query->andFilterWhere(['not', ['id' => $exceptRealtyIds]]);
                 $query->andFilterWhere(['in', 'type_object_id', [11]]);
                 $query->andFilterWhere(['>=', 'price', $customer->price_from]);
                 $query->andFilterWhere(['<=', 'price', $customer->price_to]);
