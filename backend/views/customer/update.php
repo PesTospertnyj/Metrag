@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
         }
     });
     $(document).ready(function () {
-        $(".customer-phone").mask("+38(999) 999-99-99");
+        $(".customer-phone").mask("+38(000) 000-00-00");
 
         $('.add_phone_icon').click(function(){
             let patternField = $('.additional-customer-phone.hidden').clone()
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
             let newField = patternField.clone().appendTo('.phones-container');
 
             $('.phones-container .additional-customer-phone').removeClass('hidden')
-            $(".customer-phone").mask("+38(999) 999-99-99");
+            $(".customer-phone").mask("+38(000) 000-00-00");
 
             $(newField).find('.remove_phone_icon').click(function (){
                 $(newField).remove()
