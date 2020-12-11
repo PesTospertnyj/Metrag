@@ -49,8 +49,7 @@ class CustomerController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
-            $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
+            $notViewedAdsCount = $this->getTotalCountCustomerAdverts($model);
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }
@@ -181,8 +180,7 @@ class CustomerController extends Controller
         ]);
         foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
-            $allAdsCount = $this->getTotalCountCustomerAdverts($model);
-            $notViewedAdsCount = $allAdsCount >= $viewedAdsCount ? $allAdsCount - $viewedAdsCount : $allAdsCount;
+            $notViewedAdsCount = $this->getTotalCountCustomerAdverts($model);
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
         }
@@ -230,7 +228,7 @@ class CustomerController extends Controller
 
     private function getTotalCountCustomerAdverts($customer)
     {
-        if($customer->id == 15){
+        if($customer->id == 16){
             $a = 1;
         }
         $conditions = array_map(function ($item) {
