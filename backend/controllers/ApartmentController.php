@@ -185,11 +185,19 @@ class ApartmentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$customer_id=nul)
     {
 
         $model = $this->findModel($id);
         $model->getResouseBoards('apartment');
+
+        if($customer_id !== null){
+            $viewedAd = new  CustomerViewedAd();
+            $viewedAd->customer_id = $customer_id;
+            $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
+            $viewedAd->save();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 

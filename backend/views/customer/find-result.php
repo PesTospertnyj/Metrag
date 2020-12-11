@@ -72,7 +72,7 @@ $statuses = [
 
                 $viewedAds = Html::a(
                     $model->viewedCount,
-                    Url::to(['/customer-realties/OldAdverts', 'id' => $model->id]),
+                    Url::to(['/customer-realties/old-adverts', 'id' => $model->id]),
                     [
                         'title' => 'Перейти на недвижимость покупателя',
                         'target' => '_blank',

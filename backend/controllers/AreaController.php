@@ -64,6 +64,7 @@ class AreaController extends Controller
             $viewedAd = new  CustomerViewedAd();
             $viewedAd->customer_id = $customer_id;
             $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
             $viewedAd->save();
         }
         return $this->render('view', [
@@ -109,6 +110,7 @@ class AreaController extends Controller
             $viewedAd = new  CustomerViewedAd();
             $viewedAd->customer_id = $customer_id;
             $viewedAd->realty_id = $model->id;
+            $viewedAd->realty_type_info = $model::className();
             $viewedAd->save();
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
