@@ -185,7 +185,7 @@ class ApartmentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id,$customer_id=nul)
+    public function actionUpdate($id,$customer_id=null)
     {
 
         $model = $this->findModel($id);
