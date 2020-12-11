@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        $(".customer-phone").mask("+38(000) 000-00-00");
+        $(".customer-phone").mask("+38(000) 000-00-00",{placeholder: "+38(___) ___-__-__"});
 
         $('.add_phone_icon').click(function(){
             let patternField = $('.additional-customer-phone.hidden').clone()
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             let newField = patternField.clone().appendTo('.phones-container');
 
             $('.phones-container .additional-customer-phone').removeClass('hidden')
-            $(".customer-phone").mask("+38(000) 000-00-00");
+            $(".customer-phone").mask("+38(000) 000-00-00",{placeholder: "+38(___) ___-__-__"});
 
             $(newField).find('.remove_phone_icon').click(function (){
                 $(newField).remove()
