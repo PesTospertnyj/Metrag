@@ -64,10 +64,12 @@ class CommercialController extends Controller
 
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            $viewedAd->customer_id = $customer_id;
-            $viewedAd->realty_id = $model->id;
-            $viewedAd->realty_type_info = $model::className();
-            $viewedAd->save();
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+                $viewedAd->customer_id = $customer_id;
+                $viewedAd->realty_id = $model->id;
+                $viewedAd->realty_type_info = $model::className();
+                $viewedAd->save();
+            }
         }
         return $this->render('view', [
             'model' => $model,
@@ -113,10 +115,12 @@ class CommercialController extends Controller
 
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            $viewedAd->customer_id = $customer_id;
-            $viewedAd->realty_id = $model->id;
-            $viewedAd->realty_type_info = $model::className();
-            $viewedAd->save();
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+                $viewedAd->customer_id = $customer_id;
+                $viewedAd->realty_id = $model->id;
+                $viewedAd->realty_type_info = $model::className();
+                $viewedAd->save();
+            }
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
