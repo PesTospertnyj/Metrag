@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\CustomerFind;
+use backend\models\CustomerPhones;
 use backend\models\ModelData;
 use common\models\Apartment;
 use common\models\Area;
@@ -228,9 +229,6 @@ class CustomerController extends Controller
 
     private function getTotalCountCustomerAdverts($customer)
     {
-        if($customer->id == 16){
-            $a = 1;
-        }
         $conditions = array_map(function ($item) {
             return $item['condit_id'];
         }, $customer->condits);
@@ -431,6 +429,23 @@ class CustomerController extends Controller
             }
         }
 
+
+        if ($data[$className]['is_public'] == 1) {
+            $phones = $data[$className]['phones'];
+            $customers = Customer::find()->select(['id'])
+                ->where(['is_public' => 1])
+                ->andWhere(['<>','id', $this->id])
+                ->column();
+            foreach ($phones as $phone) {
+
+                $similar = CustomerPhones::find()
+                    ->where(['phone' => $phone,'customer_id' => $customers])->count();
+                if ((int)$similar > 0) {
+                    throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
+                }
+            }
+
+        }
         return $data;
     }
 }
