@@ -66,7 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'total_area_from',
             // 'total_area_to',
             // 'info:ntext',
-            // 'is_public',
+            [
+                    'attribute' => 'is_public',
+                'label' => 'Публичный',
+                'value' => function ($model) {
+                    return $model->is_public ? 'Да' : 'Нет';
+                }
+            ],
             [
                 'label' => 'Старые/Новые',
                 'format' => 'raw',
@@ -103,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Автор',
                 'value' => function ($model) {
                     $user = $model->author;
-                    return $user->username;
+                    return $user ? $user->username : '';
                     //  return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
                 }
             ],
@@ -111,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Кто изменил',
                 'value' => function ($model) {
                     $user = $model->changedBy;
-                    return $user->username;
+                    return $user ? $user->username : '';
                     //  return get_class($model)::AVAILABLE_TYPES_LABELS[$model->type];
                 }
             ],

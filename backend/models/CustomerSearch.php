@@ -54,6 +54,9 @@ class CustomerSearch extends Customer
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
+                ],
+                'attributes' => [
+                    'is_public','id'
                 ]
             ],
         ]);
