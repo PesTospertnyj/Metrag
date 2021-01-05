@@ -48,11 +48,18 @@ class CustomerController extends Controller
     {
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $userId = Yii::$app->user->id;
+        $role = Yii::$app->authManager->getRolesByUser($userId);
+        $isSuperAdmin = isset($role['superAdmin']);
+
         foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $notViewedAdsCount = $this->getTotalCountCustomerAdverts($model);
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
+            $showPhone = $model->user_id === $userId;
+            $model->showPhone = $isSuperAdmin || $showPhone || (bool)$model->is_public;
         }
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -67,8 +74,14 @@ class CustomerController extends Controller
      */
     public function actionView($id)
     {
+        $userId = Yii::$app->user->id;
+        $role = Yii::$app->authManager->getRolesByUser($userId);
+        $isSuperAdmin = isset($role['superAdmin']);
+        $model = $this->findModel($id);
+        $showPhone = $model->user_id === $userId;
+        $model->showPhone = $isSuperAdmin || $showPhone || (bool)$model->is_public;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -83,7 +96,7 @@ class CustomerController extends Controller
         $user = Yii::$app->getUser();
         $model = new Customer();
         $model->user_id = $user->id;
-        $data = $this->validatePhones($model,$data);
+        $data = $this->validatePhones($model, $data);
         if ($model->load($data, null, true)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -103,7 +116,7 @@ class CustomerController extends Controller
     {
         $model = $this->findModel($id);
         $data = Yii::$app->request->post();
-        $data = $this->validatePhones($model,$data);
+        $data = $this->validatePhones($model, $data);
 
         if ($model->load($data)) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -179,11 +192,16 @@ class CustomerController extends Controller
                 ]
             ],
         ]);
+        $userId = Yii::$app->user->id;
+        $role = Yii::$app->authManager->getRolesByUser($userId);
+        $isSuperAdmin = isset($role['superAdmin']);
         foreach ($dataProvider->models as $model) {
             $viewedAdsCount = $this->getCountCustomerAdverts($model);
             $notViewedAdsCount = $this->getTotalCountCustomerAdverts($model);
             $model->viewedCount = $viewedAdsCount;
             $model->notViewedCount = $notViewedAdsCount;
+            $showPhone = $model->user_id === $userId;
+            $model->showPhone = $isSuperAdmin || $showPhone || (bool)$model->is_public;
         }
         return $this->render('find-result', [
             'dataProvider' => $dataProvider,
@@ -206,6 +224,7 @@ class CustomerController extends Controller
             'success' => $customer->save(),
         ]);
     }
+
     /**
      * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -241,18 +260,15 @@ class CustomerController extends Controller
             return $item['locality_id'];
         }, $customer->localities);
 
-        $regions = implode(',',$regions);
-        $localities = implode(',',$localities);
-        if($regions && $localities){
-            $whereQueryForLocationRealty = 'region_kharkiv_id IN ('.$regions.') OR locality_id IN ('.$localities.')';
-        }
-        elseif ($regions){
-            $whereQueryForLocationRealty = 'region_kharkiv_id IN ('.$regions.')';
-        }
-        elseif($localities){
-            $whereQueryForLocationRealty = 'locality_id IN ('.$localities.')';
-        }
-        else{
+        $regions = implode(',', $regions);
+        $localities = implode(',', $localities);
+        if ($regions && $localities) {
+            $whereQueryForLocationRealty = 'region_kharkiv_id IN (' . $regions . ') OR locality_id IN (' . $localities . ')';
+        } elseif ($regions) {
+            $whereQueryForLocationRealty = 'region_kharkiv_id IN (' . $regions . ')';
+        } elseif ($localities) {
+            $whereQueryForLocationRealty = 'locality_id IN (' . $localities . ')';
+        } else {
             $whereQueryForLocationRealty = '';
         }
 
@@ -407,7 +423,7 @@ class CustomerController extends Controller
         return $query->count();
     }
 
-    private function validatePhones($model,$data)
+    private function validatePhones($model, $data)
     {
         $className = $model->getClassName();
         $properPhones = [];
@@ -434,12 +450,12 @@ class CustomerController extends Controller
             $phones = $data[$className]['phones'];
             $customers = Customer::find()->select(['id'])
                 ->where(['is_public' => 1])
-                ->andWhere(['<>','id', $this->id])
+                ->andWhere(['<>', 'id', $this->id])
                 ->column();
             foreach ($phones as $phone) {
 
                 $similar = CustomerPhones::find()
-                    ->where(['phone' => $phone,'customer_id' => $customers])->count();
+                    ->where(['phone' => $phone, 'customer_id' => $customers])->count();
                 if ((int)$similar > 0) {
                     throw new ServerErrorHttpException('Такой телефон уже имеется в базе');
                 }

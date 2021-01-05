@@ -39,10 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Телефон(ы)',
                 'value' => function($model){
-                    $phones = array_map(function($phoneItem){
-                        return $phoneItem->phone;
-                    },$model->customerPhones);
-                    return implode(', ',$phones);
+                    if($model->showPhone){
+                        $phones = array_map(function($phoneItem){
+                            return $phoneItem->phone;
+                        },$model->customerPhones);
+                        return implode(', ',$phones);
+                    }
+                    return '';
+
                 },
             ],
 

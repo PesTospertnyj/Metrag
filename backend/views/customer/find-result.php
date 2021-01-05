@@ -46,8 +46,17 @@ $statuses = [
         ],
 
         [
-            'label' => 'Телефон',
-            'value' => 'phone',
+            'label' => 'Телефон(ы)',
+            'value' => function($model){
+                if($model->showPhone){
+                    $phones = array_map(function($phoneItem){
+                        return $phoneItem->phone;
+                    },$model->customerPhones);
+                    return implode(', ',$phones);
+                }
+                return '';
+
+            },
         ],
 
         [

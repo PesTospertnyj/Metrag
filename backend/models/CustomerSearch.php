@@ -40,14 +40,7 @@ class CustomerSearch extends Customer
      */
     public function search($params)
     {
-        $userId = Yii::$app->user->id;
         $query = Customer::find();
-        $role = Yii::$app->authManager->getRolesByUser($userId);
-        if(!isset($role['superAdmin'])){
-            $query->where(['user_id' => $userId])->orWhere(['is_public' => 1]);
-        }
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
