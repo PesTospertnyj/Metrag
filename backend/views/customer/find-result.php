@@ -66,6 +66,13 @@ $statuses = [
             }
         ],
         [
+            'attribute' => 'is_public',
+            'label' => 'Публичный',
+            'value' => function ($model) {
+                return $model->is_public ? 'Да' : 'Нет';
+            }
+        ],
+        [
             'label' => 'Старые/Новые',
             'format' => 'raw',
             'value' => function($model) {
