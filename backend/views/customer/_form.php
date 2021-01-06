@@ -21,12 +21,14 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-md-4">
             <?= $form->field($model, 'full_name')->textInput(['maxlength' => true])->label('ФИО') ?>
+
             <div class="phones-container">
                 <?php
                     $customerPhones = $model->customerPhones
                 ?>
             <? if(count($customerPhones) > 0) : ?>
-                <div class="form-group field-customer-phone required">
+                <? if($model->showPhone) : ?>
+                    <div class="form-group field-customer-phone required">
                     <label class="control-label" >Телефон</label>
                     <div style="display: flex;justify-content: space-between">
                         <input type="text"  class="form-control customer-phone"
@@ -38,6 +40,7 @@ use yii\widgets\ActiveForm;
 
                     <div class="help-block"></div>
                 </div>
+                <? endif;?>
                 <? unset($customerPhones[0]);?>
                 <?foreach ($customerPhones as $phoneModel):?>
                     <div class="form-group additional-customer-phone">
@@ -69,6 +72,7 @@ use yii\widgets\ActiveForm;
 
             <? endif ?>
             </div>
+
             <div class="form-group additional-customer-phone hidden">
                 <div style="display: flex;justify-content: space-between">
                     <input type="text" style="margin-left: 20px"  class="form-control customer-phone"

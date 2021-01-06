@@ -118,6 +118,12 @@ class CustomerController extends Controller
         $data = Yii::$app->request->post();
         $data = $this->validatePhones($model, $data);
 
+        $userId = Yii::$app->user->id;
+        $role = Yii::$app->authManager->getRolesByUser($userId);
+        $isSuperAdmin = isset($role['superAdmin']);
+        $showPhone = $model->user_id === $userId;
+        $model->showPhone = $isSuperAdmin || $showPhone || (bool)$model->is_public;
+
         if ($model->load($data)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
