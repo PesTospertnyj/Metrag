@@ -39,6 +39,7 @@ class Customer extends ActiveRecord
     public $viewedCount;
     public $notViewedCount;
     public $showPhone;
+    public $onlyMyCustomers;
 
     const AVAILABLE_TYPES = [
         'flats',

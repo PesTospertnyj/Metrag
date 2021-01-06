@@ -92,11 +92,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                         </div>
                     </div>
-
-
                     <? $template_date = "<div class=\"wrap-find\"><div class=\"col-lg-1 padding-null\">{label}</div>\n<div class=\"col-lg-11 find-input\">{input}</div>\n</div>"?>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-3">
                     <?= $form->field($model, 'type', [
                         'options' => [
                             'class' => 'required d-flex',
@@ -144,7 +142,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
                 </div>
-
+                <div class="col-xs-12 col-sm-12 col-md-3">
+                    <?
+                    $model->onlyMyCustomers = '0';
+                    echo $form->field($model, 'onlyMyCustomers', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Только мои'), '0' => \Yii::t('yii', 'Все')])->label(\Yii::t('yii', 'Покупатели'));
+                    ?>
+                </div>
                 <? $scrollbox_template = "{label}\n<div class=\"scrollbox\">{input}</div>" ?>
             </div>
             <div class="row">

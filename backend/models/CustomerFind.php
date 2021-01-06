@@ -90,6 +90,11 @@ class CustomerFind extends Customer
             ->andFilterWhere(['<=', 'total_area_to', $this->getParameter($params, 'total_area_to')])
             ->andFilterWhere(['like', 'customer_phones.phone', $this->getParameter($params, 'phone')]);
 
+
+        if($params['onlyMyCustomers'] == '1'){
+            $query->andFilterWhere(['=', 'user_id', Yii::$app->user->id])->orFilterWhere(['=','is_public',1]);
+        }
+
         return $query;
     }
 
