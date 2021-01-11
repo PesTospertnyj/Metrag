@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <?
-                    $model->onlyMyCustomers = '0';
+                    $model->onlyMyCustomers = '1';
                     echo $form->field($model, 'onlyMyCustomers', ['template' => "{label}<br>{input}", 'labelOptions' => ['class' => 'radio-btn-gp-label']])->radioList(['1' => \Yii::t('yii', 'Только мои'), '0' => \Yii::t('yii', 'Все')])->label(\Yii::t('yii', 'Покупатели'));
                     ?>
                 </div>

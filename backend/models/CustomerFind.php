@@ -92,7 +92,7 @@ class CustomerFind extends Customer
 
 
         if($params['onlyMyCustomers'] == '1'){
-            $query->andFilterWhere(['=', 'user_id', Yii::$app->user->id])->orFilterWhere(['=','is_public',1]);
+            $query->andFilterWhere(['=', 'user_id', Yii::$app->user->id]);
         }
 
         return $query;
