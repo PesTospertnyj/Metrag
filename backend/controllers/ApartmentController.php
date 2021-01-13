@@ -146,7 +146,7 @@ class ApartmentController extends Controller
         $model->getResouseBoards('apartment');
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className(),$customer_id)){
                 $viewedAd->customer_id = $customer_id;
                 $viewedAd->realty_id = $model->id;
                 $viewedAd->realty_type_info = $model::className();
@@ -195,7 +195,7 @@ class ApartmentController extends Controller
 
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className(),$customer_id)){
                 $viewedAd->customer_id = $customer_id;
                 $viewedAd->realty_id = $model->id;
                 $viewedAd->realty_type_info = $model::className();

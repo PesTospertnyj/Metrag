@@ -28,9 +28,9 @@ class CustomerViewedAd extends ActiveRecord
         ];
     }
 
-    public function checkIfAlreadyExists($id,$type)
+    public function checkIfAlreadyExists($realty,$type,$customer_id)
     {
-        return self::find()->where(['realty_id' => $id,'realty_type_info' =>$type])->exists();
+        return self::find()->where(['customer_id'=> $customer_id,'realty_id' => $realty,'realty_type_info' =>$type])->exists();
     }
     /**
      * @inheritdoc

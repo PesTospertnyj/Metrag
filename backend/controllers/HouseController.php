@@ -63,7 +63,7 @@ class HouseController extends Controller
 
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className(),$customer_id)){
                 $viewedAd->customer_id = $customer_id;
                 $viewedAd->realty_id = $model->id;
                 $viewedAd->realty_type_info = $model::className();
@@ -111,7 +111,7 @@ class HouseController extends Controller
         $model->getResouseBoards('house');
         if($customer_id !== null){
             $viewedAd = new  CustomerViewedAd();
-            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className())){
+            if(!$viewedAd->checkIfAlreadyExists($model->id,$model::className(),$customer_id)){
                 $viewedAd->customer_id = $customer_id;
                 $viewedAd->realty_id = $model->id;
                 $viewedAd->realty_type_info = $model::className();
