@@ -178,7 +178,7 @@ class CustomerRealtiesController extends Controller
                 $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query2->andFilterWhere(['in', 'condit_id', $conditions]);
                 $query2->andFilterWhere(['=', 'enabled', 1]);
-                $query->andWhere($whereQueryForLocationRealty);
+                $query2->andWhere($whereQueryForLocationRealty);
                 $query->union($query2);
                 break;
             case 'land_plot':
@@ -234,6 +234,7 @@ class CustomerRealtiesController extends Controller
                 break;
         }
         $query->andFilterWhere(['=', 'enabled', 1]);
+        $sql = $query->createCommand()->getRawSql();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
