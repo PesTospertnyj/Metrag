@@ -66,7 +66,7 @@ class CustomerFind extends Customer
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->getParameter($params, 'id'),
+            'customers.id' => $this->getParameter($params, 'id'),
             'is_public' => $this->getParameter($params, 'is_public'),
         ]);
 
