@@ -373,7 +373,7 @@ class CustomerController extends Controller
                 $query2->andFilterWhere(['<=', 'total_area', $customer->total_area_to]);
                 $query2->andFilterWhere(['in', 'condit_id', $conditions]);
                 $query2->andFilterWhere(['=', 'enabled', 1]);
-                $query->andWhere($whereQueryForLocationRealty);
+                $query2->andWhere($whereQueryForLocationRealty);
 
                 $query->union($query2);
                 break;
