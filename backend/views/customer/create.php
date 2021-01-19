@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
         // })
 
         $('#w0').submit(function(){
-            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings') {
+            if ($('#customer-type option:selected').val() === 'flats' || $('#customer-type option:selected').val() === 'new_buildings' || $('#customer-type option:selected').val() === "flats-new_buildings") {
                 $('.select-for-houses').remove()
             }
             else{
