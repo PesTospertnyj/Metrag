@@ -62,7 +62,7 @@ class ApartmentController extends Controller
 
         if(!$agentId) {
             return $this->asJson([
-                'error' => 'Агент не связан с пользователем. Укажите связь на странице https://metrag.com.ua/admin/agents'
+                'error' => 'Агент не связан с пользователем. Укажите связь на странице https://admin.metrag.com.ua/admin/agents'
             ]);
         }
 

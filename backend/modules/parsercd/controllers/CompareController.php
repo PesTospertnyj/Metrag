@@ -222,7 +222,7 @@ class CompareController extends Controller
     }
     private function getSimilarLink($id)
     {
-        return '<a href="https://metrag.com.ua/admin/apartment/add-from-parsercd?id=' . $id . '">' . $id . '</a>, ';
+        return '<a href="https://admin.metrag.com.ua/admin/apartment/add-from-parsercd?id=' . $id . '">' . $id . '</a>, ';
     }
     private function setStatusPhone(array $params)//: bool
     {

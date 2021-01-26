@@ -45,12 +45,12 @@ var types = {
 function getBaseLinkOnCurrentType(type)
 {
     var links = {
-        apartments: 'https://metrag.com.ua/admin/apartment',
-        buildings: 'https://metrag.com.ua/admin/building',
-        houses: 'https://metrag.com.ua/admin/house',
-        commercial: 'https://metrag.com.ua/admin/commercial',
-        areas: 'https://metrag.com.ua/admin/area',
-        rent: 'https://metrag.com.ua/admin/rent'
+        apartments: 'https://admin.metrag.com.ua/admin/apartment',
+        buildings: 'https://admin.metrag.com.ua/admin/building',
+        houses: 'https://admin.metrag.com.ua/admin/house',
+        commercial: 'https://admin.metrag.com.ua/admin/commercial',
+        areas: 'https://admin.metrag.com.ua/admin/area',
+        rent: 'https://admin.metrag.com.ua/admin/rent'
     };
 
     return links[type];
