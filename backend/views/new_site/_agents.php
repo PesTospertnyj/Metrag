@@ -35,13 +35,13 @@ use backend\models\Agents;
 <?php
 $agent = Agents::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
 if($agent && empty($model->agent1_id)) {
-   $model->agent1_id = $agent->id;
+   //$model->agent1_id = $agent->id;
 }
 ?>
 <div class="agents_list">
     <div><b>Список агентов:</b></div>
     <?php if(Yii::$app->user->id === 1 || current(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))->name === 'expert') { ?>
-        <?= $form->field($model,'agent1_id')->dropDownList($data['agents'], ['prompt'=>'', 'value' => $agentId])->label(''); ?>
+        <?= $form->field($model,'agent1_id')->dropDownList($data['agents'], ['prompt'=>''])->label(''); ?>
         <?= $form->field($model,'agent2_id')->dropDownList($data['agents'], ['prompt'=>''])->label(''); ?>
         <?= $form->field($model,'agent3_id')->dropDownList($data['agents'], ['prompt'=>''])->label(''); ?>
     <?php } else { ?>
