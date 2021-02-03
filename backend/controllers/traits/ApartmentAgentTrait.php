@@ -39,4 +39,9 @@ trait ApartmentAgentTrait
             $model->agent3_id,
         ]);
     }
+
+    protected function hasAtLeastOneAgent($model)
+    {
+        return $model->agent1_id !== "" || $model->agent2_id !== "" || $model->agent3_id !== "";
+    }
 }

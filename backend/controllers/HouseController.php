@@ -262,7 +262,7 @@ class HouseController extends Controller
         }
         $model->year_built = 0;
 
-        if ($model->is_publish) {
+        if ($model->is_publish && !$this->hasAtLeastOneAgent($model)) {
             $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
             $agentId = $agent ? $agent['id'] : null;
             if ($agentId !== null && !$this->isAgentAttachedToModel($agentId, $model)) {

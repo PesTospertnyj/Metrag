@@ -466,7 +466,7 @@ class ApartmentController extends Controller
             ]);
         }
     }
-
+//host.com/admin/appartment
     public function actionAdd()
     {
 
@@ -480,7 +480,7 @@ class ApartmentController extends Controller
             $model->date_added = date("Y-m-d H:i:s");
         }
 
-        if ($model->is_publish) {
+        if ($model->is_publish && !$this->hasAtLeastOneAgent($model)) {
             $agent = ModelData::getCurrentAgentOnUserId(Yii::$app->user->id);
             $agentId = $agent ? $agent['id'] : null;
             if ($agentId !== null && !$this->isAgentAttachedToModel($agentId, $model)) {
